@@ -28,20 +28,17 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
                 positiveFeedback,
                 improvementNotes);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(assessment.Id, Is.Not.EqualTo(Guid.Empty));
-                Assert.That(assessment.Title, Is.EqualTo(title));
-                Assert.That(assessment.Date, Is.EqualTo(date));
-                Assert.That(assessment.Grade, Is.EqualTo(grade));
-                Assert.That(assessment.Weight, Is.EqualTo(weight));
-                Assert.That(assessment.PositiveFeedback, Is.EqualTo("Gut gemacht!"));
-                Assert.That(assessment.ImprovementNotes, Is.EqualTo("Mehr üben."));
-                Assert.That(assessment.StudentId, Is.EqualTo(_validStudentId));
-                Assert.That(assessment.SubjectId, Is.EqualTo(_validSubjectId));
-                Assert.That(assessment.Student, Is.Null);
-                Assert.That(assessment.Subject, Is.Null);
-            });
+            Assert.That(assessment.Id, Is.Not.EqualTo(Guid.Empty));
+            Assert.That(assessment.Title, Is.EqualTo(title));
+            Assert.That(assessment.Date, Is.EqualTo(date));
+            Assert.That(assessment.Grade, Is.EqualTo(grade));
+            Assert.That(assessment.Weight, Is.EqualTo(weight));
+            Assert.That(assessment.PositiveFeedback, Is.EqualTo("Gut gemacht!"));
+            Assert.That(assessment.ImprovementNotes, Is.EqualTo("Mehr üben."));
+            Assert.That(assessment.StudentId, Is.EqualTo(_validStudentId));
+            Assert.That(assessment.SubjectId, Is.EqualTo(_validSubjectId));
+            Assert.That(assessment.Student, Is.Null);
+            Assert.That(assessment.Subject, Is.Null);
         }
 
         [Test]
@@ -49,12 +46,9 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             Assessment assessment = new("Test", DateTime.Now, 1.5, _validStudentId, _validSubjectId);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(assessment.Weight, Is.EqualTo(1.0));
-                Assert.That(assessment.PositiveFeedback, Is.Null);
-                Assert.That(assessment.ImprovementNotes, Is.Null);
-            });
+            Assert.That(assessment.Weight, Is.EqualTo(1.0));
+            Assert.That(assessment.PositiveFeedback, Is.Null);
+            Assert.That(assessment.ImprovementNotes, Is.Null);
         }
 
         [TestCase(null)]
@@ -62,8 +56,12 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         [TestCase("   ")]
         public void Constructor_WithInvalidTitle_ThrowsArgumentNullException(string? invalidTitle)
         {
-            Assert.Throws<ArgumentNullException>(() =>
-                new Assessment(invalidTitle, DateTime.Now, 2.0, _validStudentId, _validSubjectId));
+            void action()
+            {
+                new Assessment(invalidTitle, DateTime.Now, 2.0, _validStudentId, _validSubjectId);
+            }
+
+            Assert.Throws<ArgumentNullException>((Action)action);
         }
 
         [TestCase(0.9)]
@@ -71,8 +69,12 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         [TestCase(-1.0)]
         public void Constructor_WithInvalidGrade_ThrowsArgumentOutOfRangeException(double invalidGrade)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new Assessment("Test", DateTime.Now, invalidGrade, _validStudentId, _validSubjectId));
+            void action()
+            {
+                new Assessment("Test", DateTime.Now, invalidGrade, _validStudentId, _validSubjectId);
+            }
+
+            Assert.Throws<ArgumentOutOfRangeException>((Action)action);
         }
 
         [TestCase(0.0)]
@@ -80,22 +82,34 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         [TestCase(-5.0)]
         public void Constructor_WithInvalidWeight_ThrowsArgumentOutOfRangeException(double invalidWeight)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                new Assessment("Test", DateTime.Now, 2.0, _validStudentId, _validSubjectId, invalidWeight));
+            void action()
+            {
+                new Assessment("Test", DateTime.Now, 2.0, _validStudentId, _validSubjectId, invalidWeight);
+            }
+
+            Assert.Throws<ArgumentOutOfRangeException>((Action)action);
         }
 
         [Test]
         public void Constructor_WithEmptyStudentId_ThrowsArgumentException()
         {
-            Assert.Throws<ArgumentException>(() =>
-                new Assessment("Test", DateTime.Now, 2.0, Guid.Empty, _validSubjectId));
+            void action()
+            {
+                new Assessment("Test", DateTime.Now, 2.0, Guid.Empty, _validSubjectId);
+            }
+
+            Assert.Throws<ArgumentException>((Action)action);
         }
 
         [Test]
         public void Constructor_WithEmptySubjectId_ThrowsArgumentException()
         {
-            Assert.Throws<ArgumentException>(() =>
-                new Assessment("Test", DateTime.Now, 2.0, _validStudentId, Guid.Empty));
+            void action()
+            {
+                new Assessment("Test", DateTime.Now, 2.0, _validStudentId, Guid.Empty);
+            }
+
+            Assert.Throws<ArgumentException>((Action)action);
         }
 
         [Test]
@@ -112,15 +126,12 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
 
             assessment.Update(newTitle, newDate, newGrade, newWeight, newPositive, newImprovement);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(assessment.Title, Is.EqualTo(newTitle));
-                Assert.That(assessment.Date, Is.EqualTo(newDate));
-                Assert.That(assessment.Grade, Is.EqualTo(newGrade));
-                Assert.That(assessment.Weight, Is.EqualTo(newWeight));
-                Assert.That(assessment.PositiveFeedback, Is.EqualTo("Super!"));
-                Assert.That(assessment.ImprovementNotes, Is.EqualTo("Weiter so!"));
-            });
+            Assert.That(assessment.Title, Is.EqualTo(newTitle));
+            Assert.That(assessment.Date, Is.EqualTo(newDate));
+            Assert.That(assessment.Grade, Is.EqualTo(newGrade));
+            Assert.That(assessment.Weight, Is.EqualTo(newWeight));
+            Assert.That(assessment.PositiveFeedback, Is.EqualTo("Super!"));
+            Assert.That(assessment.ImprovementNotes, Is.EqualTo("Weiter so!"));
         }
 
         [TestCase(null)]
@@ -129,8 +140,13 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         public void Update_WithInvalidTitle_ThrowsArgumentNullException(string? invalidTitle)
         {
             Assessment assessment = new("Valid Title", DateTime.Now, 2.0, _validStudentId, _validSubjectId);
-            Assert.Throws<ArgumentNullException>(() =>
-                assessment.Update(invalidTitle, DateTime.Now, 2.0));
+
+            void action()
+            {
+                assessment.Update(invalidTitle, DateTime.Now, 2.0);
+            }
+
+            Assert.Throws<ArgumentNullException>((Action)action);
         }
 
         [TestCase(0.5)]
@@ -139,8 +155,12 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             Assessment assessment = new("Valid Title", DateTime.Now, 2.0, _validStudentId, _validSubjectId);
 
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                assessment.Update("New Title", DateTime.Now, invalidGrade));
+            void action()
+            {
+                assessment.Update("New Title", DateTime.Now, invalidGrade);
+            }
+
+            Assert.Throws<ArgumentOutOfRangeException>((Action)action);
         }
 
         [TestCase(0.0)]
@@ -149,8 +169,12 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             Assessment assessment = new("Valid Title", DateTime.Now, 2.0, _validStudentId, _validSubjectId);
 
-            Assert.Throws<ArgumentOutOfRangeException>(() =>
-                assessment.Update("New Title", DateTime.Now, 2.0, invalidWeight));
+            void action()
+            {
+                assessment.Update("New Title", DateTime.Now, 2.0, invalidWeight);
+            }
+
+            Assert.Throws<ArgumentOutOfRangeException>((Action)action);
         }
     }
 }

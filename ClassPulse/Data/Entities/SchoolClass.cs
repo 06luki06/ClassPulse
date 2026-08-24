@@ -49,7 +49,7 @@ namespace At.luki0606.ClassPulse.Data.Entities
 
         private static void ValidateSchoolYear(string schoolYear)
         {
-            if (!SchoolYearRegex().IsMatch(schoolYear))
+            if (schoolYear == null || !SchoolYearRegex().IsMatch(schoolYear))
             {
                 throw new ArgumentException("Invalid school year format.", nameof(schoolYear));
             }

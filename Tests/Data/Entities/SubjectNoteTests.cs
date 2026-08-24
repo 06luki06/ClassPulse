@@ -18,17 +18,14 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
 
             DateTime afterCreation = DateTime.Now;
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(note.Id, Is.Not.EqualTo(Guid.Empty));
-                Assert.That(note.Text, Is.EqualTo("Needs improvement in algebra."));
-                Assert.That(note.CreatedAt, Is.EqualTo(beforeCreation).Within(TimeSpan.FromSeconds(1)));
-                Assert.That(note.CreatedAt, Is.EqualTo(afterCreation).Within(TimeSpan.FromSeconds(1)));
-                Assert.That(note.StudentId, Is.EqualTo(_validStudentId));
-                Assert.That(note.SubjectId, Is.EqualTo(_validSubjectId));
-                Assert.That(note.Student, Is.Null);
-                Assert.That(note.Subject, Is.Null);
-            });
+            Assert.That(note.Id, Is.Not.EqualTo(Guid.Empty));
+            Assert.That(note.Text, Is.EqualTo("Needs improvement in algebra."));
+            Assert.That(note.CreatedAt, Is.EqualTo(beforeCreation).Within(TimeSpan.FromSeconds(1)));
+            Assert.That(note.CreatedAt, Is.EqualTo(afterCreation).Within(TimeSpan.FromSeconds(1)));
+            Assert.That(note.StudentId, Is.EqualTo(_validStudentId));
+            Assert.That(note.SubjectId, Is.EqualTo(_validSubjectId));
+            Assert.That(note.Student, Is.Null);
+            Assert.That(note.Subject, Is.Null);
         }
 
         [TestCase(null)]
@@ -36,22 +33,34 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         [TestCase("   ")]
         public void Constructor_WithInvalidText_ThrowsArgumentNullException(string? invalidText)
         {
-            Assert.Throws<ArgumentNullException>(() =>
-                new SubjectNote(invalidText, _validStudentId, _validSubjectId));
+            void action()
+            {
+                new SubjectNote(invalidText, _validStudentId, _validSubjectId);
+            }
+
+            Assert.Throws<ArgumentNullException>((Action)action);
         }
 
         [Test]
         public void Constructor_WithEmptyStudentId_ThrowsArgumentException()
         {
-            Assert.Throws<ArgumentException>(() =>
-                new SubjectNote("Valid text", Guid.Empty, _validSubjectId));
+            void action()
+            {
+                new SubjectNote("Valid text", Guid.Empty, _validSubjectId);
+            }
+
+            Assert.Throws<ArgumentException>((Action)action);
         }
 
         [Test]
         public void Constructor_WithEmptySubjectId_ThrowsArgumentException()
         {
-            Assert.Throws<ArgumentException>(() =>
-                new SubjectNote("Valid text", _validStudentId, Guid.Empty));
+            void action()
+            {
+                new SubjectNote("Valid text", _validStudentId, Guid.Empty);
+            }
+
+            Assert.Throws<ArgumentException>((Action)action);
         }
 
         [Test]
@@ -72,8 +81,12 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             SubjectNote note = new("Initial text", _validStudentId, _validSubjectId);
 
-            Assert.Throws<ArgumentNullException>(() =>
-                note.UpdateText(invalidText));
+            void action()
+            {
+                note.UpdateText(invalidText);
+            }
+
+            Assert.Throws<ArgumentNullException>((Action)action);
         }
     }
 }

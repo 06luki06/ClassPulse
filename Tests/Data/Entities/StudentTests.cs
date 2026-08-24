@@ -16,18 +16,15 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
 
             Student student = new(firstName, lastName, _validSchoolClassId, generalNotes);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(student.Id, Is.Not.EqualTo(Guid.Empty));
-                Assert.That(student.FirstName, Is.EqualTo("Max"));
-                Assert.That(student.LastName, Is.EqualTo("Mustermann"));
-                Assert.That(student.FullName, Is.EqualTo("Max Mustermann"));
-                Assert.That(student.SchoolClassId, Is.EqualTo(_validSchoolClassId));
-                Assert.That(student.GeneralNotes, Is.EqualTo("Sehr aufmerksam."));
-                Assert.That(student.SchoolClass, Is.Null);
-                Assert.That(student.SubjectNotes, Is.Empty);
-                Assert.That(student.Assessments, Is.Empty);
-            });
+            Assert.That(student.Id, Is.Not.EqualTo(Guid.Empty));
+            Assert.That(student.FirstName, Is.EqualTo("Max"));
+            Assert.That(student.LastName, Is.EqualTo("Mustermann"));
+            Assert.That(student.FullName, Is.EqualTo("Max Mustermann"));
+            Assert.That(student.SchoolClassId, Is.EqualTo(_validSchoolClassId));
+            Assert.That(student.GeneralNotes, Is.EqualTo("Sehr aufmerksam."));
+            Assert.That(student.SchoolClass, Is.Null);
+            Assert.That(student.SubjectNotes, Is.Empty);
+            Assert.That(student.Assessments, Is.Empty);
         }
 
         [Test]
@@ -43,8 +40,12 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         [TestCase("   ")]
         public void Constructor_WithInvalidFirstName_ThrowsArgumentNullException(string? invalidFirstName)
         {
-            Assert.Throws<ArgumentNullException>(() =>
-                new Student(invalidFirstName, "Mustermann", _validSchoolClassId));
+            void action()
+            {
+                new Student(invalidFirstName, "Mustermann", _validSchoolClassId);
+            }
+
+            Assert.Throws<ArgumentNullException>((Action)action);
         }
 
         [TestCase(null)]
@@ -52,15 +53,23 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         [TestCase("   ")]
         public void Constructor_WithInvalidLastName_ThrowsArgumentNullException(string? invalidLastName)
         {
-            Assert.Throws<ArgumentNullException>(() =>
-                new Student("Max", invalidLastName, _validSchoolClassId));
+            void action()
+            {
+                new Student("Max", invalidLastName, _validSchoolClassId);
+            }
+
+            Assert.Throws<ArgumentNullException>((Action)action);
         }
 
         [Test]
         public void Constructor_WithEmptySchoolClassId_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() =>
-                new Student("Max", "Mustermann", Guid.Empty));
+            void action()
+            {
+                new Student("Max", "Mustermann", Guid.Empty);
+            }
+
+            Assert.Throws<ArgumentNullException>((Action)action);
         }
 
         [Test]
@@ -75,14 +84,11 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
 
             student.UpdateDetails(newFirstName, newLastName, newSchoolClassId, newNotes);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(student.FirstName, Is.EqualTo("Erika"));
-                Assert.That(student.LastName, Is.EqualTo("Musterfrau"));
-                Assert.That(student.FullName, Is.EqualTo("Erika Musterfrau"));
-                Assert.That(student.SchoolClassId, Is.EqualTo(newSchoolClassId));
-                Assert.That(student.GeneralNotes, Is.EqualTo("Neue Notiz."));
-            });
+            Assert.That(student.FirstName, Is.EqualTo("Erika"));
+            Assert.That(student.LastName, Is.EqualTo("Musterfrau"));
+            Assert.That(student.FullName, Is.EqualTo("Erika Musterfrau"));
+            Assert.That(student.SchoolClassId, Is.EqualTo(newSchoolClassId));
+            Assert.That(student.GeneralNotes, Is.EqualTo("Neue Notiz."));
         }
 
         [TestCase(null)]
@@ -92,8 +98,12 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             Student student = new("Max", "Mustermann", _validSchoolClassId);
 
-            Assert.Throws<ArgumentNullException>(() =>
-                student.UpdateDetails(invalidFirstName, "Mustermann", _validSchoolClassId));
+            void action()
+            {
+                student.UpdateDetails(invalidFirstName, "Mustermann", _validSchoolClassId);
+            }
+
+            Assert.Throws<ArgumentNullException>((Action)action);
         }
 
         [TestCase(null)]
@@ -103,8 +113,12 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             Student student = new("Max", "Mustermann", _validSchoolClassId);
 
-            Assert.Throws<ArgumentNullException>(() =>
-                student.UpdateDetails("Max", invalidLastName, _validSchoolClassId));
+            void action()
+            {
+                student.UpdateDetails("Max", invalidLastName, _validSchoolClassId);
+            }
+
+            Assert.Throws<ArgumentNullException>((Action)action);
         }
 
         [Test]
@@ -112,8 +126,12 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             Student student = new("Max", "Mustermann", _validSchoolClassId);
 
-            Assert.Throws<ArgumentNullException>(() =>
-                student.UpdateDetails("Max", "Mustermann", Guid.Empty));
+            void action()
+            {
+                student.UpdateDetails("Max", "Mustermann", Guid.Empty);
+            }
+
+            Assert.Throws<ArgumentNullException>((Action)action);
         }
 
         [TestCase("  Updated notes.  ", "Updated notes.")]
@@ -133,11 +151,8 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             Student student = new("Max", "Mustermann", _validSchoolClassId);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(student.SubjectNotes, Is.InstanceOf<System.Collections.Generic.IReadOnlyCollection<SubjectNote>>());
-                Assert.That(student.Assessments, Is.InstanceOf<System.Collections.Generic.IReadOnlyCollection<Assessment>>());
-            });
+            Assert.That(student.SubjectNotes, Is.InstanceOf<System.Collections.Generic.IReadOnlyCollection<SubjectNote>>());
+            Assert.That(student.Assessments, Is.InstanceOf<System.Collections.Generic.IReadOnlyCollection<Assessment>>());
         }
     }
 }

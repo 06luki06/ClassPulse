@@ -13,14 +13,11 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
 
             Subject subject = new(name, code);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(subject.Id, Is.Not.EqualTo(Guid.Empty));
-                Assert.That(subject.Name, Is.EqualTo("Mathematik"));
-                Assert.That(subject.Code, Is.EqualTo("M"));
-                Assert.That(subject.Assessments, Is.Empty);
-                Assert.That(subject.SubjectNotes, Is.Empty);
-            });
+            Assert.That(subject.Id, Is.Not.EqualTo(Guid.Empty));
+            Assert.That(subject.Name, Is.EqualTo("Mathematik"));
+            Assert.That(subject.Code, Is.EqualTo("M"));
+            Assert.That(subject.Assessments, Is.Empty);
+            Assert.That(subject.SubjectNotes, Is.Empty);
         }
 
         [TestCase(null)]
@@ -28,8 +25,12 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         [TestCase("   ")]
         public void Constructor_WithInvalidName_ThrowsArgumentNullException(string? invalidName)
         {
-            Assert.Throws<ArgumentNullException>(() =>
-                new Subject(invalidName, "M"));
+            void action()
+            {
+                new Subject(invalidName, "M");
+            }
+
+            Assert.Throws<ArgumentNullException>((Action)action);
         }
 
         [TestCase(null)]
@@ -37,8 +38,12 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         [TestCase("   ")]
         public void Constructor_WithInvalidCode_ThrowsArgumentNullException(string? invalidCode)
         {
-            Assert.Throws<ArgumentNullException>(() =>
-                new Subject("Mathematik", invalidCode));
+            void action()
+            {
+                new Subject("Mathematik", invalidCode);
+            }
+
+            Assert.Throws<ArgumentNullException>((Action)action);
         }
 
         [Test]
@@ -51,11 +56,8 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
 
             subject.Update(newName, newCode);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(subject.Name, Is.EqualTo("Informatik"));
-                Assert.That(subject.Code, Is.EqualTo("INF"));
-            });
+            Assert.That(subject.Name, Is.EqualTo("Informatik"));
+            Assert.That(subject.Code, Is.EqualTo("INF"));
         }
 
         [TestCase(null)]
@@ -65,8 +67,12 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             Subject subject = new("Mathematik", "M");
 
-            Assert.Throws<ArgumentNullException>(() =>
-                subject.Update(invalidName, "INF"));
+            void action()
+            {
+                subject.Update(invalidName, "INF");
+            }
+
+            Assert.Throws<ArgumentNullException>((Action)action);
         }
 
         [TestCase(null)]
@@ -76,8 +82,12 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             Subject subject = new("Mathematik", "M");
 
-            Assert.Throws<ArgumentNullException>(() =>
-                subject.Update("Informatik", invalidCode));
+            void action()
+            {
+                subject.Update("Informatik", invalidCode);
+            }
+
+            Assert.Throws<ArgumentNullException>((Action)action);
         }
 
         [Test]
@@ -85,11 +95,8 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             Subject subject = new("Mathematik", "M");
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(subject.Assessments, Is.InstanceOf<System.Collections.Generic.IReadOnlyCollection<Assessment>>());
-                Assert.That(subject.SubjectNotes, Is.InstanceOf<System.Collections.Generic.IReadOnlyCollection<SubjectNote>>());
-            });
+            Assert.That(subject.Assessments, Is.InstanceOf<System.Collections.Generic.IReadOnlyCollection<Assessment>>());
+            Assert.That(subject.SubjectNotes, Is.InstanceOf<System.Collections.Generic.IReadOnlyCollection<SubjectNote>>());
         }
     }
 }

@@ -1,15 +1,14 @@
 using At.luki0606.ClassPulse.Data;
+using At.luki0606.ClassPulse.Services;
 using At.luki0606.ClassPulse.ViewModels;
 using At.luki0606.ClassPulse.Views;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
-using System.Linq;
 
 namespace At.luki0606.ClassPulse
 {
@@ -36,9 +35,6 @@ namespace At.luki0606.ClassPulse
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
-                // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
-                DisableAvaloniaDataAnnotationValidation();
                 MainWindowViewModel mainViewModel = Services.GetRequiredService<MainWindowViewModel>();
                 desktop.MainWindow = new MainWindow
                 {
@@ -53,6 +49,10 @@ namespace At.luki0606.ClassPulse
         {
             string dbPath = Path.Combine(GetAppdataFolderPath(), "classpulse.db");
             services.AddDbContext<AppDbContext>(options => options.UseSqlite($"Data Source={dbPath}"));
+
+            services.AddScoped<IClassService, ClassService>();
+            services.AddScoped<IAssessmentService, AssessmentService>();
+
             services.AddTransient<MainWindowViewModel>();
         }
 
@@ -63,19 +63,6 @@ namespace At.luki0606.ClassPulse
             Directory.CreateDirectory(folderPath);
 
             return folderPath;
-        }
-
-        private static void DisableAvaloniaDataAnnotationValidation()
-        {
-            // Get an array of plugins to remove
-            DataAnnotationsValidationPlugin[] dataValidationPluginsToRemove =
-                [.. BindingPlugins.DataValidators.OfType<DataAnnotationsValidationPlugin>()];
-
-            // remove each entry found
-            foreach (DataAnnotationsValidationPlugin plugin in dataValidationPluginsToRemove)
-            {
-                BindingPlugins.DataValidators.Remove(plugin);
-            }
         }
     }
 }

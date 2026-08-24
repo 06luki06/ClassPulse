@@ -13,13 +13,10 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
 
             SchoolClass schoolClass = new(name, schoolYear);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(schoolClass.Id, Is.Not.EqualTo(Guid.Empty));
-                Assert.That(schoolClass.Name, Is.EqualTo("4AHIF"));
-                Assert.That(schoolClass.SchoolYear, Is.EqualTo(schoolYear));
-                Assert.That(schoolClass.Students, Is.Not.Null);
-            });
+            Assert.That(schoolClass.Id, Is.Not.EqualTo(Guid.Empty));
+            Assert.That(schoolClass.Name, Is.EqualTo("4AHIF"));
+            Assert.That(schoolClass.SchoolYear, Is.EqualTo(schoolYear));
+            Assert.That(schoolClass.Students, Is.Not.Null);
             Assert.That(schoolClass.Students, Is.Empty);
         }
 
@@ -28,8 +25,12 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         [TestCase("   ")]
         public void Constructor_WithInvalidName_ThrowsArgumentNullException(string? invalidName)
         {
-            Assert.Throws<ArgumentNullException>(() =>
-                new SchoolClass(invalidName, "2025/2026"));
+            void action()
+            {
+                new SchoolClass(invalidName, "2025/2026");
+            }
+
+            Assert.Throws<ArgumentNullException>((Action)action);
         }
 
         [TestCase("2025")]
@@ -42,8 +43,12 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         [TestCase(null)]
         public void Constructor_WithInvalidSchoolYearFormat_ThrowsArgumentException(string? invalidSchoolYear)
         {
-            Assert.Throws<ArgumentException>(() =>
-                new SchoolClass("4AHIF", invalidSchoolYear));
+            void action()
+            {
+                new SchoolClass("4AHIF", invalidSchoolYear);
+            }
+
+            Assert.Throws<ArgumentException>((Action)action);
         }
 
         [Test]
@@ -55,11 +60,8 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
 
             schoolClass.Update(newName, newSchoolYear);
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(schoolClass.Name, Is.EqualTo("4AHIF"));
-                Assert.That(schoolClass.SchoolYear, Is.EqualTo(newSchoolYear));
-            });
+            Assert.That(schoolClass.Name, Is.EqualTo("4AHIF"));
+            Assert.That(schoolClass.SchoolYear, Is.EqualTo(newSchoolYear));
         }
 
         [TestCase(null)]
@@ -69,8 +71,12 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             SchoolClass schoolClass = new("4AHIF", "2025/2026");
 
-            Assert.Throws<ArgumentNullException>(() =>
-                schoolClass.Update(invalidName, "2025/2026"));
+            void action()
+            {
+                schoolClass.Update(invalidName, "2025/2026");
+            }
+
+            Assert.Throws<ArgumentNullException>((Action)action);
         }
 
         [TestCase("2026")]
@@ -80,8 +86,12 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             SchoolClass schoolClass = new("4AHIF", "2025/2026");
 
-            Assert.Throws<ArgumentException>(() =>
-                schoolClass.Update("4AHIF", invalidSchoolYear));
+            void action()
+            {
+                schoolClass.Update("4AHIF", invalidSchoolYear);
+            }
+
+            Assert.Throws<ArgumentException>((Action)action);
         }
 
         [Test]
