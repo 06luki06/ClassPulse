@@ -1,0 +1,4 @@
+TestResults/
+.vs/
+**/bin/
+**/obj/

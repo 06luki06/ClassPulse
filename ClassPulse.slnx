@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="ClassPulse/ClassPulse.csproj" />
+  <Project Path="Tests/Tests.csproj" />
+</Solution>
