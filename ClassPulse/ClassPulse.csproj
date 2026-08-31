@@ -20,6 +20,7 @@
     <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="FluentIcons.Avalonia" Version="2.1.337" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.30" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.30">
 		<PrivateAssets>all</PrivateAssets>
@@ -30,5 +31,20 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+	
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

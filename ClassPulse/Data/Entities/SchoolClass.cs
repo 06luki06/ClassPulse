@@ -4,14 +4,13 @@ using System.Text.RegularExpressions;
 
 namespace At.luki0606.ClassPulse.Data.Entities
 {
-    public partial class SchoolClass
+    public class SchoolClass
     {
         public Guid Id { get; private set; }
         public string Name { get; private set; }
         public string SchoolYear { get; private set; }
 
-        [GeneratedRegex(@"^\d{4}/\d{4}$")]
-        private static partial Regex SchoolYearRegex();
+        private static readonly Regex _schoolYearRegex = new(@"^\d{4}/\d{4}$");
 
         private readonly List<Student> _students = [];
         public IReadOnlyCollection<Student> Students => _students.AsReadOnly();
@@ -49,7 +48,7 @@ namespace At.luki0606.ClassPulse.Data.Entities
 
         private static void ValidateSchoolYear(string schoolYear)
         {
-            if (schoolYear == null || !SchoolYearRegex().IsMatch(schoolYear))
+            if (schoolYear == null || !_schoolYearRegex.IsMatch(schoolYear))
             {
                 throw new ArgumentException("Invalid school year format.", nameof(schoolYear));
             }

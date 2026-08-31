@@ -2,3 +2,4 @@ TestResults/
 .vs/
 **/bin/
 **/obj/
+repomix-output.xml

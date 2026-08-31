@@ -1,0 +1,52 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:At.luki0606.ClassPulse.ViewModels.Dialogs"
+        xmlns:res="clr-namespace:At.luki0606.ClassPulse.Resources"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="At.luki0606.ClassPulse.Views.Dialogs.InputDialogWindow"
+        x:DataType="vm:InputDialogViewModel"
+        Title="{Binding Title}"
+        Width="400" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False"
+        Background="{DynamicResource WindowBackgroundBrush}"
+        Padding="20">
+    <StackPanel Spacing="15">
+        <TextBlock Text="{Binding Title}" 
+                   FontSize="18" 
+                   FontWeight="Bold"
+                   Foreground="{DynamicResource PrimaryTextBrush}"/>
+                   
+        <TextBlock Text="{Binding Message}" 
+                   TextWrapping="Wrap" 
+                   Foreground="{DynamicResource SecondaryTextBrush}"/>
+
+        <!-- Dynamic Input Fields -->
+        <ItemsControl ItemsSource="{Binding Fields}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:InputField">
+                    <StackPanel Spacing="5" Margin="0,5">
+                        <TextBlock Text="{Binding Label}" 
+                                   FontSize="12" 
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource PrimaryTextBrush}"/>
+                        <TextBox Text="{Binding Value, Mode=TwoWay}" 
+                                 PlaceholderText="{Binding Placeholder}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!-- Buttons -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="0,10,0,0">
+            <Button Content="{x:Static res:Resources.Label_Cancel}" 
+                    Command="{Binding CancelCommand}"/>
+            <Button Content="{x:Static res:Resources.Label_Save}" 
+                    Command="{Binding ConfirmCommand}" 
+                    Background="{DynamicResource AccentButtonBrush}"
+                    Foreground="White"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

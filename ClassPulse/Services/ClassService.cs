@@ -33,6 +33,22 @@ namespace At.luki0606.ClassPulse.Services
             return schoolClass;
         }
 
+        public async Task<SchoolClass?> DeleteClassAsync(Guid classId)
+        {
+            SchoolClass? schoolClass = await _dbContext.SchoolClasses
+                .Include(c => c.Students)
+                .FirstOrDefaultAsync(c => c.Id == classId);
+
+            if (schoolClass == null)
+            {
+                return null;
+            }
+
+            _dbContext.SchoolClasses.Remove(schoolClass);
+            await _dbContext.SaveChangesAsync();
+            return schoolClass;
+        }
+
         public async Task<List<SchoolClass>> GetAllClassesAsync()
         {
             return await _dbContext.SchoolClasses

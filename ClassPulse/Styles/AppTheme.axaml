@@ -1,0 +1,79 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.ThemeDictionaries>
+        <!-- (Light Theme) -->
+        <ResourceDictionary x:Key="Light">
+            <Color x:Key="PrimaryColor">#0F766E</Color>
+            <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}"/>
+            
+            <Color x:Key="CardBackgroundColor">#F8FAFC</Color>
+            <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource CardBackgroundColor}"/>
+            
+            <Color x:Key="PrimaryTextColor">#0F172A</Color>
+            <SolidColorBrush x:Key="PrimaryTextBrush" Color="{StaticResource PrimaryTextColor}"/>
+
+            <Color x:Key="SecondaryTextColor">#64748B</Color>
+            <SolidColorBrush x:Key="SecondaryTextBrush" Color="{StaticResource SecondaryTextColor}"/>
+
+            <SolidColorBrush x:Key="CardBorderBrush" Color="#E2E8F0"/>
+            <SolidColorBrush x:Key="DangerBrush" Color="#E11D48"/>
+
+            <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#FFFFFF"/>
+            <SolidColorBrush x:Key="AccentButtonBrush" Color="#0F766E"/>
+
+            <!-- AVA LONI A FLUENT OVERRIDES (Das löst dein Hover/Selection-Problem) -->
+            <!-- Akzentfarbe für Selection (z.B. Dropdown Hover/Active) -->
+            <Color x:Key="SystemAccentColor">#0F766E</Color>
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentLowBrush" Color="#200F766E"/>
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush" Color="#400F766E"/>
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentHighBrush" Color="#0F766E"/>
+
+            <!-- Primary Button Hover & Pressed Status -->
+            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#138E84"/>
+            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#0D645E"/>
+            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="#FFFFFF"/>
+            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="#FFFFFF"/>
+            
+            <!-- ComboBox Item Hover -->
+            <SolidColorBrush x:Key="ComboBoxItemControlHighlightBackgroundPointerOver" Color="#200F766E"/>
+            <SolidColorBrush x:Key="ComboBoxItemControlHighlightBackgroundSelected" Color="#400F766E"/>
+        </ResourceDictionary>
+
+        <!-- (Dark Theme) -->
+        <ResourceDictionary x:Key="Dark">
+            <Color x:Key="PrimaryColor">#14B8A6</Color>
+            <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}"/>
+            
+            <Color x:Key="CardBackgroundColor">#CC1E293B</Color>
+            <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource CardBackgroundColor}"/>
+            
+            <Color x:Key="PrimaryTextColor">#F8FAFC</Color>
+            <SolidColorBrush x:Key="PrimaryTextBrush" Color="{StaticResource PrimaryTextColor}"/>
+
+            <Color x:Key="SecondaryTextColor">#94A3B8</Color>
+            <SolidColorBrush x:Key="SecondaryTextBrush" Color="{StaticResource SecondaryTextColor}"/>
+
+            <SolidColorBrush x:Key="CardBorderBrush" Color="#33FFFFFF"/>
+            <SolidColorBrush x:Key="DangerBrush" Color="#FB7185"/>
+
+            <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#0F172A"/>
+            <SolidColorBrush x:Key="AccentButtonBrush" Color="#14B8A6"/>
+
+            <!-- AVA LONI A FLUENT OVERRIDES -->
+            <Color x:Key="SystemAccentColor">#14B8A6</Color>
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentLowBrush" Color="#3014B8A6"/>
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush" Color="#5014B8A6"/>
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentHighBrush" Color="#14B8A6"/>
+
+            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#2DD4BF"/>
+            <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#0D9488"/>
+            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="#0F172A"/>
+            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="#0F172A"/>
+
+            <SolidColorBrush x:Key="ComboBoxItemControlHighlightBackgroundPointerOver" Color="#3014B8A6"/>
+            <SolidColorBrush x:Key="ComboBoxItemControlHighlightBackgroundSelected" Color="#5014B8A6"/>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+
+</ResourceDictionary>

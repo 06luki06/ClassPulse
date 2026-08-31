@@ -1,0 +1,123 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:At.luki0606.ClassPulse.ViewModels"
+             xmlns:res="clr-namespace:At.luki0606.ClassPulse.Resources"
+             xmlns:ic="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="At.luki0606.ClassPulse.Views.HomeView"
+             x:DataType="vm:HomeViewModel">
+
+  <Grid>
+    <!-- Decent dark overlay -->
+    <Border Background="#20000000" />
+
+    <!-- Centered Container for logo + card -->
+    <StackPanel HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Spacing="20">
+
+        <!-- logo above the container -->
+        <Image Source="avares://ClassPulse/Assets/classpulse_transparent_bg.png"
+               Height="350"
+               HorizontalAlignment="Center" />
+
+        <!-- Glassmorphism Card with dynamic Theme-background & border-->
+        <Border Width="380"
+                Padding="28"
+                CornerRadius="16"
+                Background="{DynamicResource CardBackgroundBrush}"
+                BorderBrush="{DynamicResource CardBorderBrush}"
+                BorderThickness="1"
+                BoxShadow="0 20 40 0 #80000000">
+
+            <StackPanel Spacing="20">
+                
+                <!-- formular group: Class-selection -->
+                <StackPanel Spacing="8">
+                    <TextBlock Text="{x:Static res:Resources.Home_SelectClassLabel}"
+                               FontSize="13"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource SecondaryTextBrush}" />
+
+                    <Grid ColumnDefinitions="*, Auto, Auto">
+<ComboBox Grid.Column="0"
+          ItemsSource="{Binding SchoolClasses}"
+          SelectedItem="{Binding SelectedClass}"
+          HorizontalAlignment="Stretch"
+          PlaceholderText="{x:Static res:Resources.Home_SelectClassPlaceholder}">
+
+    <ComboBox.Styles>
+        <!-- Style for all items in ComboBox -->
+        <Style Selector="ComboBoxItem">
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Margin" Value="2" />
+        </Style>
+
+        <!-- Hover-state -->
+        <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
+            <Setter Property="TextBlock.Foreground" Value="#FFFFFF" />
+        </Style>
+
+        <!-- Selected-state -->
+        <Style Selector="ComboBoxItem:selected /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
+            <Setter Property="TextBlock.Foreground" Value="#FFFFFF" />
+        </Style>
+
+        <!-- Selected + Hover combined -->
+        <Style Selector="ComboBoxItem:selected:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
+            <Setter Property="TextBlock.Foreground" Value="#FFFFFF" />
+        </Style>
+    </ComboBox.Styles>
+
+    <ComboBox.ItemTemplate>
+        <DataTemplate>
+            <TextBlock>
+                <Run Text="{Binding Name}" FontWeight="Bold"/>
+                <Run Text=" - "/>
+                <Run Text="{Binding SchoolYear}"/>
+            </TextBlock>
+        </DataTemplate>
+    </ComboBox.ItemTemplate>
+</ComboBox>
+
+                        <!-- Add Button -->
+                        <Button Grid.Column="1"
+                                Command="{Binding CreateClassCommand}"
+                                ToolTip.Tip="{x:Static res:Resources.Home_AddClassTooltip}"
+                                Margin="8,0,0,0"
+                                Padding="12,8">
+                                <ic:SymbolIcon Symbol="Add" FontSize="18" />
+                        </Button>
+
+                        <!-- Delete Button -->
+                        <Button Grid.Column="2"
+                                Command="{Binding DeleteClassCommand}"
+                                ToolTip.Tip="{x:Static res:Resources.Home_DeleteClassTooltip}"
+                                Margin="8,0,0,0"
+                                Padding="12,8">
+                        <ic:SymbolIcon Symbol="Delete" FontSize="18" Foreground="{DynamicResource DangerBrush}" />                        </Button>
+                    </Grid>
+                </StackPanel>
+
+                <!-- Main Button mit decent accentcolor -->
+                <Button Command="{Binding GoToClassCommand}"
+                        Content="{x:Static res:Resources.Home_BtnGoToClass}"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Padding="12"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        CornerRadius="8"
+                        Background="{DynamicResource PrimaryBrush}"
+                        Foreground="{DynamicResource PrimaryTextBrush}" />
+
+            </StackPanel>
+        </Border>
+    </StackPanel>
+  </Grid>
+</UserControl>

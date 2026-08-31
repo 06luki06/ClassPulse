@@ -52,7 +52,9 @@ namespace At.luki0606.ClassPulse
 
             services.AddScoped<IClassService, ClassService>();
             services.AddScoped<IAssessmentService, AssessmentService>();
+            services.AddScoped<IDialogService, AvaloniaDialogService>();
 
+            services.AddTransient<HomeViewModel>();
             services.AddTransient<MainWindowViewModel>();
         }
 

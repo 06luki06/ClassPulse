@@ -81,7 +81,7 @@ namespace At.luki0606.ClassPulse.Tests.Services
             List<SchoolClass> result = await _classService.GetAllClassesAsync();
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Count, Is.EqualTo(2));
+            Assert.That(result, Has.Count.EqualTo(2));
             Assert.That(result[0].Name, Is.EqualTo("A Klasse"));
             Assert.That(result[1].Name, Is.EqualTo("B Klasse"));
         }
@@ -141,9 +141,28 @@ namespace At.luki0606.ClassPulse.Tests.Services
             List<Student> result = await _classService.SearchStudentAsync("max");
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Count, Is.EqualTo(2));
+            Assert.That(result, Has.Count.EqualTo(2));
             Assert.That(result[0].LastName, Is.EqualTo("auer"));
             Assert.That(result[1].LastName, Is.EqualTo("huber"));
+        }
+
+        [Test]
+        public async Task DeleteClassAsync_IdNotFound_ReturnsNull()
+        {
+            SchoolClass? school = await _classService.DeleteClassAsync(Guid.NewGuid());
+            Assert.That(school, Is.Null);
+        }
+
+        [Test]
+        public async Task DeleteClassAsync_ReturnsDeletedClass()
+        {
+            SchoolClass schoolClass = new("1a", "2026/2027");
+            _dbContext.SchoolClasses.Add(schoolClass);
+            await _dbContext.SaveChangesAsync();
+
+            SchoolClass? deletedSchoolClass = await _classService.DeleteClassAsync(schoolClass.Id);
+            Assert.That(deletedSchoolClass, Is.Not.Null);
+            Assert.That(deletedSchoolClass.Id, Is.EqualTo(schoolClass.Id));
         }
     }
 }
