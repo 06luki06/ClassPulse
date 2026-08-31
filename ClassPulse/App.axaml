@@ -11,6 +11,30 @@
   
     <Application.Styles>
         <FluentTheme />
+
+        <!-- Global ComboBoxItem Style for whole app-->
+        <Style Selector="ComboBoxItem">
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Margin" Value="2" />
+        </Style>
+
+        <!-- Hover State -->
+        <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
+            <Setter Property="TextBlock.Foreground" Value="#FFFFFF" />
+        </Style>
+
+        <!-- Selected State -->
+        <Style Selector="ComboBoxItem:selected /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
+            <Setter Property="TextBlock.Foreground" Value="#FFFFFF" />
+        </Style>
+
+        <!-- Selected + Hover combined-->
+        <Style Selector="ComboBoxItem:selected:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
+            <Setter Property="TextBlock.Foreground" Value="#FFFFFF" />
+        </Style>
     </Application.Styles>
 
     <Application.Resources>

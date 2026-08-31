@@ -6,6 +6,7 @@
 	  <RootNamespace>At.luki0606.ClassPulse</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+	<ApplicationIcon>Assets\classpulse_logo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

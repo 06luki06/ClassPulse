@@ -42,48 +42,23 @@
                                Foreground="{DynamicResource SecondaryTextBrush}" />
 
                     <Grid ColumnDefinitions="*, Auto, Auto">
-<ComboBox Grid.Column="0"
-          ItemsSource="{Binding SchoolClasses}"
-          SelectedItem="{Binding SelectedClass}"
-          HorizontalAlignment="Stretch"
-          PlaceholderText="{x:Static res:Resources.Home_SelectClassPlaceholder}">
 
-    <ComboBox.Styles>
-        <!-- Style for all items in ComboBox -->
-        <Style Selector="ComboBoxItem">
-            <Setter Property="CornerRadius" Value="4" />
-            <Setter Property="Margin" Value="2" />
-        </Style>
+                    <ComboBox Grid.Column="0"
+                              ItemsSource="{Binding SchoolClasses}"
+                              SelectedItem="{Binding SelectedClass}"
+                              HorizontalAlignment="Stretch"
+                              PlaceholderText="{x:Static res:Resources.Home_SelectClassPlaceholder}">
 
-        <!-- Hover-state -->
-        <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
-            <Setter Property="TextBlock.Foreground" Value="#FFFFFF" />
-        </Style>
-
-        <!-- Selected-state -->
-        <Style Selector="ComboBoxItem:selected /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
-            <Setter Property="TextBlock.Foreground" Value="#FFFFFF" />
-        </Style>
-
-        <!-- Selected + Hover combined -->
-        <Style Selector="ComboBoxItem:selected:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
-            <Setter Property="TextBlock.Foreground" Value="#FFFFFF" />
-        </Style>
-    </ComboBox.Styles>
-
-    <ComboBox.ItemTemplate>
-        <DataTemplate>
-            <TextBlock>
-                <Run Text="{Binding Name}" FontWeight="Bold"/>
-                <Run Text=" - "/>
-                <Run Text="{Binding SchoolYear}"/>
-            </TextBlock>
-        </DataTemplate>
-    </ComboBox.ItemTemplate>
-</ComboBox>
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <Run Text="{Binding Name}" FontWeight="Bold"/>
+                                    <Run Text=" - "/>
+                                    <Run Text="{Binding SchoolYear}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
                         <!-- Add Button -->
                         <Button Grid.Column="1"
