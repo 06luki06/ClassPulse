@@ -10,7 +10,6 @@
              x:DataType="vm:ClassDetailViewModel">
 
     <Grid RowDefinitions="Auto, *">
-        <!-- Header / Top-Bar -->
         <Border Grid.Row="0" 
                 Background="{DynamicResource CardBackgroundBrush}" 
                 Padding="16" 
@@ -59,7 +58,6 @@
             </Grid>
         </Border>
 
-        <!-- Schüler-Cards Liste -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding StudentRows}">
                 <ItemsControl.ItemTemplate>
@@ -71,7 +69,6 @@
                                 Padding="16"
                                 Margin="0,0,0,12">
                             <Grid RowDefinitions="Auto, Auto">
-                                <!-- Karten-Kopf: Name & Schnitt -->
                                 <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,12">
                                     <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
                                         <ic:SymbolIcon Symbol="Person" FontSize="20" Foreground="{DynamicResource PrimaryBrush}"/>
@@ -81,7 +78,6 @@
                                                    VerticalAlignment="Center"/>
                                     </StackPanel>
 
-                                    <!-- Gesamtschnitt Badge -->
                                     <Border Grid.Column="1" 
                                             Background="{DynamicResource PrimaryBrush}" 
                                             CornerRadius="6" 
@@ -93,7 +89,6 @@
                                     </Border>
                                 </Grid>
 
-                                <!-- Fächer & Noten Chips -->
                                 <ItemsControl Grid.Row="1" ItemsSource="{Binding SubjectGradesList}">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>

@@ -25,5 +25,10 @@ namespace At.luki0606.ClassPulse.ViewModels
         {
             CurrentView = classDetailViewModel;
         }
+
+        public void NavigateToSettings()
+        {
+            CurrentView = new SettingsViewModel();
+        }
     }
 }

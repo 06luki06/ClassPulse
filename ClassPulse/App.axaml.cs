@@ -64,6 +64,7 @@ namespace At.luki0606.ClassPulse
             services.AddScoped<IDialogService, AvaloniaDialogService>();
 
             services.AddTransient<HomeViewModel>();
+            services.AddTransient<SettingsViewModel>();
             services.AddSingleton<MainWindowViewModel>();
         }
 

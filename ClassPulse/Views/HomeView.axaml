@@ -12,6 +12,9 @@
   <Grid>
     <!-- Decent dark overlay -->
     <Border Background="#20000000" />
+      <Button Command="{Binding GoToSettingsCommand}" ToolTip.Tip="Einstellungen">
+    <ic:SymbolIcon Symbol="Settings" FontSize="20" />
+</Button>
 
     <!-- Centered Container for logo + card -->
     <StackPanel HorizontalAlignment="Center"

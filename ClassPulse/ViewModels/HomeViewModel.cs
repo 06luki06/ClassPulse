@@ -121,5 +121,15 @@ namespace At.luki0606.ClassPulse.ViewModels
                 mainVm.NavigateToClassDetail(classDetailVm);
             }
         }
+
+        [RelayCommand]
+        private static void GoToSettings()
+        {
+            if (App.Current is App { Services: { } services })
+            {
+                MainWindowViewModel mainVm = services.GetRequiredService<MainWindowViewModel>();
+                mainVm.NavigateToSettings();
+            }
+        }
     }
 }
