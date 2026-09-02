@@ -79,6 +79,33 @@ namespace At.luki0606.ClassPulse.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Pupil.
+        /// </summary>
+        public static string Dialog_NewPupil_Message {
+            get {
+                return ResourceManager.GetString("Dialog_NewPupil_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Name of Pupil:.
+        /// </summary>
+        public static string Dialog_NewPupil_Title {
+            get {
+                return ResourceManager.GetString("Dialog_NewPupil_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An unexpected error has occured:.
+        /// </summary>
+        public static string General_ExceptionHasOccured {
+            get {
+                return ResourceManager.GetString("General_ExceptionHasOccured", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add new class.
         /// </summary>
         public static string Home_AddClassTooltip {
@@ -142,11 +169,38 @@ namespace At.luki0606.ClassPulse.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to First Name.
+        /// </summary>
+        public static string Label_FirstName {
+            get {
+                return ResourceManager.GetString("Label_FirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to e.g..
         /// </summary>
         public static string Label_for_example_abbr {
             get {
                 return ResourceManager.GetString("Label_for_example_abbr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string Label_Home {
+            get {
+                return ResourceManager.GetString("Label_Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Name.
+        /// </summary>
+        public static string Label_LastName {
+            get {
+                return ResourceManager.GetString("Label_LastName", resourceCulture);
             }
         }
         

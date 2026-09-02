@@ -15,5 +15,15 @@ namespace At.luki0606.ClassPulse.ViewModels
 
             _currentView = HomeVm;
         }
+
+        public void NavigateToHome()
+        {
+            CurrentView = HomeVm;
+        }
+
+        public void NavigateToClassDetail(ClassDetailViewModel classDetailViewModel)
+        {
+            CurrentView = classDetailViewModel;
+        }
     }
 }

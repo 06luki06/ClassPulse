@@ -1,14 +1,19 @@
 using At.luki0606.ClassPulse.Data;
 using At.luki0606.ClassPulse.Services;
 using At.luki0606.ClassPulse.ViewModels;
+using At.luki0606.ClassPulse.ViewModels.Dialogs;
 using At.luki0606.ClassPulse.Views;
+using At.luki0606.ClassPulse.Views.Dialogs;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
+using System.Threading.Tasks;
+using ResourcesTxt = At.luki0606.ClassPulse.Resources;
 
 namespace At.luki0606.ClassPulse
 {
@@ -23,6 +28,10 @@ namespace At.luki0606.ClassPulse
 
         public override void OnFrameworkInitializationCompleted()
         {
+            Dispatcher.UIThread.UnhandledException += OnUiThreadUnhandledException;
+            TaskScheduler.UnobservedTaskException += OnUnobservedTaskException;
+            AppDomain.CurrentDomain.UnhandledException += OnAppDomainUnhandledException;
+
             ServiceCollection serviceCollection = new();
             ConfigureServices(serviceCollection);
             Services = serviceCollection.BuildServiceProvider();
@@ -55,7 +64,7 @@ namespace At.luki0606.ClassPulse
             services.AddScoped<IDialogService, AvaloniaDialogService>();
 
             services.AddTransient<HomeViewModel>();
-            services.AddTransient<MainWindowViewModel>();
+            services.AddSingleton<MainWindowViewModel>();
         }
 
         private static string GetAppdataFolderPath()
@@ -65,6 +74,49 @@ namespace At.luki0606.ClassPulse
             Directory.CreateDirectory(folderPath);
 
             return folderPath;
+        }
+
+        private void OnUiThreadUnhandledException(object? sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            ShowErrorDialog("UI Thread Error", e.Exception);
+        }
+
+        private void OnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
+        {
+            e.SetObserved();
+            Dispatcher.UIThread.Post(() =>
+            {
+                ShowErrorDialog("Async Task Error", e.Exception.InnerException ?? e.Exception);
+            });
+        }
+
+        private void OnAppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (e.ExceptionObject is Exception ex)
+            {
+                Dispatcher.UIThread.Post(() =>
+                {
+                    ShowErrorDialog("Fatal Application Error", ex);
+                });
+            }
+        }
+
+        private async Task ShowErrorDialog(string title, Exception ex)
+        {
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop && desktop.MainWindow != null)
+            {
+                InputDialogWindow dialog = new()
+                {
+                    DataContext = new InputDialogViewModel(
+                        title: $"⚠️ {title}",
+                        message: $"{ResourcesTxt.Resources.General_ExceptionHasOccured}\n\n{ex.Message}",
+                        fields: []
+                        )
+                };
+
+                await dialog.ShowDialog(desktop.MainWindow);
+            }
         }
     }
 }

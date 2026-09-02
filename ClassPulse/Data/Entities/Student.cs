@@ -71,5 +71,18 @@ namespace At.luki0606.ClassPulse.Data.Entities
                 throw new ArgumentNullException(nameof(schoolClassId));
             }
         }
+
+        public IEnumerable<Assessment> GetAssessmentsBySubjectId(Guid subjectId)
+        {
+            List<Assessment> result = [];
+            foreach (Assessment assessment in _assessments)
+            {
+                if (assessment.SubjectId == subjectId)
+                {
+                    result.Add(assessment);
+                }
+            }
+            return result;
+        }
     }
 }

@@ -85,5 +85,22 @@ namespace At.luki0606.ClassPulse.Services
                 .ThenBy(s => s.FirstName)
                 .ToListAsync();
         }
+
+        public async Task<List<Student>> GetStudentsByClassIdAsync(Guid classId)
+        {
+            return await _dbContext.Students
+                .Include(s => s.SchoolClass)
+                .Where(s => s.SchoolClassId == classId)
+                .OrderBy(s => s.LastName)
+                .ThenBy(s => s.FirstName)
+                .ToListAsync();
+        }
+
+        public async Task<List<Subject>> GetAllSubjectsAsync()
+        {
+            return await _dbContext.Subjects
+                .OrderBy(s => s.Name)
+                .ToListAsync();
+        }
     }
 }

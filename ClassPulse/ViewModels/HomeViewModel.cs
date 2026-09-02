@@ -3,6 +3,7 @@ using At.luki0606.ClassPulse.Services;
 using At.luki0606.ClassPulse.ViewModels.Dialogs;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +16,7 @@ namespace At.luki0606.ClassPulse.ViewModels
     {
         private readonly IClassService _classService;
         private readonly IDialogService _dialogService;
+        private readonly IAssessmentService _assessmentService;
 
         private bool HasSelectedClass => SelectedClass != null;
 
@@ -25,10 +27,11 @@ namespace At.luki0606.ClassPulse.ViewModels
 
         public ObservableCollection<SchoolClass> SchoolClasses { get; } = [];
 
-        public HomeViewModel(IClassService classService, IDialogService dialogService)
+        public HomeViewModel(IClassService classService, IDialogService dialogService, IAssessmentService assessmentService)
         {
             _classService = classService;
             _dialogService = dialogService;
+            _assessmentService = assessmentService;
 
             _ = InitializeAsync();
         }
@@ -109,7 +112,14 @@ namespace At.luki0606.ClassPulse.ViewModels
             {
                 return;
             }
-            //Navigate
+
+            ClassDetailViewModel classDetailVm = new(SelectedClass, _classService, _dialogService, _assessmentService);
+
+            if (App.Current is App { Services: { } services })
+            {
+                MainWindowViewModel mainVm = services.GetRequiredService<MainWindowViewModel>();
+                mainVm.NavigateToClassDetail(classDetailVm);
+            }
         }
     }
 }

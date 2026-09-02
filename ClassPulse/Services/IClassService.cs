@@ -14,5 +14,7 @@ namespace At.luki0606.ClassPulse.Services
         Task<Student> AddStudentToSchoolSclass(Guid schoolClassId, string firstName, string lastName, string? generalNotes = null);
         Task<List<Student>> SearchStudentAsync(string searchTerm);
         Task<Student?> GetStudentDetailsAsync(Guid studentId);
+        Task<List<Student>> GetStudentsByClassIdAsync(Guid classId);
+        Task<List<Subject>> GetAllSubjectsAsync();
     }
 }

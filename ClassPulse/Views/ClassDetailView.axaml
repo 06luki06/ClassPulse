@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:At.luki0606.ClassPulse.ViewModels"
+             xmlns:ic="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             xmlns:res="clr-namespace:At.luki0606.ClassPulse.Resources"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="At.luki0606.ClassPulse.Views.ClassDetailView"
+             x:DataType="vm:ClassDetailViewModel">
+  <Grid RowDefinitions="Auto, *">
+        <Border Grid.Row="0" Background="{DynamicResource CardBackgroundBrush}" Padding="16" Margin="0,0,0,16" CornerRadius="8">
+            <Grid ColumnDefinitions="Auto, *, Auto">
+                <Button Grid.Column="0" Command="{Binding BackToHomeCommand}">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <ic:SymbolIcon Symbol="ArrowLeft" />
+                        <TextBlock Text="{x:Static res:Resources.Label_Home}" />
+                    </StackPanel>
+                </Button>
+
+                <TextBlock Grid.Column="1" 
+                           Text="{Binding ClassTitle}" 
+                           FontSize="20" 
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center" />
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Background="{DynamicResource CardBackgroundBrush}" Padding="12" CornerRadius="8">
+            <DataGrid Name="MatrixDataGrid"
+                      ItemsSource="{Binding StudentRows}"
+                      AutoGenerateColumns="False"
+                      GridLinesVisibility="All" />
+        </Border>
+    </Grid>
+</UserControl>

@@ -153,4 +153,22 @@
   <data name="Label_Save" xml:space="preserve">
     <value>Speichern</value>
   </data>
+  <data name="General_ExceptionHasOccured" xml:space="preserve">
+    <value>Ein unerwarteter Fehler ist aufgetreten:</value>
+  </data>
+  <data name="Dialog_NewPupil_Title" xml:space="preserve">
+    <value>Name des Schülers eingeben:</value>
+  </data>
+  <data name="Dialog_NewPupil_Message" xml:space="preserve">
+    <value>Neuer Schüler</value>
+  </data>
+  <data name="Label_FirstName" xml:space="preserve">
+    <value>Vorname</value>
+  </data>
+  <data name="Label_LastName" xml:space="preserve">
+    <value>Nachname</value>
+  </data>
+  <data name="Label_Home" xml:space="preserve">
+    <value>Übersicht</value>
+  </data>
 </root>

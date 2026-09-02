@@ -64,7 +64,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         [Test]
         public void Constructor_WithEmptySchoolClassId_ThrowsArgumentNullException()
         {
-            void action()
+            static void action()
             {
                 new Student("Max", "Mustermann", Guid.Empty);
             }
