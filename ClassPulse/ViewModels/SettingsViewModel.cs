@@ -1,4 +1,6 @@
-﻿using Avalonia;
+﻿using At.luki0606.ClassPulse.Data;
+using At.luki0606.ClassPulse.Services;
+using Avalonia;
 using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -12,6 +14,8 @@ namespace At.luki0606.ClassPulse.ViewModels
 {
     public partial class SettingsViewModel : ViewModelBase
     {
+        private readonly SettingsService _settingsService;
+
         [ObservableProperty]
         private ThemeOption? _selectedThemeOption;
 
@@ -21,8 +25,10 @@ namespace At.luki0606.ClassPulse.ViewModels
         public List<ThemeOption> AvailableThemes { get; private set; }
         public List<LanguageOption> AvailableLanguages { get; private set; }
 
-        public SettingsViewModel()
+        public SettingsViewModel(SettingsService settingsService)
         {
+            _settingsService = settingsService;
+
             AvailableThemes = BuildThemeOptions();
             AvailableLanguages = BuildLanguageOptions();
 
@@ -38,6 +44,7 @@ namespace At.luki0606.ClassPulse.ViewModels
             if (Application.Current != null && value != null)
             {
                 Application.Current.RequestedThemeVariant = value.Variant;
+                PersistCurrentSettings();
             }
         }
 
@@ -54,6 +61,21 @@ namespace At.luki0606.ClassPulse.ViewModels
             Resources.Resources.Culture = cultureInfo;
 
             UpdateOptionLabels();
+            PersistCurrentSettings();
+        }
+
+        private void PersistCurrentSettings()
+        {
+            string themeStr = SelectedThemeOption?.Variant == ThemeVariant.Dark ? "Dark" :
+                              SelectedThemeOption?.Variant == ThemeVariant.Light ? "Light" : "System";
+
+            string langStr = SelectedLanguageOption?.Code ?? "de";
+
+            _settingsService.SaveSettings(new AppSettings
+            {
+                Theme = themeStr,
+                Language = langStr
+            });
         }
 
         private void UpdateOptionLabels()

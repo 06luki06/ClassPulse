@@ -36,6 +36,9 @@ namespace At.luki0606.ClassPulse
             ConfigureServices(serviceCollection);
             Services = serviceCollection.BuildServiceProvider();
 
+            SettingsService settingsService = Services.GetRequiredService<SettingsService>();
+            ApplySettings(settingsService.LoadSettings());
+
             using (IServiceScope scope = Services.CreateScope())
             {
                 AppDbContext dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -54,27 +57,38 @@ namespace At.luki0606.ClassPulse
             base.OnFrameworkInitializationCompleted();
         }
 
+        private static void ApplySettings(AppSettings settings)
+        {
+            if (Application.Current != null)
+            {
+                Application.Current.RequestedThemeVariant = settings.Theme switch
+                {
+                    "Dark" => Avalonia.Styling.ThemeVariant.Dark,
+                    "Light" => Avalonia.Styling.ThemeVariant.Light,
+                    _ => Avalonia.Styling.ThemeVariant.Default
+                };
+            }
+
+            // Sprache anwenden
+            System.Globalization.CultureInfo culture = new(settings.Language);
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+            At.luki0606.ClassPulse.Resources.Resources.Culture = culture;
+        }
+
         private static void ConfigureServices(IServiceCollection services)
         {
-            string dbPath = Path.Combine(GetAppdataFolderPath(), "classpulse.db");
+            string dbPath = Path.Combine(Utils.GetAppdataFolderPath(), "classpulse.db");
             services.AddDbContext<AppDbContext>(options => options.UseSqlite($"Data Source={dbPath}"));
 
             services.AddScoped<IClassService, ClassService>();
             services.AddScoped<IAssessmentService, AssessmentService>();
             services.AddScoped<IDialogService, AvaloniaDialogService>();
+            services.AddSingleton<SettingsService>();
 
             services.AddTransient<HomeViewModel>();
             services.AddTransient<SettingsViewModel>();
             services.AddSingleton<MainWindowViewModel>();
-        }
-
-        private static string GetAppdataFolderPath()
-        {
-            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string folderPath = Path.Combine(appDataPath, "ClassPulse");
-            Directory.CreateDirectory(folderPath);
-
-            return folderPath;
         }
 
         private void OnUiThreadUnhandledException(object? sender, DispatcherUnhandledExceptionEventArgs e)
