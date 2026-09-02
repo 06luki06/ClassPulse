@@ -171,4 +171,25 @@
   <data name="Label_Home" xml:space="preserve">
     <value>Übersicht</value>
   </data>
+  <data name="Label_Average" xml:space="preserve">
+    <value>Durchschnitt</value>
+  </data>
+  <data name="Label_Pupil" xml:space="preserve">
+    <value>Schüler</value>
+  </data>
+  <data name="Dialog_NewAssessment_Title" xml:space="preserve">
+    <value>Neue Prüfung anlegen</value>
+  </data>
+  <data name="Dialog_NewAssessment_Message" xml:space="preserve">
+    <value>Prüfung für {0} anlegen:</value>
+  </data>
+  <data name="Label_Titel" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="Label_Weight" xml:space="preserve">
+    <value>Gewichtung</value>
+  </data>
+  <data name="Label_Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
 </root>

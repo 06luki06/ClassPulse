@@ -8,9 +8,15 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="At.luki0606.ClassPulse.Views.ClassDetailView"
              x:DataType="vm:ClassDetailViewModel">
-  <Grid RowDefinitions="Auto, *">
-        <Border Grid.Row="0" Background="{DynamicResource CardBackgroundBrush}" Padding="16" Margin="0,0,0,16" CornerRadius="8">
-            <Grid ColumnDefinitions="Auto, *, Auto">
+
+    <Grid RowDefinitions="Auto, *">
+        <!-- Header / Top-Bar -->
+        <Border Grid.Row="0" 
+                Background="{DynamicResource CardBackgroundBrush}" 
+                Padding="16" 
+                Margin="0,0,0,16" 
+                CornerRadius="8">
+            <Grid ColumnDefinitions="Auto, *, Auto, Auto">
                 <Button Grid.Column="0" Command="{Binding BackToHomeCommand}">
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <ic:SymbolIcon Symbol="ArrowLeft" />
@@ -24,14 +30,90 @@
                            FontWeight="Bold" 
                            HorizontalAlignment="Center" 
                            VerticalAlignment="Center" />
+
+                <Button Grid.Column="2" 
+                        Command="{Binding AddStudentCommand}" 
+                        Margin="0,0,8,0">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <ic:SymbolIcon Symbol="PersonAdd" />
+                        <TextBlock Text="Schüler" />
+                    </StackPanel>
+                </Button>
+
+                <Button Grid.Column="3" 
+                        Command="{Binding AddAssessmentCommand}">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <ic:SymbolIcon Symbol="Add" />
+                        <TextBlock Text="Prüfung" />
+                    </StackPanel>
+                </Button>
             </Grid>
         </Border>
 
-        <Border Grid.Row="1" Background="{DynamicResource CardBackgroundBrush}" Padding="12" CornerRadius="8">
-            <DataGrid Name="MatrixDataGrid"
-                      ItemsSource="{Binding StudentRows}"
-                      AutoGenerateColumns="False"
-                      GridLinesVisibility="All" />
-        </Border>
+        <!-- Schüler-Cards Liste -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding StudentRows}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:StudentMatrixRow">
+                        <Border Background="{DynamicResource CardBackgroundBrush}"
+                                BorderBrush="{DynamicResource CardBorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="12"
+                                Padding="16"
+                                Margin="0,0,0,12">
+                            <Grid RowDefinitions="Auto, Auto">
+                                <!-- Karten-Kopf: Name & Schnitt -->
+                                <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,12">
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                                        <ic:SymbolIcon Symbol="Person" FontSize="20" Foreground="{DynamicResource PrimaryBrush}"/>
+                                        <TextBlock Text="{Binding FullName}" 
+                                                   FontSize="18" 
+                                                   FontWeight="Bold" 
+                                                   VerticalAlignment="Center"/>
+                                    </StackPanel>
+
+                                    <!-- Gesamtschnitt Badge -->
+                                    <Border Grid.Column="1" 
+                                            Background="{DynamicResource PrimaryBrush}" 
+                                            CornerRadius="6" 
+                                            Padding="10,4">
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <TextBlock Text="{x:Static res:Resources.Label_Average}" Foreground="White" FontSize="12"/>
+                                            <TextBlock Text="{Binding OverallAverage}" FontWeight="Bold" Foreground="White" FontSize="12"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                                <!-- Fächer & Noten Chips -->
+                                <ItemsControl Grid.Row="1" ItemsSource="{Binding SubjectGradesList}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="vm:SubjectGradeDto">
+                                            <Border Background="#15000000" 
+                                                    CornerRadius="6" 
+                                                    Padding="8,4" 
+                                                    Margin="0,0,8,8">
+                                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                                    <TextBlock Text="{Binding ShortName}" FontWeight="SemiBold" FontSize="13"/>
+                                                    <TextBlock Text=":" />
+                                                    <TextBlock Text="{Binding Grade}" 
+                                                               FontWeight="Bold" 
+                                                               Foreground="{DynamicResource PrimaryBrush}"
+                                                               FontSize="13"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>

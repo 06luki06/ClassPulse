@@ -61,6 +61,24 @@ namespace At.luki0606.ClassPulse.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add exam for {0}:.
+        /// </summary>
+        public static string Dialog_NewAssessment_Message {
+            get {
+                return ResourceManager.GetString("Dialog_NewAssessment_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new exam.
+        /// </summary>
+        public static string Dialog_NewAssessment_Title {
+            get {
+                return ResourceManager.GetString("Dialog_NewAssessment_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please enter the details for the new class:.
         /// </summary>
         public static string Dialog_NewClass_Message {
@@ -151,6 +169,15 @@ namespace At.luki0606.ClassPulse.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Average.
+        /// </summary>
+        public static string Label_Average {
+            get {
+                return ResourceManager.GetString("Label_Average", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Label_Cancel {
@@ -205,6 +232,15 @@ namespace At.luki0606.ClassPulse.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pupil.
+        /// </summary>
+        public static string Label_Pupil {
+            get {
+                return ResourceManager.GetString("Label_Pupil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Label_Save {
@@ -219,6 +255,33 @@ namespace At.luki0606.ClassPulse.Resources {
         public static string Label_SchoolYear {
             get {
                 return ResourceManager.GetString("Label_SchoolYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test.
+        /// </summary>
+        public static string Label_Test {
+            get {
+                return ResourceManager.GetString("Label_Test", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Titel.
+        /// </summary>
+        public static string Label_Titel {
+            get {
+                return ResourceManager.GetString("Label_Titel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weighting.
+        /// </summary>
+        public static string Label_Weight {
+            get {
+                return ResourceManager.GetString("Label_Weight", resourceCulture);
             }
         }
     }

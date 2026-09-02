@@ -55,17 +55,20 @@ namespace At.luki0606.ClassPulse.ViewModels
             foreach (Student student in students)
             {
                 StudentMatrixRow row = new(student);
-                foreach ((Subject? subject, double avg) in from Subject subject in allSubjects
-                                                           let studentAssessments = student.GetAssessmentsBySubjectId(subject.Id)
-                                                           let avg = _assessmentService.CalculateSubjectAverage(studentAssessments)
-                                                           select (subject, avg))
-                {
 
-                    row.SubjectGrades[subject.Id] = avg > 0 ? avg.ToString("0.0") : "-";
+                foreach (Subject subject in allSubjects)
+                {
+                    IEnumerable<Assessment> studentAssessments = student.GetAssessmentsBySubjectId(subject.Id);
+                    double avg = _assessmentService.CalculateSubjectAverage(studentAssessments);
+                    string gradeStr = avg > 0 ? avg.ToString("0.0") : "-";
+
+                    row.SubjectGradesList.Add(new SubjectGradeDto(subject.Code, gradeStr));
                 }
 
                 StudentRows.Add(row);
             }
+
+            OnPropertyChanged(nameof(Subjects));
         }
 
         [RelayCommand]
@@ -99,6 +102,44 @@ namespace At.luki0606.ClassPulse.ViewModels
                 }
             }
         }
+
+        [RelayCommand]
+        private async Task AddAssessmentAsync()
+        {
+            if (!Subjects.Any())
+            {
+                return;
+            }
+
+            // has to get replaced by subject-choice
+            SubjectDto firstSubject = Subjects.First();
+
+            InputDialogResult? result = await _dialogService.ShowInputDialogAsync(
+                Resources.Resources.Dialog_NewAssessment_Title,
+                string.Format(Resources.Resources.Dialog_NewAssessment_Message, firstSubject),
+                new InputField(Resources.Resources.Label_Titel, $"{Resources.Resources.Label_for_example_abbr} 1. {Resources.Resources.Label_Test}"),
+                new InputField(Resources.Resources.Label_Weight, "1", "1")
+            );
+
+            if (result is { IsConfirmed: true })
+            {
+                string title = result.ViewModel.GetValue(Resources.Resources.Label_Titel);
+                string weightStr = result.ViewModel.GetValue(Resources.Resources.Label_Weight);
+                if (!string.IsNullOrWhiteSpace(title) && int.TryParse(weightStr, out int weight))
+                {
+                    await _assessmentService.CreateClassAssessmentAsync(
+                        schoolClassId: SelectedClass.Id,
+                        subjectId: firstSubject.Id,
+                        title: title,
+                        weight: weight,
+                        date: DateTime.Now,
+                        defaultGrade: 1.0
+                    );
+
+                    await LoadDataAsync();
+                }
+            }
+        }
     }
 
     public class SubjectDto
@@ -121,12 +162,24 @@ namespace At.luki0606.ClassPulse.ViewModels
 
         public Guid Id => _student.Id;
         public string FullName => _student.FullName;
-        public Dictionary<Guid, string> SubjectGrades { get; set; } = [];
         public string OverallAverage { get; set; } = "-";
+        public List<SubjectGradeDto> SubjectGradesList { get; } = [];
 
         public StudentMatrixRow(Student student)
         {
             _student = student;
+        }
+    }
+
+    public class SubjectGradeDto
+    {
+        public string ShortName { get; }
+        public string Grade { get; }
+
+        public SubjectGradeDto(string shortName, string grade)
+        {
+            ShortName = shortName;
+            Grade = grade;
         }
     }
 }
