@@ -31,7 +31,7 @@ namespace At.luki0606.ClassPulse.Tests.Stubs
             return Task.FromResult(schoolClass);
         }
 
-        public Task<Student> AddStudentToSchoolSclass(Guid schoolClassId, string firstName, string lastName, string? generalNotes = null)
+        public Task<Student> AddStudentToSchoolClass(Guid schoolClassId, string firstName, string lastName, string? generalNotes = null)
         {
             SchoolClass schoolClass = _schoolClasses.FirstOrDefault(c => c.Id == schoolClassId)
                 ?? throw new KeyNotFoundException($"SchoolClass with ID {schoolClassId} not found.");

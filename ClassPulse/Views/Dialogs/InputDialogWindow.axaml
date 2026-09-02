@@ -32,8 +32,17 @@
                                    FontSize="12" 
                                    FontWeight="SemiBold"
                                    Foreground="{DynamicResource PrimaryTextBrush}"/>
+                        
+                        <!-- Normal TextBox -->
                         <TextBox Text="{Binding Value, Mode=TwoWay}" 
-                                 PlaceholderText="{Binding Placeholder}"/>
+                                 PlaceholderText="{Binding Placeholder}"
+                                 IsVisible="{Binding !IsDropdown}"/>
+
+                        <!-- DropDown -->
+                        <ComboBox ItemsSource="{Binding Options}"
+                                  SelectedItem="{Binding Value, Mode=TwoWay}"
+                                  HorizontalAlignment="Stretch"
+                                  IsVisible="{Binding IsDropdown}"/>
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

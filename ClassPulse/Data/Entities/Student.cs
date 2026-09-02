@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace At.luki0606.ClassPulse.Data.Entities
 {
@@ -74,15 +75,7 @@ namespace At.luki0606.ClassPulse.Data.Entities
 
         public IEnumerable<Assessment> GetAssessmentsBySubjectId(Guid subjectId)
         {
-            List<Assessment> result = [];
-            foreach (Assessment assessment in _assessments)
-            {
-                if (assessment.SubjectId == subjectId)
-                {
-                    result.Add(assessment);
-                }
-            }
-            return result;
+            return _assessments.Where(a => a.SubjectId == subjectId);
         }
     }
 }

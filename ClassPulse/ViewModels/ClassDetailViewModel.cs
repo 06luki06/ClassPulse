@@ -55,16 +55,19 @@ namespace At.luki0606.ClassPulse.ViewModels
             foreach (Student student in students)
             {
                 StudentMatrixRow row = new(student);
+                List<Assessment> allStudentAssessments = [];
 
                 foreach (Subject subject in allSubjects)
                 {
                     IEnumerable<Assessment> studentAssessments = student.GetAssessmentsBySubjectId(subject.Id);
+                    allStudentAssessments.AddRange(studentAssessments);
                     double avg = _assessmentService.CalculateSubjectAverage(studentAssessments);
                     string gradeStr = avg > 0 ? avg.ToString("0.0") : "-";
 
                     row.SubjectGradesList.Add(new SubjectGradeDto(subject.Code, gradeStr));
                 }
-
+                double overallAvg = _assessmentService.CalculateSubjectAverage(allStudentAssessments);
+                row.OverallAverage = overallAvg > 0 ? overallAvg.ToString("0.0") : "-";
                 StudentRows.Add(row);
             }
 
@@ -97,7 +100,7 @@ namespace At.luki0606.ClassPulse.ViewModels
                 string lastName = result.ViewModel.GetValue(Resources.Resources.Label_LastName);
                 if (!string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(lastName))
                 {
-                    await _classService.AddStudentToSchoolSclass(SelectedClass.Id, firstName, lastName);
+                    await _classService.AddStudentToSchoolClass(SelectedClass.Id, firstName, lastName);
                     await LoadDataAsync();
                 }
             }
@@ -111,25 +114,47 @@ namespace At.luki0606.ClassPulse.ViewModels
                 return;
             }
 
-            // has to get replaced by subject-choice
-            SubjectDto firstSubject = Subjects.First();
+            List<string> subjectOptions = [.. Subjects.Select(s => $"{s.ShortName} - {s.Name}")];
+
+            InputField subjectField = new(
+                Resources.Resources.Label_Subject,
+                Resources.Resources.Dialog_SelectSubject_Message,
+                subjectOptions[0],
+                subjectOptions
+            );
+
+            InputField titleField = new(
+                Resources.Resources.Label_Titel,
+                $"{Resources.Resources.Label_for_example_abbr} 1. {Resources.Resources.Label_Test}");
+
+            InputField weightField = new(
+                Resources.Resources.Label_Weight,
+                "1",
+                "1"
+            );
 
             InputDialogResult? result = await _dialogService.ShowInputDialogAsync(
                 Resources.Resources.Dialog_NewAssessment_Title,
-                string.Format(Resources.Resources.Dialog_NewAssessment_Message, firstSubject),
-                new InputField(Resources.Resources.Label_Titel, $"{Resources.Resources.Label_for_example_abbr} 1. {Resources.Resources.Label_Test}"),
-                new InputField(Resources.Resources.Label_Weight, "1", "1")
+                Resources.Resources.Dialog_NewAssessment_Message,
+                subjectField,
+                titleField,
+                weightField
             );
 
             if (result is { IsConfirmed: true })
             {
+                string selectedOption = result.ViewModel.GetValue(Resources.Resources.Label_Subject);
                 string title = result.ViewModel.GetValue(Resources.Resources.Label_Titel);
                 string weightStr = result.ViewModel.GetValue(Resources.Resources.Label_Weight);
+
+                string shortName = selectedOption.Split(" - ")[0];
+                SubjectDto? selectedSubject = Subjects.FirstOrDefault(s => s.ShortName == shortName) ?? Subjects[0];
+
                 if (!string.IsNullOrWhiteSpace(title) && int.TryParse(weightStr, out int weight))
                 {
                     await _assessmentService.CreateClassAssessmentAsync(
                         schoolClassId: SelectedClass.Id,
-                        subjectId: firstSubject.Id,
+                        subjectId: selectedSubject.Id,
                         title: title,
                         weight: weight,
                         date: DateTime.Now,

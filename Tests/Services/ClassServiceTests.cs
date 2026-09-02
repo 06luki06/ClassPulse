@@ -57,7 +57,7 @@ namespace At.luki0606.ClassPulse.Tests.Services
             string lastName = "Mustermann";
             string notes = "Test note";
 
-            Student result = await _classService.AddStudentToSchoolSclass(schoolClass.Id, firstName, lastName, notes);
+            Student result = await _classService.AddStudentToSchoolClass(schoolClass.Id, firstName, lastName, notes);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Id, Is.Not.EqualTo(Guid.Empty));

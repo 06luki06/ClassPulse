@@ -61,7 +61,7 @@ namespace At.luki0606.ClassPulse.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add exam for {0}:.
+        ///   Looks up a localized string similar to Add exam for the selected subject:.
         /// </summary>
         public static string Dialog_NewAssessment_Message {
             get {
@@ -111,6 +111,15 @@ namespace At.luki0606.ClassPulse.Resources {
         public static string Dialog_NewPupil_Title {
             get {
                 return ResourceManager.GetString("Dialog_NewPupil_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a subject:.
+        /// </summary>
+        public static string Dialog_SelectSubject_Message {
+            get {
+                return ResourceManager.GetString("Dialog_SelectSubject_Message", resourceCulture);
             }
         }
         
@@ -255,6 +264,15 @@ namespace At.luki0606.ClassPulse.Resources {
         public static string Label_SchoolYear {
             get {
                 return ResourceManager.GetString("Label_SchoolYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subject.
+        /// </summary>
+        public static string Label_Subject {
+            get {
+                return ResourceManager.GetString("Label_Subject", resourceCulture);
             }
         }
         

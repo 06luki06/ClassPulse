@@ -181,7 +181,7 @@
     <value>Add new exam</value>
   </data>
   <data name="Dialog_NewAssessment_Message" xml:space="preserve">
-    <value>Add exam for {0}:</value>
+    <value>Add exam for the selected subject:</value>
   </data>
   <data name="Label_Titel" xml:space="preserve">
     <value>Titel</value>
@@ -191,5 +191,11 @@
   </data>
   <data name="Label_Test" xml:space="preserve">
     <value>Test</value>
+  </data>
+  <data name="Label_Subject" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="Dialog_SelectSubject_Message" xml:space="preserve">
+    <value>Select a subject:</value>
   </data>
 </root>

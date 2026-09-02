@@ -17,7 +17,7 @@ namespace At.luki0606.ClassPulse.Services
             _dbContext = context;
         }
 
-        public async Task<Student> AddStudentToSchoolSclass(Guid schoolClassId, string firstName, string lastName, string? generalNotes = null)
+        public async Task<Student> AddStudentToSchoolClass(Guid schoolClassId, string firstName, string lastName, string? generalNotes = null)
         {
             Student student = new(firstName, lastName, schoolClassId, generalNotes);
             _dbContext.Students.Add(student);

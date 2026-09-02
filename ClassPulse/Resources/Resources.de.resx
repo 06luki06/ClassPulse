@@ -181,7 +181,7 @@
     <value>Neue Prüfung anlegen</value>
   </data>
   <data name="Dialog_NewAssessment_Message" xml:space="preserve">
-    <value>Prüfung für {0} anlegen:</value>
+    <value>Prüfung für das ausgewählte Fach auswählen:</value>
   </data>
   <data name="Label_Titel" xml:space="preserve">
     <value>Titel</value>
@@ -191,5 +191,11 @@
   </data>
   <data name="Label_Test" xml:space="preserve">
     <value>Test</value>
+  </data>
+  <data name="Label_Subject" xml:space="preserve">
+    <value>Fach</value>
+  </data>
+  <data name="Dialog_SelectSubject_Message" xml:space="preserve">
+    <value>Wähle ein Fach:</value>
   </data>
 </root>
