@@ -198,4 +198,19 @@
   <data name="Dialog_SelectSubject_Message" xml:space="preserve">
     <value>Wähle ein Fach:</value>
   </data>
+  <data name="Dialog_NewSubject_Title" xml:space="preserve">
+    <value>Fach</value>
+  </data>
+  <data name="Dialog_NewSubject_Message" xml:space="preserve">
+    <value>Gib die Daten für ein neues Unterrichtsfach ein:</value>
+  </data>
+  <data name="Label_SubjectName" xml:space="preserve">
+    <value>Fachname</value>
+  </data>
+  <data name="Label_ShortName" xml:space="preserve">
+    <value>Kürzel</value>
+  </data>
+  <data name="Label_Mathematics" xml:space="preserve">
+    <value>Mathematik</value>
+  </data>
 </root>

@@ -198,4 +198,19 @@
   <data name="Dialog_SelectSubject_Message" xml:space="preserve">
     <value>Select a subject:</value>
   </data>
+  <data name="Dialog_NewSubject_Title" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="Dialog_NewSubject_Message" xml:space="preserve">
+    <value>Enter data in order to create a new subject:</value>
+  </data>
+  <data name="Label_SubjectName" xml:space="preserve">
+    <value>Subject Name</value>
+  </data>
+  <data name="Label_ShortName" xml:space="preserve">
+    <value>Short Name</value>
+  </data>
+  <data name="Label_Mathematics" xml:space="preserve">
+    <value>Mathematics</value>
+  </data>
 </root>

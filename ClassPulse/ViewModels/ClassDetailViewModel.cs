@@ -165,6 +165,27 @@ namespace At.luki0606.ClassPulse.ViewModels
                 }
             }
         }
+
+        [RelayCommand]
+        private async Task AddSubjectAsync()
+        {
+            InputDialogResult? result = await _dialogService.ShowInputDialogAsync(
+                Resources.Resources.Dialog_NewSubject_Title,
+                Resources.Resources.Dialog_NewSubject_Message,
+                new InputField(Resources.Resources.Label_SubjectName, Resources.Resources.Label_Mathematics),
+                new InputField(Resources.Resources.Label_ShortName, "M")
+            );
+            if (result is { IsConfirmed: true })
+            {
+                string name = result.ViewModel.GetValue(Resources.Resources.Label_SubjectName);
+                string code = result.ViewModel.GetValue(Resources.Resources.Label_ShortName);
+                if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(code))
+                {
+                    await _classService.CreateSubjectAsync(name, code);
+                    await LoadDataAsync();
+                }
+            }
+        }
     }
 
     public class SubjectDto

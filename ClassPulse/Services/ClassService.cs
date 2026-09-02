@@ -102,5 +102,13 @@ namespace At.luki0606.ClassPulse.Services
                 .OrderBy(s => s.Name)
                 .ToListAsync();
         }
+
+        public async Task<Subject> CreateSubjectAsync(string name, string code)
+        {
+            Subject subject = new(name, code);
+            _dbContext.Subjects.Add(subject);
+            await _dbContext.SaveChangesAsync();
+            return subject;
+        }
     }
 }

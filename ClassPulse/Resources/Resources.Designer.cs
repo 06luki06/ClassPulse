@@ -115,6 +115,24 @@ namespace At.luki0606.ClassPulse.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter data in order to create a new subject:.
+        /// </summary>
+        public static string Dialog_NewSubject_Message {
+            get {
+                return ResourceManager.GetString("Dialog_NewSubject_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subject.
+        /// </summary>
+        public static string Dialog_NewSubject_Title {
+            get {
+                return ResourceManager.GetString("Dialog_NewSubject_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select a subject:.
         /// </summary>
         public static string Dialog_SelectSubject_Message {
@@ -241,6 +259,15 @@ namespace At.luki0606.ClassPulse.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mathematics.
+        /// </summary>
+        public static string Label_Mathematics {
+            get {
+                return ResourceManager.GetString("Label_Mathematics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pupil.
         /// </summary>
         public static string Label_Pupil {
@@ -268,11 +295,29 @@ namespace At.luki0606.ClassPulse.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Short Name.
+        /// </summary>
+        public static string Label_ShortName {
+            get {
+                return ResourceManager.GetString("Label_ShortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subject.
         /// </summary>
         public static string Label_Subject {
             get {
                 return ResourceManager.GetString("Label_Subject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subject Name.
+        /// </summary>
+        public static string Label_SubjectName {
+            get {
+                return ResourceManager.GetString("Label_SubjectName", resourceCulture);
             }
         }
         

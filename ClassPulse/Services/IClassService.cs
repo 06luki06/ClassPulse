@@ -10,11 +10,11 @@ namespace At.luki0606.ClassPulse.Services
         Task<List<SchoolClass>> GetAllClassesAsync();
         Task<SchoolClass> CreateClassAsync(string name, string schoolYear);
         Task<SchoolClass?> DeleteClassAsync(Guid classId);
-
         Task<Student> AddStudentToSchoolClass(Guid schoolClassId, string firstName, string lastName, string? generalNotes = null);
         Task<List<Student>> SearchStudentAsync(string searchTerm);
         Task<Student?> GetStudentDetailsAsync(Guid studentId);
         Task<List<Student>> GetStudentsByClassIdAsync(Guid classId);
         Task<List<Subject>> GetAllSubjectsAsync();
+        Task<Subject> CreateSubjectAsync(string name, string code);
     }
 }

@@ -16,7 +16,7 @@
                 Padding="16" 
                 Margin="0,0,0,16" 
                 CornerRadius="8">
-            <Grid ColumnDefinitions="Auto, *, Auto, Auto">
+            <Grid ColumnDefinitions="Auto, *, Auto, Auto, Auto">
                 <Button Grid.Column="0" Command="{Binding BackToHomeCommand}">
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <ic:SymbolIcon Symbol="ArrowLeft" />
@@ -36,7 +36,7 @@
                         Margin="0,0,8,0">
                     <StackPanel Orientation="Horizontal" Spacing="6">
                         <ic:SymbolIcon Symbol="PersonAdd" />
-                        <TextBlock Text="Schüler" />
+                        <TextBlock Text="{x:Static res:Resources.Label_Pupil}" />
                     </StackPanel>
                 </Button>
 
@@ -44,7 +44,16 @@
                         Command="{Binding AddAssessmentCommand}">
                     <StackPanel Orientation="Horizontal" Spacing="6">
                         <ic:SymbolIcon Symbol="Add" />
-                        <TextBlock Text="Prüfung" />
+                        <TextBlock Text="{x:Static res:Resources.Label_Test}" />
+                    </StackPanel>
+                </Button>
+
+                <Button Grid.Column="4"
+                        Command="{Binding AddSubjectCommand}"
+                        Margin="8, 0, 0, 0">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+						<ic:SymbolIcon Symbol="BookAdd"/>
+                        <TextBlock Text="{x:Static res:Resources.Label_Subject}"/>
                     </StackPanel>
                 </Button>
             </Grid>
