@@ -34,5 +34,10 @@ namespace At.luki0606.ClassPulse.ViewModels
         {
             CurrentView = new SettingsViewModel(_settingsService);
         }
+
+        public void NavigateToStudentDetail(StudentDetailViewModel studentDetailViewModel)
+        {
+            CurrentView = studentDetailViewModel;
+        }
     }
 }

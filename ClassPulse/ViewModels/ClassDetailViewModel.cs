@@ -186,6 +186,17 @@ namespace At.luki0606.ClassPulse.ViewModels
                 }
             }
         }
+
+        [RelayCommand]
+        private void SelectStudent(StudentMatrixRow row)
+        {
+            if (App.Current is App { Services: { } services })
+            {
+                MainWindowViewModel mainVm = services.GetRequiredService<MainWindowViewModel>();
+                StudentDetailViewModel studentDetailVm = new(row.Id, this, _classService, _assessmentService);
+                mainVm.NavigateToStudentDetail(studentDetailVm);
+            }
+        }
     }
 
     public class SubjectDto

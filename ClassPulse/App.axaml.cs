@@ -13,7 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using ResourcesTxt = At.luki0606.ClassPulse.Resources;
 
 namespace At.luki0606.ClassPulse
 {
@@ -69,11 +68,10 @@ namespace At.luki0606.ClassPulse
                 };
             }
 
-            // Sprache anwenden
             System.Globalization.CultureInfo culture = new(settings.Language);
             System.Threading.Thread.CurrentThread.CurrentCulture = culture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
-            At.luki0606.ClassPulse.Resources.Resources.Culture = culture;
+            ClassPulse.Resources.Resources.Culture = culture;
         }
 
         private static void ConfigureServices(IServiceCollection services)
@@ -125,7 +123,7 @@ namespace At.luki0606.ClassPulse
                 {
                     DataContext = new InputDialogViewModel(
                         title: $"⚠️ {title}",
-                        message: $"{ResourcesTxt.Resources.General_ExceptionHasOccured}\n\n{ex.Message}",
+                        message: $"{ClassPulse.Resources.Resources.General_ExceptionHasOccured}\n\n{ex.Message}",
                         fields: []
                         )
                 };

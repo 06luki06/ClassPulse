@@ -1,0 +1,85 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:At.luki0606.ClassPulse.ViewModels"
+             xmlns:ic="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             xmlns:entities="clr-namespace:At.luki0606.ClassPulse.Data.Entities"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="At.luki0606.ClassPulse.Views.StudentDetailView"
+             x:DataType="vm:StudentDetailViewModel">
+
+    <Grid RowDefinitions="Auto, *">
+        <!-- Top-Bar -->
+        <Border Grid.Row="0" 
+                Background="{DynamicResource CardBackgroundBrush}" 
+                Padding="16" Margin="0,0,0,16" CornerRadius="8">
+            <Grid ColumnDefinitions="Auto, *">
+                <Button Grid.Column="0" Command="{Binding BackToClassDetailCommand}">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <ic:SymbolIcon Symbol="ArrowLeft" />
+                        <TextBlock Text="Zurück" />
+                    </StackPanel>
+                </Button>
+                <TextBlock Grid.Column="1" 
+                           Text="{Binding StudentName}" 
+                           FontSize="20" FontWeight="Bold"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <!-- Fächer-Details -->
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding SubjectGroups}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:SubjectDetailGroup">
+                        <Border Background="{DynamicResource CardBackgroundBrush}"
+                                BorderBrush="{DynamicResource CardBorderBrush}"
+                                BorderThickness="1" CornerRadius="12"
+                                Padding="16" Margin="0,0,0,16">
+                            <StackPanel Spacing="12">
+                                <Grid ColumnDefinitions="*, Auto, Auto">
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="{Binding SubjectName}" FontSize="16" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding SubjectCode, StringFormat='({0})'}" Foreground="{DynamicResource SecondaryTextBrush}"/>
+                                    </StackPanel>
+
+                                    <!-- Performance-Drop-Warning-->
+                                    <Border Grid.Column="1" 
+                                            IsVisible="{Binding HasPerformanceDropWarning}"
+                                            Background="{DynamicResource DangerBrush}" 
+                                            CornerRadius="6" Padding="8,4" Margin="0,0,8,0">
+                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                            <ic:SymbolIcon Symbol="Warning" Foreground="White" FontSize="14"/>
+                                            <TextBlock Text="Leistungsabfall" Foreground="White" FontSize="12" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- Average -->
+                                    <Border Grid.Column="2" Background="{DynamicResource PrimaryBrush}" CornerRadius="6" Padding="8,4">
+                                        <TextBlock Text="{Binding Average, StringFormat='Schnitt: {0}'}" Foreground="White" FontWeight="Bold" FontSize="12"/>
+                                    </Border>
+                                </Grid>
+
+                                <!-- Einzelne Prüfungen -->
+                                <ItemsControl ItemsSource="{Binding Assessments}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="entities:Assessment">
+                                            <Border Background="#10000000" CornerRadius="6" Padding="8" Margin="0,2">
+                                                <Grid ColumnDefinitions="*, Auto, Auto">
+                                                    <TextBlock Grid.Column="0" Text="{Binding Title}" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="1" Text="{Binding Date, StringFormat='{}{0:dd.MM.yyyy}'}" Margin="0,0,16,0" Foreground="{DynamicResource SecondaryTextBrush}" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding Grade, StringFormat='Note: {0:0.0}'}" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}" VerticalAlignment="Center"/>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
