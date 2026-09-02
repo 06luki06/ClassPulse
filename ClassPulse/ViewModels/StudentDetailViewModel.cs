@@ -1,5 +1,8 @@
 ﻿using At.luki0606.ClassPulse.Data.Entities;
 using At.luki0606.ClassPulse.Services;
+using At.luki0606.ClassPulse.ViewModels.Dialogs;
+using At.luki0606.ClassPulse.Views.Dialogs;
+using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
@@ -71,12 +74,33 @@ namespace At.luki0606.ClassPulse.ViewModels
         }
 
         [RelayCommand]
-        private void BackToClassDetail()
+        private async Task BackToClassDetail()
         {
             if (App.Current is App { Services: { } services })
             {
+                await _parentClassDetailVm.LoadDataAsync();
+
                 MainWindowViewModel mainVm = services.GetRequiredService<MainWindowViewModel>();
                 mainVm.NavigateToClassDetail(_parentClassDetailVm);
+            }
+        }
+
+        [RelayCommand]
+        private async Task EditAssessmentGradeAsync(Assessment assessment)
+        {
+            if (App.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop && desktop.MainWindow != null)
+            {
+                List<Assessment> list = [assessment];
+                AssessmentGradeEditViewModel vm = new(assessment.Title, list, _assessmentService);
+                AssessmentGradeEditWindow window = new() { DataContext = vm };
+
+                vm.OnCloseRequested += () => window.Close();
+                await window.ShowDialog(desktop.MainWindow);
+
+                if (vm.IsConfirmed)
+                {
+                    await LoadStudentDataAsync();
+                }
             }
         }
     }

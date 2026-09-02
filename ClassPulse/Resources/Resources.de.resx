@@ -237,4 +237,19 @@
   <data name="Label_Language" xml:space="preserve">
     <value>Sprache</value>
   </data>
+  <data name="Dialog_AssessmentGradeEdit_ImprovementNotes" xml:space="preserve">
+    <value>Verbesserungsbedarf...</value>
+  </data>
+  <data name="Dialog_AssessmentGradeEdit_PositiveFeedback" xml:space="preserve">
+    <value>Positives Feedback...</value>
+  </data>
+  <data name="Label_PerformanceDrop" xml:space="preserve">
+    <value>Leistungsabfall</value>
+  </data>
+  <data name="StudentDetailView_EditNoteAndFB" xml:space="preserve">
+    <value>Note &amp; Feedback bearbeiten</value>
+  </data>
+  <data name="Label_Grade" xml:space="preserve">
+    <value>Note</value>
+  </data>
 </root>

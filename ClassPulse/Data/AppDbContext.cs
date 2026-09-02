@@ -57,6 +57,27 @@ namespace At.luki0606.ClassPulse.Data
                 .WithMany(s => s.SubjectNotes)
                 .HasForeignKey(sn => sn.SubjectId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // ==========================================
+            // Auto-includes for automatic loading of related entities
+            // ==========================================
+
+            modelBuilder.Entity<Student>(entity =>
+            {
+                entity.Navigation(s => s.SchoolClass).AutoInclude();
+                entity.Navigation(s => s.Assessments).AutoInclude();
+                entity.Navigation(s => s.SubjectNotes).AutoInclude();
+            });
+
+            modelBuilder.Entity<Assessment>(entity =>
+            {
+                entity.Navigation(a => a.Subject).AutoInclude();
+            });
+
+            modelBuilder.Entity<SubjectNote>(entity =>
+            {
+                entity.Navigation(sn => sn.Subject).AutoInclude();
+            });
         }
     }
 }

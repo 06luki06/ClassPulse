@@ -36,7 +36,6 @@ namespace At.luki0606.ClassPulse.Services
         public async Task<SchoolClass?> DeleteClassAsync(Guid classId)
         {
             SchoolClass? schoolClass = await _dbContext.SchoolClasses
-                .Include(c => c.Students)
                 .FirstOrDefaultAsync(c => c.Id == classId);
 
             if (schoolClass == null)
@@ -60,11 +59,6 @@ namespace At.luki0606.ClassPulse.Services
         public async Task<Student?> GetStudentDetailsAsync(Guid studentId)
         {
             return await _dbContext.Students
-                .Include(s => s.SchoolClass)
-                .Include(s => s.Assessments)
-                    .ThenInclude(a => a.Subject)
-                .Include(s => s.SubjectNotes)
-                    .ThenInclude(sn => sn.Subject)
                 .FirstOrDefaultAsync(s => s.Id == studentId);
         }
 
@@ -75,12 +69,11 @@ namespace At.luki0606.ClassPulse.Services
                 return [];
             }
 
-            string term = searchTerm.Trim().ToLower();
+            string term = searchTerm.Trim();
 
             return await _dbContext.Students
-                .Include(s => s.SchoolClass)
-                .Where(s => (s.FirstName != null && s.FirstName.Contains(term, StringComparison.CurrentCultureIgnoreCase)) ||
-                            (s.LastName != null && s.LastName.Contains(term, StringComparison.CurrentCultureIgnoreCase)))
+                .Where(s => EF.Functions.Like(s.FirstName, $"%{term}%") ||
+                            EF.Functions.Like(s.LastName, $"%{term}%"))
                 .OrderBy(s => s.LastName)
                 .ThenBy(s => s.FirstName)
                 .ToListAsync();
@@ -89,7 +82,6 @@ namespace At.luki0606.ClassPulse.Services
         public async Task<List<Student>> GetStudentsByClassIdAsync(Guid classId)
         {
             return await _dbContext.Students
-                .Include(s => s.SchoolClass)
                 .Where(s => s.SchoolClassId == classId)
                 .OrderBy(s => s.LastName)
                 .ThenBy(s => s.FirstName)

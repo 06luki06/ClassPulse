@@ -1,0 +1,49 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:At.luki0606.ClassPulse.ViewModels.Dialogs"
+        xmlns:res="clr-namespace:At.luki0606.ClassPulse.Resources"
+        x:Class="At.luki0606.ClassPulse.Views.Dialogs.AssessmentGradeEditWindow"
+        x:DataType="vm:AssessmentGradeEditViewModel"
+        Title="{Binding Title}"
+        Width="650" Height="500"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource WindowBackgroundBrush}"
+        Padding="20">
+
+    <Grid RowDefinitions="Auto, *, Auto">
+        <TextBlock Grid.Row="0" Text="{Binding Title}" FontSize="18" FontWeight="Bold" Margin="0,0,0,16"/>
+
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding GradeEntries}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:AssessmentGradeEntryDto">
+                        <Border Background="{DynamicResource CardBackgroundBrush}" 
+                                BorderBrush="{DynamicResource CardBorderBrush}"
+                                BorderThickness="1" CornerRadius="8" Padding="12" Margin="0,0,0,8">
+                            <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="*, Auto">
+                                <!-- Student Name & Grade -->
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding StudentName}" FontWeight="Bold" VerticalAlignment="Center"/>
+                                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                    <TextBlock Text="Note:" VerticalAlignment="Center"/>
+                                    <NumericUpDown Value="{Binding Grade}" Minimum="1.0" Maximum="5.0" Increment="0.5" Width="120"/>
+                                </StackPanel>
+
+                                <!-- Feedback -->
+                                <Grid Grid.Row="1" Grid.ColumnSpan="2" ColumnDefinitions="*, *" Margin="0,8,0,0">
+                                    <TextBox Grid.Column="0" Text="{Binding PositiveFeedback}" PlaceholderText="{x:Static res:Resources.Dialog_AssessmentGradeEdit_PositiveFeedback}" Margin="0,0,4,0"/>
+                                    <TextBox Grid.Column="1" Text="{Binding ImprovementNotes}" PlaceholderText="{x:Static res:Resources.Dialog_AssessmentGradeEdit_ImprovementNotes}" Margin="4,0,0,0"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Action Buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="0,16,0,0">
+            <Button Content="{x:Static res:Resources.Label_Cancel}" Command="{Binding CancelCommand}"/>
+            <Button Content="{x:Static res:Resources.Label_Save}" Command="{Binding SaveCommand}" Background="{DynamicResource AccentButtonBrush}" Foreground="White"/>
+        </StackPanel>
+    </Grid>
+</Window>

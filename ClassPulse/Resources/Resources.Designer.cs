@@ -61,6 +61,24 @@ namespace At.luki0606.ClassPulse.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Improvement Notes....
+        /// </summary>
+        public static string Dialog_AssessmentGradeEdit_ImprovementNotes {
+            get {
+                return ResourceManager.GetString("Dialog_AssessmentGradeEdit_ImprovementNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Postive Feedback....
+        /// </summary>
+        public static string Dialog_AssessmentGradeEdit_PositiveFeedback {
+            get {
+                return ResourceManager.GetString("Dialog_AssessmentGradeEdit_PositiveFeedback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add exam for the selected subject:.
         /// </summary>
         public static string Dialog_NewAssessment_Message {
@@ -268,6 +286,15 @@ namespace At.luki0606.ClassPulse.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Grade.
+        /// </summary>
+        public static string Label_Grade {
+            get {
+                return ResourceManager.GetString("Label_Grade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Label_Home {
@@ -309,6 +336,15 @@ namespace At.luki0606.ClassPulse.Resources {
         public static string Label_Mathematics {
             get {
                 return ResourceManager.GetString("Label_Mathematics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Performance Drop.
+        /// </summary>
+        public static string Label_PerformanceDrop {
+            get {
+                return ResourceManager.GetString("Label_PerformanceDrop", resourceCulture);
             }
         }
         
@@ -417,6 +453,15 @@ namespace At.luki0606.ClassPulse.Resources {
         public static string Label_Weight {
             get {
                 return ResourceManager.GetString("Label_Weight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Note &amp; Feedback.
+        /// </summary>
+        public static string StudentDetailView_EditNoteAndFB {
+            get {
+                return ResourceManager.GetString("StudentDetailView_EditNoteAndFB", resourceCulture);
             }
         }
     }

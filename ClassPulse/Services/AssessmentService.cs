@@ -27,44 +27,43 @@ namespace At.luki0606.ClassPulse.Services
 
         public double CalculateSubjectAverage(IEnumerable<Assessment> assessments)
         {
-            List<Assessment> list = [.. assessments];
+            List<Assessment> list = assessments as List<Assessment> ?? [.. assessments];
             if (list.Count == 0)
             {
                 return 0.0;
             }
 
-            double totalWeightedGrades = list.Sum(a => a.Grade * a.Weight);
             double totalWeight = list.Sum(a => a.Weight);
+            if (totalWeight <= 0)
+            {
+                return 0.0;
+            }
 
-            return totalWeight > 0 ? Math.Round(totalWeightedGrades / totalWeight, 2) : 0.0;
+            double totalWeightedGrades = list.Sum(a => a.Grade * a.Weight);
+            return Math.Round(totalWeightedGrades / totalWeight, 2);
         }
 
         public async Task<List<Assessment>> CreateClassAssessmentAsync(Guid schoolClassId, Guid subjectId, string title, DateTime date, double weight = 1, double defaultGrade = 1)
         {
-            List<Guid> studendIds = await _dbContext.Students
+            List<Guid> studentIds = await _dbContext.Students
                 .Where(s => s.SchoolClassId == schoolClassId)
                 .Select(s => s.Id)
                 .ToListAsync();
 
-            if (studendIds.Count == 0)
+            if (studentIds.Count == 0)
             {
                 throw new InvalidOperationException("No students found in the specified class.");
             }
 
-            List<Assessment> newAssessments = [];
-
-            foreach (Guid studentId in studendIds)
-            {
-                Assessment assessment = new(
+            List<Assessment> newAssessments = [.. studentIds
+                .Select(studentId => new Assessment(
                     title: title,
                     date: date,
                     grade: defaultGrade,
                     studentId: studentId,
                     subjectId: subjectId,
                     weight: weight
-                );
-                newAssessments.Add(assessment);
-            }
+                ))];
 
             await _dbContext.Assessments.AddRangeAsync(newAssessments);
             await _dbContext.SaveChangesAsync();
@@ -100,6 +99,18 @@ namespace At.luki0606.ClassPulse.Services
                 improvementNotes: improvementNotes
             );
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<Assessment>> GetAssessmentsByTitleAndSubjectAsync(Guid schoolClassId, Guid subjectId, string title)
+        {
+            return await _dbContext.Assessments
+                .Where(a => a.SubjectId == subjectId &&
+                            a.Title == title &&
+                            a.Student != null &&
+                            a.Student.SchoolClassId == schoolClassId)
+                .OrderBy(a => a.Student!.LastName)
+                .ThenBy(a => a.Student!.FirstName)
+                .ToListAsync();
         }
     }
 }

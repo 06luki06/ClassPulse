@@ -26,5 +26,7 @@ namespace At.luki0606.ClassPulse.Services
         double CalculateSubjectAverage(IEnumerable<Assessment> assessments);
 
         bool HasPerformanceDrop(IEnumerable<Assessment> assessments);
+
+        Task<List<Assessment>> GetAssessmentsByTitleAndSubjectAsync(Guid schoolClassId, Guid subjectId, string title);
     }
 }
