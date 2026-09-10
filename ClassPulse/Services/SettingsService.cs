@@ -12,10 +12,13 @@ namespace At.luki0606.ClassPulse.Services
             WriteIndented = true
         };
 
-        public SettingsService()
+        public SettingsService() : this(Path.Combine(Utils.GetAppdataFolderPath(), "settings.json"))
         {
-            string appdataFoldetrPath = Utils.GetAppdataFolderPath();
-            _settingsFilePath = Path.Combine(appdataFoldetrPath, "settings.json");
+        }
+
+        public SettingsService(string settingsFilePath)
+        {
+            _settingsFilePath = settingsFilePath;
         }
 
         public AppSettings LoadSettings()

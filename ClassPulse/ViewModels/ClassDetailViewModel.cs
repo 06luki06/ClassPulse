@@ -100,7 +100,7 @@ namespace At.luki0606.ClassPulse.ViewModels
                 string lastName = result.ViewModel.GetValue(Resources.Resources.Label_LastName);
                 if (!string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(lastName))
                 {
-                    await _classService.AddStudentToSchoolClass(SelectedClass.Id, firstName, lastName);
+                    await _classService.AddStudentToSchoolClassAsync(SelectedClass.Id, firstName, lastName);
                     await LoadDataAsync();
                 }
             }

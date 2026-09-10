@@ -11,6 +11,7 @@ namespace At.luki0606.ClassPulse.Tests.ViewModels
     {
         private ClassServiceStub _classServiceStub = null!;
         private DialogServiceStub _dialogServiceStub = null!;
+        private AssessmentServiceStub _assessmentServiceStub = null!;
         private HomeViewModel _viewModel = null!;
 
         [SetUp]
@@ -18,8 +19,9 @@ namespace At.luki0606.ClassPulse.Tests.ViewModels
         {
             _classServiceStub = new ClassServiceStub();
             _dialogServiceStub = new DialogServiceStub();
+            _assessmentServiceStub = new AssessmentServiceStub();
 
-            _viewModel = new HomeViewModel(_classServiceStub, _dialogServiceStub);
+            _viewModel = new HomeViewModel(_classServiceStub, _dialogServiceStub, _assessmentServiceStub);
         }
 
         [Test]
@@ -110,7 +112,7 @@ namespace At.luki0606.ClassPulse.Tests.ViewModels
         public async Task Ctor_SelectFirstEntry_WhenItemsArePresent()
         {
             SchoolClass createdClass = await _classServiceStub.CreateClassAsync("1A", "2025/2026");
-            _viewModel = new(_classServiceStub, _dialogServiceStub);
+            _viewModel = new(_classServiceStub, _dialogServiceStub, _assessmentServiceStub);
             Assert.That(_viewModel.SelectedClass, Is.EqualTo(createdClass));
         }
 
