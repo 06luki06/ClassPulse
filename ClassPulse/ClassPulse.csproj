@@ -2,9 +2,11 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
+	<LangVersion>14</LangVersion>
+	<Version>1.0.0</Version>
     <Nullable>enable</Nullable>
-	  <RootNamespace>At.luki0606.ClassPulse</RootNamespace>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
+	<RootNamespace>At.luki0606.ClassPulse</RootNamespace>
+	<ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
 	<ApplicationIcon>Assets\classpulse_logo.ico</ApplicationIcon>
   </PropertyGroup>

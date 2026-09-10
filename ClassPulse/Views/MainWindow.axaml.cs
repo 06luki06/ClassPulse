@@ -1,12 +1,13 @@
 using Avalonia.Controls;
+using System.Diagnostics.CodeAnalysis;
 
-namespace At.luki0606.ClassPulse.Views
+namespace At.luki0606.ClassPulse.Views;
+
+[ExcludeFromCodeCoverage]
+public partial class MainWindow : Window
 {
-    public partial class MainWindow : Window
+    public MainWindow()
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

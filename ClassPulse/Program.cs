@@ -1,9 +1,11 @@
 ﻿using Avalonia;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace At.luki0606.ClassPulse
 {
-    internal sealed class Program
+    [ExcludeFromCodeCoverage]
+    internal static class Program
     {
         // Initialization code. Don't use any Avalonia, third-party APIs or any
         // SynchronizationContext-reliant code before AppMain is called: things aren't initialized

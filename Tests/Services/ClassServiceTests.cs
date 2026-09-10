@@ -57,7 +57,7 @@ namespace At.luki0606.ClassPulse.Tests.Services
             string lastName = "Mustermann";
             string notes = "Test note";
 
-            Student result = await _classService.AddStudentToSchoolClass(schoolClass.Id, firstName, lastName, notes);
+            Student result = await _classService.AddStudentToSchoolClassAsync(schoolClass.Id, firstName, lastName, notes);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Id, Is.Not.EqualTo(Guid.Empty));
@@ -163,6 +163,48 @@ namespace At.luki0606.ClassPulse.Tests.Services
             SchoolClass? deletedSchoolClass = await _classService.DeleteClassAsync(schoolClass.Id);
             Assert.That(deletedSchoolClass, Is.Not.Null);
             Assert.That(deletedSchoolClass.Id, Is.EqualTo(schoolClass.Id));
+        }
+
+        [Test]
+        public async Task GetStudentsByClassIdAsync_ValiId_ReturnsStudents()
+        {
+            SchoolClass schoolClass = new("1a", "2026/2027");
+            _dbContext.SchoolClasses.Add(schoolClass);
+            await _dbContext.SaveChangesAsync();
+
+            Student student1 = new("Max", "Mustermann", schoolClass.Id);
+            Student student2 = new("Anna", "Musterfrau", Guid.NewGuid()); // is not in the class
+            Student student3 = new("John", "Doe", schoolClass.Id);
+            Student student4 = new("Alfred", "Mustermann", schoolClass.Id);
+            _dbContext.Students.AddRange(student1, student2, student3, student4);
+            await _dbContext.SaveChangesAsync();
+
+            List<Student> studentsInClass = await _classService.GetStudentsByClassIdAsync(schoolClass.Id);
+            Assert.That(studentsInClass, Is.Not.Null);
+            Assert.That(studentsInClass, Has.Count.EqualTo(3));
+            Assert.That(studentsInClass, Is.Ordered.By("LastName").Then.By("FirstName"));
+            Assert.That(studentsInClass[0].LastName, Is.EqualTo("Doe"));
+            Assert.That(studentsInClass[1].LastName, Is.EqualTo("Mustermann"));
+            Assert.That(studentsInClass[1].FirstName, Is.EqualTo("Alfred"));
+            Assert.That(studentsInClass[2].LastName, Is.EqualTo("Mustermann"));
+            Assert.That(studentsInClass[2].FirstName, Is.EqualTo("Max"));
+        }
+
+        [Test]
+        public async Task GetAllSubjectsAsync_ReturnsOrderedSubjects()
+        {
+            await _classService.CreateSubjectAsync("a_subject", "A001");
+            await _classService.CreateSubjectAsync("c_subject", "C001");
+            await _classService.CreateSubjectAsync("b_subject", "B001");
+            await _dbContext.SaveChangesAsync();
+            List<Subject> subjects = await _classService.GetAllSubjectsAsync();
+
+            Assert.That(subjects, Is.Not.Null);
+            Assert.That(subjects, Has.Count.GreaterThan(0));
+            Assert.That(subjects, Is.Ordered.By("Name"));
+            Assert.That(subjects[0].Name, Is.EqualTo("a_subject"));
+            Assert.That(subjects[1].Name, Is.EqualTo("b_subject"));
+            Assert.That(subjects[2].Name, Is.EqualTo("c_subject"));
         }
     }
 }

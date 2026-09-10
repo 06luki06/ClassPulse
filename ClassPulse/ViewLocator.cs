@@ -12,6 +12,7 @@ namespace At.luki0606.ClassPulse
     [RequiresUnreferencedCode(
         "Default implementation of ViewLocator involves reflection which may be trimmed away.",
         Url = "https://docs.avaloniaui.net/docs/concepts/view-locator")]
+    [ExcludeFromCodeCoverage]
     public class ViewLocator : IDataTemplate
     {
         public Control? Build(object? param)
@@ -22,7 +23,7 @@ namespace At.luki0606.ClassPulse
             }
 
             string name = param.GetType().FullName!.Replace("ViewModel", "View", StringComparison.Ordinal);
-            Type type = Type.GetType(name);
+            Type? type = Type.GetType(name);
 
             if (type != null)
             {

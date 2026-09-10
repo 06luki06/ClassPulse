@@ -24,7 +24,7 @@ namespace At.luki0606.ClassPulse.Tests.Stubs
 
         public double CalculateSubjectAverage(IEnumerable<Assessment> assessments)
         {
-            List<Assessment> list = assessments.ToList();
+            List<Assessment> list = [.. assessments];
             if (list.Count == 0)
             {
                 return 0.0;
@@ -74,7 +74,7 @@ namespace At.luki0606.ClassPulse.Tests.Stubs
 
         public bool HasPerformanceDrop(IEnumerable<Assessment> assessments)
         {
-            List<Assessment> sorted = assessments.OrderByDescending(a => a.Date).ToList();
+            List<Assessment> sorted = [.. assessments.OrderByDescending(a => a.Date)];
             if (sorted.Count < 3)
             {
                 return false;
@@ -105,6 +105,20 @@ namespace At.luki0606.ClassPulse.Tests.Stubs
             );
 
             return Task.CompletedTask;
+        }
+
+        public Task<List<Assessment>> GetAssessmentsByTitleAndSubjectAsync(Guid schoolClassId, Guid subjectId, string title)
+        {
+            List<Guid> studentIdsInClass = [.. _studentToClassMap
+                .Where(kvp => kvp.Value == schoolClassId)
+                .Select(kvp => kvp.Key)];
+
+            List<Assessment> matchingAssessments = [.. _assessments
+                .Where(a => a.SubjectId == subjectId &&
+                            a.Title == title &&
+                            studentIdsInClass.Contains(a.StudentId))];
+
+            return Task.FromResult(matchingAssessments);
         }
     }
 }

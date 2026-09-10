@@ -6,12 +6,14 @@ namespace At.luki0606.ClassPulse.Tests.Stubs
     internal class ClassServiceStub : IClassService
     {
         private readonly List<SchoolClass> _schoolClasses = [];
+        private readonly List<Subject> _subjects = [];
+        private readonly Dictionary<Guid, List<Student>> _classStudentsMap = [];
 
         public Task<SchoolClass> CreateClassAsync(string name, string schoolYear)
         {
             SchoolClass schoolClass = new(name, schoolYear);
-
             _schoolClasses.Add(schoolClass);
+            _classStudentsMap[schoolClass.Id] = [];
             return Task.FromResult(schoolClass);
         }
 
@@ -31,22 +33,24 @@ namespace At.luki0606.ClassPulse.Tests.Stubs
             return Task.FromResult(schoolClass);
         }
 
-        public Task<Student> AddStudentToSchoolClass(Guid schoolClassId, string firstName, string lastName, string? generalNotes = null)
+        public Task<Student> AddStudentToSchoolClassAsync(Guid schoolClassId, string firstName, string lastName, string? generalNotes = null)
         {
-            SchoolClass schoolClass = _schoolClasses.FirstOrDefault(c => c.Id == schoolClassId)
-                ?? throw new KeyNotFoundException($"SchoolClass with ID {schoolClassId} not found.");
+            if (!_classStudentsMap.TryGetValue(schoolClassId, out List<Student>? value))
+            {
+                value = [];
+                _classStudentsMap[schoolClassId] = value;
+            }
 
             Student student = new(firstName, lastName, schoolClassId, generalNotes);
-
-            IEnumerable<Student> _ = schoolClass.Students.Append(student);
+            value.Add(student);
 
             return Task.FromResult(student);
         }
 
         public Task<Student?> GetStudentDetailsAsync(Guid studentId)
         {
-            Student? student = _schoolClasses
-                .SelectMany(c => c.Students ?? Enumerable.Empty<Student>())
+            Student? student = _classStudentsMap.Values
+                .SelectMany(list => list)
                 .FirstOrDefault(s => s.Id == studentId);
 
             return Task.FromResult(student);
@@ -65,6 +69,29 @@ namespace At.luki0606.ClassPulse.Tests.Stubs
                             s.LastName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))];
 
             return Task.FromResult(results);
+        }
+
+        public Task<List<Student>> GetStudentsByClassIdAsync(Guid classId)
+        {
+            if (_classStudentsMap.TryGetValue(classId, out List<Student>? students))
+            {
+                List<Student> result = [.. students];
+                return Task.FromResult(result);
+            }
+
+            return Task.FromResult(new List<Student>());
+        }
+
+        public Task<List<Subject>> GetAllSubjectsAsync()
+        {
+            return Task.FromResult(_subjects);
+        }
+
+        public Task<Subject> CreateSubjectAsync(string name, string code)
+        {
+            Subject subject = new(name, code);
+            _subjects.Add(subject);
+            return Task.FromResult(subject);
         }
     }
 }
