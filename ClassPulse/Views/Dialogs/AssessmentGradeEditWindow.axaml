@@ -29,9 +29,9 @@
                                 </StackPanel>
 
                                 <!-- Feedback -->
-                                <Grid Grid.Row="1" Grid.ColumnSpan="2" ColumnDefinitions="*, *" Margin="0,8,0,0">
-                                    <TextBox Grid.Column="0" Text="{Binding PositiveFeedback}" PlaceholderText="{x:Static res:Resources.Dialog_AssessmentGradeEdit_PositiveFeedback}" Margin="0,0,4,0"/>
-                                    <TextBox Grid.Column="1" Text="{Binding ImprovementNotes}" PlaceholderText="{x:Static res:Resources.Dialog_AssessmentGradeEdit_ImprovementNotes}" Margin="4,0,0,0"/>
+                                <Grid Grid.Row="1" Grid.ColumnSpan="2" ColumnDefinitions="*, *" Margin="0,8,0,0" Height="200">
+                                    <TextBox Grid.Column="0" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding PositiveFeedback}" PlaceholderText="{x:Static res:Resources.Dialog_AssessmentGradeEdit_PositiveFeedback}" Margin="0,0,4,0"/>
+                                    <TextBox Grid.Column="1" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding ImprovementNotes}" PlaceholderText="{x:Static res:Resources.Dialog_AssessmentGradeEdit_ImprovementNotes}" Margin="4,0,0,0"/>
                                 </Grid>
                             </Grid>
                         </Border>
