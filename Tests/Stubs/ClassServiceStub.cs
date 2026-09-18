@@ -93,5 +93,20 @@ namespace At.luki0606.ClassPulse.Tests.Stubs
             _subjects.Add(subject);
             return Task.FromResult(subject);
         }
+
+        public Task<Student?> RemoveStudentFromClassAsync(Guid schoolClassId, Guid studentId)
+        {
+            if (_classStudentsMap.TryGetValue(schoolClassId, out List<Student>? students))
+            {
+                Student? student = students.FirstOrDefault(s => s.Id == studentId);
+                if (student != null)
+                {
+                    students.Remove(student);
+                    return Task.FromResult<Student?>(student);
+                }
+            }
+
+            return Task.FromResult<Student?>(null);
+        }
     }
 }

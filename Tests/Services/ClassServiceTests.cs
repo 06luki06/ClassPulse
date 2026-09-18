@@ -206,5 +206,30 @@ namespace At.luki0606.ClassPulse.Tests.Services
             Assert.That(subjects[1].Name, Is.EqualTo("b_subject"));
             Assert.That(subjects[2].Name, Is.EqualTo("c_subject"));
         }
+
+        [Test]
+        public async Task RemoveStudentFromClassAsync_RemovesStuden()
+        {
+            SchoolClass schoolClass = await _classService.CreateClassAsync("TestClass", "2026/2027");
+            Student newStudent = await _classService.AddStudentToSchoolClassAsync(schoolClass.Id, "Test", "User");
+
+            List<Student> students = await _classService.GetStudentsByClassIdAsync(schoolClass.Id);
+            Assert.That(students, Has.Count.EqualTo(1));
+
+            Student? student = await _classService.RemoveStudentFromClassAsync(schoolClass.Id, newStudent.Id);
+            Assert.That(student, Is.Not.Null);
+            Assert.That(student.Id, Is.EqualTo(newStudent.Id));
+            students = await _classService.GetStudentsByClassIdAsync(schoolClass.Id);
+            Assert.That(students, Has.Count.EqualTo(0));
+        }
+
+        [Test]
+        public async Task RemoveStudentFromClassAsync_StudentDoesNotExist()
+        {
+            SchoolClass schoolClass = await _classService.CreateClassAsync("TestClass", "2026/2027");
+
+            Student? student = await _classService.RemoveStudentFromClassAsync(schoolClass.Id, Guid.NewGuid());
+            Assert.That(student, Is.Null);
+        }
     }
 }

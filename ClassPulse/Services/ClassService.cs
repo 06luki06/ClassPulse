@@ -102,5 +102,20 @@ namespace At.luki0606.ClassPulse.Services
             await _dbContext.SaveChangesAsync();
             return subject;
         }
+
+        public async Task<Student?> RemoveStudentFromClassAsync(Guid schoolClassId, Guid studentId)
+        {
+            Student? student = await _dbContext.Students
+                .FirstOrDefaultAsync(s => s.Id == studentId && s.SchoolClassId == schoolClassId);
+
+            if (student == null)
+            {
+                return null;
+            }
+
+            _dbContext.Students.Remove(student);
+            await _dbContext.SaveChangesAsync();
+            return student;
+        }
     }
 }
