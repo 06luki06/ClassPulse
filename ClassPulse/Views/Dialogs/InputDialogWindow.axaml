@@ -33,10 +33,21 @@
                                    FontWeight="SemiBold"
                                    Foreground="{DynamicResource PrimaryTextBrush}"/>
                         
-                        <!-- Normal TextBox -->
+                        <!-- Normal Single-Line TextBox -->
                         <TextBox Text="{Binding Value, Mode=TwoWay}" 
                                  PlaceholderText="{Binding Placeholder}"
-                                 IsVisible="{Binding !IsDropdown}"/>
+                                 IsVisible="{Binding IsSingleLine}"/>
+
+                        <!-- Multiline TextArea mit Scroll-Behaviour -->
+                        <TextBox Text="{Binding Value, Mode=TwoWay}" 
+                                 PlaceholderText="{Binding Placeholder}"
+                                 AcceptsReturn="True"
+                                 AcceptsTab="True"
+                                 TextWrapping="Wrap"
+                                 MinHeight="120"
+                                 MaxHeight="250"
+                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                 IsVisible="{Binding IsMultiline}"/>
 
                         <!-- DropDown -->
                         <ComboBox ItemsSource="{Binding Options}"

@@ -204,6 +204,28 @@ namespace At.luki0606.ClassPulse.ViewModels
             await _classService.RemoveStudentFromClassAsync(SelectedClass.Id, row.Id);
             await LoadDataAsync();
         }
+
+        [RelayCommand]
+        private async Task EditStudentNotes(StudentMatrixRow row)
+        {
+            InputDialogResult? result = await _dialogService.ShowInputDialogAsync(
+                title: $"{Resources.Resources.Label_Notes}: {row.FullName}",
+                message: Resources.Resources.Label_Notes,
+                new InputField(
+                    label: Resources.Resources.Label_Notes,
+                    placeholder: Resources.Resources.Label_Notes,
+                    initialValue: row.GeneralNotes,
+                    isMultiline: true
+                )
+            );
+
+            if (result is { IsConfirmed: true })
+            {
+                string notes = result.ViewModel.GetValue(Resources.Resources.Label_Notes);
+                await _classService.UpdateStudentGeneralNotesAsync(row.Id, notes);
+                await LoadDataAsync();
+            }
+        }
     }
 
     public class SubjectDto
@@ -226,6 +248,7 @@ namespace At.luki0606.ClassPulse.ViewModels
 
         public Guid Id => _student.Id;
         public string FullName => _student.FullName;
+        public string GeneralNotes => _student.GeneralNotes ?? string.Empty;
         public string OverallAverage { get; set; } = "-";
         public List<SubjectGradeDto> SubjectGradesList { get; } = [];
 

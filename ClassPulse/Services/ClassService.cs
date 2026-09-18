@@ -117,5 +117,18 @@ namespace At.luki0606.ClassPulse.Services
             await _dbContext.SaveChangesAsync();
             return student;
         }
+
+        public async Task<Student?> UpdateStudentGeneralNotesAsync(Guid studentId, string? generalNotes)
+        {
+            Student? student = await _dbContext.Students.FirstOrDefaultAsync(s => s.Id == studentId);
+            if (student == null)
+            {
+                return null;
+            }
+
+            student.UpdateGeneralNotes(generalNotes);
+            await _dbContext.SaveChangesAsync();
+            return student;
+        }
     }
 }

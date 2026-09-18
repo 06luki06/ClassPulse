@@ -17,5 +17,6 @@ namespace At.luki0606.ClassPulse.Services
         Task<List<Subject>> GetAllSubjectsAsync();
         Task<Subject> CreateSubjectAsync(string name, string code);
         Task<Student?> RemoveStudentFromClassAsync(Guid schoolClassId, Guid studentId);
+        Task<Student?> UpdateStudentGeneralNotesAsync(Guid studentId, string? generalNotes);
     }
 }

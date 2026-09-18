@@ -141,5 +141,32 @@ namespace At.luki0606.ClassPulse.Tests.ViewModels
             await vm.RemoveStudentCommand.ExecuteAsync(student);
             Assert.That(vm.StudentRows, Has.Count.EqualTo(0));
         }
+
+        [Test]
+        public async Task EditStudentNotes_WhenConfirmed_ShouldUpdateNotesAndReload()
+        {
+            Student student = await _classService.AddStudentToSchoolClassAsync(_testClass.Id, "Max", "Mustermann", "Alte Notiz");
+            ClassDetailViewModel vm = new(_testClass, _classService, _dialogService, _assessmentService);
+            await vm.LoadDataAsync();
+
+            StudentMatrixRow row = vm.StudentRows.First(r => r.Id == student.Id);
+
+            InputDialogViewModel dialogResultVm = new(
+                "Title",
+                "Message",
+                [
+                    new InputField(Resources.Resources.Label_Notes, "Placeholder", "Neue Notiz", isMultiline: true)
+                ]
+            );
+
+            _dialogService.NextInputResult = new InputDialogResult(true, dialogResultVm);
+
+            await vm.EditStudentNotesCommand.ExecuteAsync(row);
+
+            Student? updatedStudent = await _classService.GetStudentDetailsAsync(student.Id);
+            Assert.That(updatedStudent, Is.Not.Null);
+            Assert.That(updatedStudent!.GeneralNotes, Is.EqualTo("Neue Notiz"));
+            Assert.That(vm.StudentRows.First(r => r.Id == student.Id).GeneralNotes, Is.EqualTo("Neue Notiz"));
+        }
     }
 }

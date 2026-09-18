@@ -252,4 +252,7 @@
   <data name="Label_Grade" xml:space="preserve">
     <value>Grade</value>
   </data>
+  <data name="Label_Notes" xml:space="preserve">
+    <value>Nozes</value>
+  </data>
 </root>

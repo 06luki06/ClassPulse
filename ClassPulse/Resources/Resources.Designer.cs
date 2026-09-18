@@ -340,6 +340,15 @@ namespace At.luki0606.ClassPulse.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nozes.
+        /// </summary>
+        public static string Label_Notes {
+            get {
+                return ResourceManager.GetString("Label_Notes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Performance Drop.
         /// </summary>
         public static string Label_PerformanceDrop {

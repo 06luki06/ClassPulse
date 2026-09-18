@@ -108,5 +108,16 @@ namespace At.luki0606.ClassPulse.Tests.Stubs
 
             return Task.FromResult<Student?>(null);
         }
+
+        public Task<Student?> UpdateStudentGeneralNotesAsync(Guid studentId, string? generalNotes)
+        {
+            Student? student = _classStudentsMap.Values
+                .SelectMany(list => list)
+                .FirstOrDefault(s => s.Id == studentId);
+
+            student?.UpdateGeneralNotes(generalNotes);
+
+            return Task.FromResult(student);
+        }
     }
 }
