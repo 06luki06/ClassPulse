@@ -126,5 +126,20 @@ namespace At.luki0606.ClassPulse.Tests.ViewModels
             Assert.That(assessments[0].Title, Is.EqualTo("Test 1"));
             Assert.That(assessments[0].Weight, Is.EqualTo(2));
         }
+
+        [Test]
+        public async Task RemoveStudentCommand_RemovesStudent()
+        {
+            ClassDetailViewModel vm = new(_testClass, _classService, _dialogService, _assessmentService);
+            await _classService.AddStudentToSchoolClassAsync(_testClass.Id, "Test", "User");
+            await vm.LoadDataAsync();
+
+            Assert.That(vm.StudentRows, Has.Count.EqualTo(1));
+
+            StudentMatrixRow student = vm.StudentRows[0];
+
+            await vm.RemoveStudentCommand.ExecuteAsync(student);
+            Assert.That(vm.StudentRows, Has.Count.EqualTo(0));
+        }
     }
 }

@@ -197,6 +197,13 @@ namespace At.luki0606.ClassPulse.ViewModels
                 mainVm.NavigateToStudentDetail(studentDetailVm);
             }
         }
+
+        [RelayCommand]
+        private async Task RemoveStudent(StudentMatrixRow row)
+        {
+            await _classService.RemoveStudentFromClassAsync(SelectedClass.Id, row.Id);
+            await LoadDataAsync();
+        }
     }
 
     public class SubjectDto
