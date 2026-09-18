@@ -95,6 +95,14 @@
                                             </StackPanel>
                                         </Border>
 
+                                        <Button Command="{Binding $parent[UserControl].((vm:ClassDetailViewModel)DataContext).EditStudentNotesCommand}"
+                                                CommandParameter="{Binding}"
+                                                Background="Transparent"
+                                                Padding="6"
+                                                ToolTip.Tip="{x:Static res:Resources.Label_Notes}">
+                                            <ic:SymbolIcon Symbol="NoteEdit" FontSize="18" Foreground="{DynamicResource PrimaryBrush}"/>
+                                        </Button>
+
                                         <Button Command="{Binding $parent[UserControl].((vm:ClassDetailViewModel)DataContext).RemoveStudentCommand}"
                                                 CommandParameter="{Binding}"
                                                 Background="{DynamicResource DangerBrush}"

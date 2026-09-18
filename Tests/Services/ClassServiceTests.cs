@@ -231,5 +231,32 @@ namespace At.luki0606.ClassPulse.Tests.Services
             Student? student = await _classService.RemoveStudentFromClassAsync(schoolClass.Id, Guid.NewGuid());
             Assert.That(student, Is.Null);
         }
+
+        [Test]
+        public async Task UpdateStudentGeneralNotesAsync_WithValidId_UpdatesNotesInDatabase()
+        {
+            SchoolClass schoolClass = new("4AHIF", "2025/2026");
+            Student student = new("Max", "Mustermann", schoolClass.Id, "Alte Notiz");
+            _dbContext.SchoolClasses.Add(schoolClass);
+            _dbContext.Students.Add(student);
+            await _dbContext.SaveChangesAsync();
+
+            Student? updated = await _classService.UpdateStudentGeneralNotesAsync(student.Id, "  Neue Notiz  ");
+
+            Assert.That(updated, Is.Not.Null);
+            Assert.That(updated!.GeneralNotes, Is.EqualTo("Neue Notiz"));
+
+            Student? dbStudent = await _dbContext.Students.FindAsync(student.Id);
+            Assert.That(dbStudent, Is.Not.Null);
+            Assert.That(dbStudent!.GeneralNotes, Is.EqualTo("Neue Notiz"));
+        }
+
+        [Test]
+        public async Task UpdateStudentGeneralNotesAsync_WithInvalidId_ReturnsNull()
+        {
+            Student? result = await _classService.UpdateStudentGeneralNotesAsync(Guid.NewGuid(), "Notiz");
+
+            Assert.That(result, Is.Null);
+        }
     }
 }
