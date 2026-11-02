@@ -21,11 +21,22 @@
                                 BorderBrush="{DynamicResource CardBorderBrush}"
                                 BorderThickness="1" CornerRadius="8" Padding="12" Margin="0,0,0,8">
                             <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="*, Auto">
-                                <!-- Student Name & Grade -->
+                                <!-- Student Name & Participation / Grade -->
                                 <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding StudentName}" FontWeight="Bold" VerticalAlignment="Center"/>
-                                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="8">
-                                    <TextBlock Text="Note:" VerticalAlignment="Center"/>
-                                    <NumericUpDown Value="{Binding Grade}" Minimum="1.0" Maximum="5.0" Increment="0.5" Width="120"/>
+                                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
+                                    <CheckBox Content="{x:Static res:Resources.Label_Participated}" 
+                                              IsChecked="{Binding HasParticipated}" 
+                                              VerticalAlignment="Center"/>
+                                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                        <TextBlock Text="{x:Static res:Resources.Label_Grade}" VerticalAlignment="Center"/>
+                                        <TextBlock Text=":" VerticalAlignment="Center"/>
+                                        <NumericUpDown Value="{Binding Grade}" 
+                                                       Minimum="0.0" 
+                                                       Maximum="5.0" 
+                                                       Increment="0.5" 
+                                                       Width="120"
+                                                       IsEnabled="{Binding HasParticipated}"/>
+                                    </StackPanel>
                                 </StackPanel>
 
                                 <!-- Feedback -->

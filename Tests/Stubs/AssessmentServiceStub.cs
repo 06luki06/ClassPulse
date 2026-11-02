@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.Data.Entities;
+using At.luki0606.ClassPulse.Data.Entities;
 using At.luki0606.ClassPulse.Services;
 
 namespace At.luki0606.ClassPulse.Tests.Stubs
@@ -24,7 +24,10 @@ namespace At.luki0606.ClassPulse.Tests.Stubs
 
         public double CalculateSubjectAverage(IEnumerable<Assessment> assessments)
         {
-            List<Assessment> list = [.. assessments];
+            List<Assessment> list = assessments
+                .Where(a => a.HasParticipated && a.Grade > 0.0)
+                .ToList();
+
             if (list.Count == 0)
             {
                 return 0.0;
@@ -74,7 +77,10 @@ namespace At.luki0606.ClassPulse.Tests.Stubs
 
         public bool HasPerformanceDrop(IEnumerable<Assessment> assessments)
         {
-            List<Assessment> sorted = [.. assessments.OrderByDescending(a => a.Date)];
+            List<Assessment> sorted = [.. assessments
+                .Where(a => a.HasParticipated && a.Grade > 0.0)
+                .OrderByDescending(a => a.Date)];
+
             if (sorted.Count < 3)
             {
                 return false;
@@ -90,7 +96,8 @@ namespace At.luki0606.ClassPulse.Tests.Stubs
             Guid assessmentId,
             double grade,
             string? positiveFeedback = null,
-            string? improvementNotes = null)
+            string? improvementNotes = null,
+            bool hasParticipated = true)
         {
             Assessment assessment = _assessments.FirstOrDefault(a => a.Id == assessmentId)
                 ?? throw new InvalidOperationException("Assessment not found.");
@@ -101,7 +108,8 @@ namespace At.luki0606.ClassPulse.Tests.Stubs
                 grade: grade,
                 weight: assessment.Weight,
                 positiveFeedback: positiveFeedback,
-                improvementNotes: improvementNotes
+                improvementNotes: improvementNotes,
+                hasParticipated: hasParticipated
             );
 
             return Task.CompletedTask;

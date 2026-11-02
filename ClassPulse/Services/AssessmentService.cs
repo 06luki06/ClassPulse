@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.Data;
+using At.luki0606.ClassPulse.Data;
 using At.luki0606.ClassPulse.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -27,7 +27,10 @@ namespace At.luki0606.ClassPulse.Services
 
         public double CalculateSubjectAverage(IEnumerable<Assessment> assessments)
         {
-            List<Assessment> list = assessments as List<Assessment> ?? [.. assessments];
+            List<Assessment> list = assessments
+                .Where(a => a.HasParticipated && a.Grade > 0.0)
+                .ToList();
+
             if (list.Count == 0)
             {
                 return 0.0;
@@ -73,7 +76,10 @@ namespace At.luki0606.ClassPulse.Services
 
         public bool HasPerformanceDrop(IEnumerable<Assessment> assessments)
         {
-            List<Assessment> sorted = [.. assessments.OrderByDescending(a => a.Date)];
+            List<Assessment> sorted = [.. assessments
+                .Where(a => a.HasParticipated && a.Grade > 0.0)
+                .OrderByDescending(a => a.Date)];
+
             if (sorted.Count < 3)
             {
                 return false;
@@ -85,7 +91,7 @@ namespace At.luki0606.ClassPulse.Services
             return (recentAvg - overallAvg) >= 0.75;
         }
 
-        public async Task UpdateAssessmentGradeAsync(Guid assessmentId, double grade, string? positiveFeedback = null, string? improvementNotes = null)
+        public async Task UpdateAssessmentGradeAsync(Guid assessmentId, double grade, string? positiveFeedback = null, string? improvementNotes = null, bool hasParticipated = true)
         {
             Assessment assessment = await _dbContext.Assessments.FindAsync(assessmentId)
                 ?? throw new InvalidOperationException("Assessment not found.");
@@ -96,7 +102,8 @@ namespace At.luki0606.ClassPulse.Services
                 grade: grade,
                 weight: assessment.Weight,
                 positiveFeedback: positiveFeedback,
-                improvementNotes: improvementNotes
+                improvementNotes: improvementNotes,
+                hasParticipated: hasParticipated
             );
             await _dbContext.SaveChangesAsync();
         }

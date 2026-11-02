@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.Data.Entities;
+using At.luki0606.ClassPulse.Data.Entities;
 using At.luki0606.ClassPulse.Tests.Stubs;
 using At.luki0606.ClassPulse.ViewModels.Dialogs;
 
@@ -33,6 +33,7 @@ namespace At.luki0606.ClassPulse.Tests.ViewModels.Dialogs
             Assert.That(vm.GradeEntries, Has.Count.EqualTo(1));
             Assert.That(vm.GradeEntries[0].AssessmentId, Is.EqualTo(_testAssessment.Id));
             Assert.That(vm.GradeEntries[0].Grade, Is.EqualTo(1.0));
+            Assert.That(vm.GradeEntries[0].HasParticipated, Is.True);
             Assert.That(vm.IsConfirmed, Is.False);
         }
 
@@ -64,6 +65,54 @@ namespace At.luki0606.ClassPulse.Tests.ViewModels.Dialogs
             Assert.That(updatedAssessments[0].Grade, Is.EqualTo(2.0));
             Assert.That(updatedAssessments[0].PositiveFeedback, Is.EqualTo("Good job"));
             Assert.That(updatedAssessments[0].ImprovementNotes, Is.EqualTo("Work on speed"));
+            Assert.That(updatedAssessments[0].HasParticipated, Is.True);
+        }
+
+        [Test]
+        public async Task SaveAsync_WhenParticipationIsFalse_ShouldSaveUnattendedStatus()
+        {
+            Guid schoolClassId = Guid.NewGuid();
+
+            _assessmentService.RegisterStudentToClass(_studentId, schoolClassId);
+            await _assessmentService.CreateClassAssessmentAsync(schoolClassId, _subjectId, "Math Test", DateTime.Now);
+
+            List<Assessment> assessments = await _assessmentService.GetAssessmentsByTitleAndSubjectAsync(schoolClassId, _subjectId, "Math Test");
+
+            AssessmentGradeEditViewModel vm = new("Math Test", assessments, _assessmentService);
+
+            vm.GradeEntries[0].HasParticipated = false;
+
+            await vm.SaveCommand.ExecuteAsync(null);
+
+            Assert.That(vm.IsConfirmed, Is.True);
+
+            List<Assessment> updatedAssessments = await _assessmentService.GetAssessmentsByTitleAndSubjectAsync(schoolClassId, _subjectId, "Math Test");
+            Assert.That(updatedAssessments[0].HasParticipated, Is.False);
+            Assert.That(updatedAssessments[0].Grade, Is.EqualTo(0.0));
+        }
+
+        [Test]
+        public void AssessmentGradeEntryDto_TogglingParticipation_UpdatesGrade()
+        {
+            AssessmentGradeEntryDto dto = new(Guid.NewGuid(), "Max", 2.0, null, null, hasParticipated: true);
+
+            dto.HasParticipated = false;
+            Assert.That(dto.Grade, Is.EqualTo(0.0));
+
+            dto.HasParticipated = true;
+            Assert.That(dto.Grade, Is.EqualTo(1.0));
+        }
+
+        [Test]
+        public void AssessmentGradeEntryDto_SettingGradeToZero_UnchecksParticipation()
+        {
+            AssessmentGradeEntryDto dto = new(Guid.NewGuid(), "Max", 2.0, null, null, hasParticipated: true);
+
+            dto.Grade = 0.0;
+            Assert.That(dto.HasParticipated, Is.False);
+
+            dto.Grade = 3.5;
+            Assert.That(dto.HasParticipated, Is.True);
         }
 
         [Test]

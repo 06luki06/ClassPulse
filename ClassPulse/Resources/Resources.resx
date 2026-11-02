@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -254,5 +254,11 @@
   </data>
   <data name="Label_Notes" xml:space="preserve">
     <value>Nozes</value>
+  </data>
+  <data name="Label_Participated" xml:space="preserve">
+    <value>Participated</value>
+  </data>
+  <data name="Label_NotAttended" xml:space="preserve">
+    <value>Did not attend</value>
   </data>
 </root>

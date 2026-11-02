@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.Data;
+using At.luki0606.ClassPulse.Data;
 using At.luki0606.ClassPulse.Data.Entities;
 using At.luki0606.ClassPulse.Services;
 using Microsoft.EntityFrameworkCore;
@@ -83,6 +83,60 @@ namespace At.luki0606.ClassPulse.Tests.Services
         }
 
         [Test]
+        public void CalculateSubjectAverage_ExcludesNonParticipatingAssessments()
+        {
+            Guid studentId = Guid.NewGuid();
+            Guid subjectId = Guid.NewGuid();
+            DateTime date = DateTime.Now;
+
+            List<Assessment> assessments =
+            [
+                new("Test 1", date, 2.0, studentId, subjectId, weight: 1.0, hasParticipated: true),
+                new("Test 2", date, 1.0, studentId, subjectId, weight: 1.0, hasParticipated: false) // Missed exam due to illness
+            ];
+
+            double result = _assessmentService.CalculateSubjectAverage(assessments);
+
+            Assert.That(result, Is.EqualTo(2.0));
+        }
+
+        [Test]
+        public void CalculateSubjectAverage_ExcludesZeroGradeAssessments()
+        {
+            Guid studentId = Guid.NewGuid();
+            Guid subjectId = Guid.NewGuid();
+            DateTime date = DateTime.Now;
+
+            List<Assessment> assessments =
+            [
+                new("Test 1", date, 3.0, studentId, subjectId, weight: 1.0),
+                new("Test 2", date, 0.0, studentId, subjectId, weight: 1.0) // 0 grade = did not attend
+            ];
+
+            double result = _assessmentService.CalculateSubjectAverage(assessments);
+
+            Assert.That(result, Is.EqualTo(3.0));
+        }
+
+        [Test]
+        public void CalculateSubjectAverage_WhenAllAssessmentsNonParticipating_ReturnsZero()
+        {
+            Guid studentId = Guid.NewGuid();
+            Guid subjectId = Guid.NewGuid();
+            DateTime date = DateTime.Now;
+
+            List<Assessment> assessments =
+            [
+                new("Test 1", date, 0.0, studentId, subjectId, weight: 1.0),
+                new("Test 2", date, 2.0, studentId, subjectId, weight: 1.0, hasParticipated: false)
+            ];
+
+            double result = _assessmentService.CalculateSubjectAverage(assessments);
+
+            Assert.That(result, Is.Zero);
+        }
+
+        [Test]
         public async Task CreateClassAssessmentAsync_WithStudents_CreatesAssessmentsForAllStudents()
         {
             SchoolClass schoolClass = new("4AHIF", "2025/2026");
@@ -108,6 +162,7 @@ namespace At.luki0606.ClassPulse.Tests.Services
                 Assert.That(assessment.Grade, Is.EqualTo(2.5));
                 Assert.That(assessment.Weight, Is.EqualTo(2.0));
                 Assert.That(assessment.SubjectId, Is.EqualTo(subject.Id));
+                Assert.That(assessment.HasParticipated, Is.True);
             }
         }
 
@@ -165,6 +220,27 @@ namespace At.luki0606.ClassPulse.Tests.Services
         }
 
         [Test]
+        public void HasPerformanceDrop_ExcludesNonParticipatingAssessments()
+        {
+            Guid studentId = Guid.NewGuid();
+            Guid subjectId = Guid.NewGuid();
+
+            // Older assessments: 1.0, 1.0, 1.0
+            // Recent assessment: 5.0 (hasParticipated: false - was ill)
+            List<Assessment> assessments =
+            [
+                new("T1", new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Local), 1.0, studentId, subjectId),
+                new("T2", new DateTime(2026, 2, 1, 0, 0, 0, DateTimeKind.Local), 1.0, studentId, subjectId),
+                new("T3", new DateTime(2026, 3, 1, 0, 0, 0, DateTimeKind.Local), 1.0, studentId, subjectId),
+                new("T4", new DateTime(2026, 4, 1, 0, 0, 0, DateTimeKind.Local), 5.0, studentId, subjectId, hasParticipated: false)
+            ];
+
+            bool result = _assessmentService.HasPerformanceDrop(assessments);
+
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
         public async Task UpdateAssessmentGradeAsync_WithValidId_UpdatesGradeAndFeedback()
         {
             SchoolClass schoolClass = new("4AHIF", "2025/2026");
@@ -185,6 +261,29 @@ namespace At.luki0606.ClassPulse.Tests.Services
             Assert.That(updated.Grade, Is.EqualTo(1.5));
             Assert.That(updated.PositiveFeedback, Is.EqualTo("Super"));
             Assert.That(updated.ImprovementNotes, Is.EqualTo("Keine"));
+            Assert.That(updated.HasParticipated, Is.True);
+        }
+
+        [Test]
+        public async Task UpdateAssessmentGradeAsync_WithParticipationFalse_UpdatesSuccessfully()
+        {
+            SchoolClass schoolClass = new("4AHIF", "2025/2026");
+            Student student = new("Max", "Mustermann", schoolClass.Id);
+            Subject subject = new("Mathematik", "M");
+            Assessment assessment = new("Test", DateTime.Now, 3.0, student.Id, subject.Id);
+
+            _dbContext.SchoolClasses.Add(schoolClass);
+            _dbContext.Students.Add(student);
+            _dbContext.Subjects.Add(subject);
+            _dbContext.Assessments.Add(assessment);
+            await _dbContext.SaveChangesAsync();
+
+            await _assessmentService.UpdateAssessmentGradeAsync(assessment.Id, 0.0, hasParticipated: false);
+
+            Assessment? updated = await _dbContext.Assessments.FindAsync(assessment.Id);
+            Assert.That(updated, Is.Not.Null);
+            Assert.That(updated.HasParticipated, Is.False);
+            Assert.That(updated.Grade, Is.EqualTo(0.0));
         }
 
         [Test]

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace At.luki0606.ClassPulse.Data.Entities
 {
@@ -10,6 +10,7 @@ namespace At.luki0606.ClassPulse.Data.Entities
 
         public double Grade { get; private set; }
         public double Weight { get; private set; }
+        public bool HasParticipated { get; private set; } = true;
 
         public string? PositiveFeedback { get; private set; }
         public string? ImprovementNotes { get; private set; }
@@ -33,10 +34,16 @@ namespace At.luki0606.ClassPulse.Data.Entities
             Guid subjectId,
             double weight = 1.0,
             string? positiveFeedback = null,
-            string? improvementNotes = null)
+            string? improvementNotes = null,
+            bool hasParticipated = true)
         {
+            if (grade == 0.0)
+            {
+                hasParticipated = false;
+            }
+
             ValidateTitle(title);
-            ValidateGrade(grade);
+            ValidateGrade(grade, hasParticipated);
             ValidateWeight(weight);
             ValidateId(studentId);
             ValidateId(subjectId);
@@ -50,6 +57,7 @@ namespace At.luki0606.ClassPulse.Data.Entities
             ImprovementNotes = improvementNotes?.Trim();
             StudentId = studentId;
             SubjectId = subjectId;
+            HasParticipated = hasParticipated;
         }
 
         public void Update(
@@ -58,10 +66,16 @@ namespace At.luki0606.ClassPulse.Data.Entities
             double grade,
             double weight = 1.0,
             string? positiveFeedback = null,
-            string? improvementNotes = null)
+            string? improvementNotes = null,
+            bool hasParticipated = true)
         {
+            if (grade == 0.0)
+            {
+                hasParticipated = false;
+            }
+
             ValidateTitle(title);
-            ValidateGrade(grade);
+            ValidateGrade(grade, hasParticipated);
             ValidateWeight(weight);
             Title = title;
             Date = date;
@@ -69,6 +83,7 @@ namespace At.luki0606.ClassPulse.Data.Entities
             Weight = weight;
             PositiveFeedback = positiveFeedback?.Trim();
             ImprovementNotes = improvementNotes?.Trim();
+            HasParticipated = hasParticipated;
         }
 
         private static void ValidateTitle(string title)
@@ -79,8 +94,13 @@ namespace At.luki0606.ClassPulse.Data.Entities
             }
         }
 
-        private static void ValidateGrade(double grade)
+        private static void ValidateGrade(double grade, bool hasParticipated = true)
         {
+            if (!hasParticipated && grade == 0.0)
+            {
+                return;
+            }
+
             if (grade is < 1.0 or > 5.0)
             {
                 throw new ArgumentOutOfRangeException(nameof(grade));

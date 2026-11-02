@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.Data.Entities;
+using At.luki0606.ClassPulse.Data.Entities;
 
 namespace At.luki0606.ClassPulse.Tests.Data.Entities
 {
@@ -37,6 +37,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
             Assert.That(assessment.ImprovementNotes, Is.EqualTo("Mehr üben."));
             Assert.That(assessment.StudentId, Is.EqualTo(_validStudentId));
             Assert.That(assessment.SubjectId, Is.EqualTo(_validSubjectId));
+            Assert.That(assessment.HasParticipated, Is.True);
             Assert.That(assessment.Student, Is.Null);
             Assert.That(assessment.Subject, Is.Null);
         }
@@ -49,6 +50,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
             Assert.That(assessment.Weight, Is.EqualTo(1.0));
             Assert.That(assessment.PositiveFeedback, Is.Null);
             Assert.That(assessment.ImprovementNotes, Is.Null);
+            Assert.That(assessment.HasParticipated, Is.True);
         }
 
         [TestCase(null)]
@@ -113,6 +115,35 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         }
 
         [Test]
+        public void Constructor_WithHasParticipatedFalse_SetsHasParticipatedCorrectly()
+        {
+            Assessment assessment = new(
+                "Test",
+                DateTime.Now,
+                1.0,
+                _validStudentId,
+                _validSubjectId,
+                hasParticipated: false);
+
+            Assert.That(assessment.HasParticipated, Is.False);
+            Assert.That(assessment.Grade, Is.EqualTo(1.0));
+        }
+
+        [Test]
+        public void Constructor_WithGradeZero_SetsHasParticipatedFalseAndGradeZero()
+        {
+            Assessment assessment = new(
+                "Test",
+                DateTime.Now,
+                0.0,
+                _validStudentId,
+                _validSubjectId);
+
+            Assert.That(assessment.HasParticipated, Is.False);
+            Assert.That(assessment.Grade, Is.EqualTo(0.0));
+        }
+
+        [Test]
         public void Update_WithValidArguments_UpdatesPropertiesAndTrimsStrings()
         {
             Assessment assessment = new("Old Title", DateTime.Now, 3.0, _validStudentId, _validSubjectId);
@@ -132,6 +163,29 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
             Assert.That(assessment.Weight, Is.EqualTo(newWeight));
             Assert.That(assessment.PositiveFeedback, Is.EqualTo("Super!"));
             Assert.That(assessment.ImprovementNotes, Is.EqualTo("Weiter so!"));
+            Assert.That(assessment.HasParticipated, Is.True);
+        }
+
+        [Test]
+        public void Update_WithHasParticipatedFalse_UpdatesCorrectly()
+        {
+            Assessment assessment = new("Test", DateTime.Now, 2.0, _validStudentId, _validSubjectId);
+
+            assessment.Update("Test", DateTime.Now, 2.0, hasParticipated: false);
+
+            Assert.That(assessment.HasParticipated, Is.False);
+            Assert.That(assessment.Grade, Is.EqualTo(2.0));
+        }
+
+        [Test]
+        public void Update_WithGradeZero_SetsHasParticipatedFalseAndGradeZero()
+        {
+            Assessment assessment = new("Test", DateTime.Now, 2.0, _validStudentId, _validSubjectId);
+
+            assessment.Update("Test", DateTime.Now, 0.0);
+
+            Assert.That(assessment.HasParticipated, Is.False);
+            Assert.That(assessment.Grade, Is.EqualTo(0.0));
         }
 
         [TestCase(null)]

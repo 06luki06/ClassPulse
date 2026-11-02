@@ -46,6 +46,13 @@ namespace At.luki0606.ClassPulse.Data
                 .HasForeignKey(a => a.SubjectId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Existing assessments were all "participated". ValueGeneratedNever ensures EF
+            // always writes the actual value (otherwise 'false' would be replaced by the DB default).
+            modelBuilder.Entity<Assessment>()
+                .Property(a => a.HasParticipated)
+                .HasDefaultValue(true)
+                .ValueGeneratedNever();
+
             modelBuilder.Entity<SubjectNote>()
                 .HasOne(sn => sn.Student)
                 .WithMany(s => s.SubjectNotes)

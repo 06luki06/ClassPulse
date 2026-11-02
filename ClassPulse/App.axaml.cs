@@ -43,7 +43,7 @@ namespace At.luki0606.ClassPulse
             using (IServiceScope scope = Services.CreateScope())
             {
                 AppDbContext dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                dbContext.Database.EnsureCreated();
+                DatabaseSchemaUpdater.EnsureCreatedAndUpToDate(dbContext);
             }
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

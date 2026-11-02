@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.Data.Entities;
+using At.luki0606.ClassPulse.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -19,7 +19,8 @@ namespace At.luki0606.ClassPulse.Services
             Guid assessmentId,
             double grade,
             string? positiveFeedback = null,
-            string? improvementNotes = null);
+            string? improvementNotes = null,
+            bool hasParticipated = true);
 
         Task<SubjectNote> AddSubjectNoteAsync(Guid studentId, Guid subjectId, string noteText);
 
