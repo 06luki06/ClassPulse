@@ -2,10 +2,7 @@ using At.luki0606.ClassPulse.Data;
 using At.luki0606.ClassPulse.Data.Entities;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data.Common;
-using System.Linq;
 
 namespace At.luki0606.ClassPulse.Tests.Data
 {

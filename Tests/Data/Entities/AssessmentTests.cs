@@ -60,7 +60,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             void action()
             {
-                new Assessment(invalidTitle, DateTime.Now, 2.0, _validStudentId, _validSubjectId);
+                _ = new Assessment(invalidTitle!, DateTime.Now, 2.0, _validStudentId, _validSubjectId);
             }
 
             Assert.Throws<ArgumentNullException>((Action)action);
@@ -73,7 +73,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             void action()
             {
-                new Assessment("Test", DateTime.Now, invalidGrade, _validStudentId, _validSubjectId);
+                _ = new Assessment("Test", DateTime.Now, invalidGrade, _validStudentId, _validSubjectId);
             }
 
             Assert.Throws<ArgumentOutOfRangeException>((Action)action);
@@ -86,7 +86,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             void action()
             {
-                new Assessment("Test", DateTime.Now, 2.0, _validStudentId, _validSubjectId, invalidWeight);
+                _ = new Assessment("Test", DateTime.Now, 2.0, _validStudentId, _validSubjectId, invalidWeight);
             }
 
             Assert.Throws<ArgumentOutOfRangeException>((Action)action);
@@ -97,7 +97,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             void action()
             {
-                new Assessment("Test", DateTime.Now, 2.0, Guid.Empty, _validSubjectId);
+                _ = new Assessment("Test", DateTime.Now, 2.0, Guid.Empty, _validSubjectId);
             }
 
             Assert.Throws<ArgumentException>((Action)action);
@@ -108,7 +108,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             void action()
             {
-                new Assessment("Test", DateTime.Now, 2.0, _validStudentId, Guid.Empty);
+                _ = new Assessment("Test", DateTime.Now, 2.0, _validStudentId, Guid.Empty);
             }
 
             Assert.Throws<ArgumentException>((Action)action);
@@ -197,7 +197,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
 
             void action()
             {
-                assessment.Update(invalidTitle, DateTime.Now, 2.0);
+                assessment.Update(invalidTitle!, DateTime.Now, 2.0);
             }
 
             Assert.Throws<ArgumentNullException>((Action)action);

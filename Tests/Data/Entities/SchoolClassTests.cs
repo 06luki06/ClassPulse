@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.Data.Entities;
+using At.luki0606.ClassPulse.Data.Entities;
 
 namespace At.luki0606.ClassPulse.Tests.Data.Entities
 {
@@ -27,7 +27,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             void action()
             {
-                new SchoolClass(invalidName, "2025/2026");
+                _ = new SchoolClass(invalidName!, "2025/2026");
             }
 
             Assert.Throws<ArgumentNullException>((Action)action);
@@ -45,7 +45,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             void action()
             {
-                new SchoolClass("4AHIF", invalidSchoolYear);
+                _ = new SchoolClass("4AHIF", invalidSchoolYear!);
             }
 
             Assert.Throws<ArgumentException>((Action)action);
@@ -73,7 +73,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
 
             void action()
             {
-                schoolClass.Update(invalidName, "2025/2026");
+                schoolClass.Update(invalidName!, "2025/2026");
             }
 
             Assert.Throws<ArgumentNullException>((Action)action);

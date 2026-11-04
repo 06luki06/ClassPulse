@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.Data;
+using At.luki0606.ClassPulse.Data;
 using At.luki0606.ClassPulse.Services;
 using Avalonia;
 using Avalonia.Styling;
@@ -12,19 +12,38 @@ using System.Threading;
 
 namespace At.luki0606.ClassPulse.ViewModels
 {
+    /// <summary>
+    /// View model of the settings page. Changes apply and persist immediately.
+    /// </summary>
     public partial class SettingsViewModel : ViewModelBase
     {
         private readonly SettingsService _settingsService;
 
+        /// <summary>
+        /// The selected theme.
+        /// </summary>
         [ObservableProperty]
         private ThemeOption? _selectedThemeOption;
 
+        /// <summary>
+        /// The selected language.
+        /// </summary>
         [ObservableProperty]
         private LanguageOption? _selectedLanguageOption;
 
+        /// <summary>
+        /// Gets the selectable themes with labels in the current language.
+        /// </summary>
         public List<ThemeOption> AvailableThemes { get; private set; }
+        /// <summary>
+        /// Gets the selectable languages with labels in the current language.
+        /// </summary>
         public List<LanguageOption> AvailableLanguages { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance with the selections matching the current theme and language.
+        /// </summary>
+        /// <param name="settingsService">The service that persists changes.</param>
         public SettingsViewModel(SettingsService settingsService)
         {
             _settingsService = settingsService;
@@ -124,16 +143,34 @@ namespace At.luki0606.ClassPulse.ViewModels
         }
     }
 
+    /// <summary>
+    /// A selectable theme.
+    /// </summary>
+    /// <param name="Variant">The Avalonia theme variant.</param>
+    /// <param name="Label">The label in the current language.</param>
     public record ThemeOption(ThemeVariant Variant, string Label)
     {
+        /// <summary>
+        /// Returns the label.
+        /// </summary>
+        /// <returns>The value of <see cref="Label"/>.</returns>
         public override string ToString()
         {
             return Label;
         }
     }
 
+    /// <summary>
+    /// A selectable UI language.
+    /// </summary>
+    /// <param name="Code">The two-letter language code.</param>
+    /// <param name="Label">The label in the current language.</param>
     public record LanguageOption(string Code, string Label)
     {
+        /// <summary>
+        /// Returns the label.
+        /// </summary>
+        /// <returns>The value of <see cref="Label"/>.</returns>
         public override string ToString()
         {
             return Label;

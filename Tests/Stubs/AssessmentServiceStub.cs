@@ -3,7 +3,7 @@ using At.luki0606.ClassPulse.Services;
 
 namespace At.luki0606.ClassPulse.Tests.Stubs
 {
-    internal class AssessmentServiceStub : IAssessmentService
+    internal sealed class AssessmentServiceStub : IAssessmentService
     {
         private readonly List<Assessment> _assessments = [];
         private readonly List<SubjectNote> _subjectNotes = [];
@@ -43,7 +43,7 @@ namespace At.luki0606.ClassPulse.Tests.Stubs
             Guid schoolClassId,
             Guid subjectId,
             string title,
-            DateTime date,
+            DateTime assessmentDate,
             double weight = 1,
             double defaultGrade = 1)
         {
@@ -62,7 +62,7 @@ namespace At.luki0606.ClassPulse.Tests.Stubs
             {
                 Assessment assessment = new(
                     title: title,
-                    date: date,
+                    date: assessmentDate,
                     grade: defaultGrade,
                     studentId: studentId,
                     subjectId: subjectId,

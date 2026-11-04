@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.Data;
+using At.luki0606.ClassPulse.Data;
 using At.luki0606.ClassPulse.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,15 +8,23 @@ using System.Threading.Tasks;
 
 namespace At.luki0606.ClassPulse.Services
 {
+    /// <summary>
+    /// Default <see cref="IClassService"/> implementation backed by <see cref="AppDbContext"/>.
+    /// </summary>
     public class ClassService : IClassService
     {
         private readonly AppDbContext _dbContext;
 
+        /// <summary>
+        /// Initializes a new instance.
+        /// </summary>
+        /// <param name="context">The database context.</param>
         public ClassService(AppDbContext context)
         {
             _dbContext = context;
         }
 
+        /// <inheritdoc/>
         public async Task<Student> AddStudentToSchoolClassAsync(Guid schoolClassId, string firstName, string lastName, string? generalNotes = null)
         {
             Student student = new(firstName, lastName, schoolClassId, generalNotes);
@@ -25,6 +33,7 @@ namespace At.luki0606.ClassPulse.Services
             return student;
         }
 
+        /// <inheritdoc/>
         public async Task<SchoolClass> CreateClassAsync(string name, string schoolYear)
         {
             SchoolClass schoolClass = new(name, schoolYear);
@@ -33,6 +42,7 @@ namespace At.luki0606.ClassPulse.Services
             return schoolClass;
         }
 
+        /// <inheritdoc/>
         public async Task<SchoolClass?> DeleteClassAsync(Guid classId)
         {
             SchoolClass? schoolClass = await _dbContext.SchoolClasses
@@ -48,6 +58,7 @@ namespace At.luki0606.ClassPulse.Services
             return schoolClass;
         }
 
+        /// <inheritdoc/>
         public async Task<List<SchoolClass>> GetAllClassesAsync()
         {
             return await _dbContext.SchoolClasses
@@ -56,12 +67,14 @@ namespace At.luki0606.ClassPulse.Services
                 .ToListAsync();
         }
 
+        /// <inheritdoc/>
         public async Task<Student?> GetStudentDetailsAsync(Guid studentId)
         {
             return await _dbContext.Students
                 .FirstOrDefaultAsync(s => s.Id == studentId);
         }
 
+        /// <inheritdoc/>
         public async Task<List<Student>> SearchStudentAsync(string searchTerm)
         {
             if (string.IsNullOrWhiteSpace(searchTerm))
@@ -79,6 +92,7 @@ namespace At.luki0606.ClassPulse.Services
                 .ToListAsync();
         }
 
+        /// <inheritdoc/>
         public async Task<List<Student>> GetStudentsByClassIdAsync(Guid classId)
         {
             return await _dbContext.Students
@@ -88,6 +102,7 @@ namespace At.luki0606.ClassPulse.Services
                 .ToListAsync();
         }
 
+        /// <inheritdoc/>
         public async Task<List<Subject>> GetAllSubjectsAsync()
         {
             return await _dbContext.Subjects
@@ -95,6 +110,7 @@ namespace At.luki0606.ClassPulse.Services
                 .ToListAsync();
         }
 
+        /// <inheritdoc/>
         public async Task<Subject> CreateSubjectAsync(string name, string code)
         {
             Subject subject = new(name, code);
@@ -103,6 +119,7 @@ namespace At.luki0606.ClassPulse.Services
             return subject;
         }
 
+        /// <inheritdoc/>
         public async Task<Student?> RemoveStudentFromClassAsync(Guid schoolClassId, Guid studentId)
         {
             Student? student = await _dbContext.Students
@@ -118,6 +135,7 @@ namespace At.luki0606.ClassPulse.Services
             return student;
         }
 
+        /// <inheritdoc/>
         public async Task<Student?> UpdateStudentGeneralNotesAsync(Guid studentId, string? generalNotes)
         {
             Student? student = await _dbContext.Students.FirstOrDefaultAsync(s => s.Id == studentId);

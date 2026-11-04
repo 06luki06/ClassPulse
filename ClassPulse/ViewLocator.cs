@@ -15,6 +15,11 @@ namespace At.luki0606.ClassPulse
     [ExcludeFromCodeCoverage]
     public class ViewLocator : IDataTemplate
     {
+        /// <summary>
+        /// Creates the view for a view model by replacing <c>ViewModel</c> with <c>View</c> in its full type name.
+        /// </summary>
+        /// <param name="param">The view model to create a view for.</param>
+        /// <returns>The new view, a text block naming the missing type if no view exists, or <see langword="null"/> if <paramref name="param"/> is <see langword="null"/>.</returns>
         public Control? Build(object? param)
         {
             if (param is null)
@@ -33,6 +38,11 @@ namespace At.luki0606.ClassPulse
             return new TextBlock { Text = "Not Found: " + name };
         }
 
+        /// <summary>
+        /// Determines whether this locator handles the given object.
+        /// </summary>
+        /// <param name="data">The object to test.</param>
+        /// <returns><see langword="true"/> if <paramref name="data"/> derives from <see cref="ViewModelBase"/>.</returns>
         public bool Match(object? data)
         {
             return data is ViewModelBase;

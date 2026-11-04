@@ -10,18 +10,26 @@ namespace At.luki0606.ClassPulse.Data
 {
     /// <summary>
     /// Brings an existing SQLite database in line with the current EF model.
-    /// <see cref="DatabaseFacade.EnsureCreated"/> only creates a database that does not exist yet,
+    /// <see cref="Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreated"/> only creates a database that does not exist yet,
     /// so columns added to entities later would be missing in existing databases.
     /// This adds every missing column (additive changes only - no renames or removals).
     /// </summary>
     public static class DatabaseSchemaUpdater
     {
+        /// <summary>
+        /// Creates the database if it does not exist and then adds any missing columns.
+        /// </summary>
+        /// <param name="dbContext">The context of the database to update.</param>
         public static void EnsureCreatedAndUpToDate(AppDbContext dbContext)
         {
             dbContext.Database.EnsureCreated();
             AddMissingColumns(dbContext);
         }
 
+        /// <summary>
+        /// Adds every column of the EF model that is missing from an existing table. Missing tables are skipped.
+        /// </summary>
+        /// <param name="dbContext">The context of the database to update.</param>
         public static void AddMissingColumns(AppDbContext dbContext)
         {
             DbConnection connection = dbContext.Database.GetDbConnection();

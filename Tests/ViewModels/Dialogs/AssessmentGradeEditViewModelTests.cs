@@ -5,7 +5,7 @@ using At.luki0606.ClassPulse.ViewModels.Dialogs;
 namespace At.luki0606.ClassPulse.Tests.ViewModels.Dialogs
 {
     [TestFixture]
-    internal class AssessmentGradeEditViewModelTests
+    internal sealed class AssessmentGradeEditViewModelTests
     {
         private AssessmentServiceStub _assessmentService;
         private Guid _studentId;

@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Tests run on .NET 8, while global.json selects the SDK that builds them.
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+          global-json-file: global.json
+
+      - name: Restore
+        run: dotnet restore ClassPulse.slnx
+
+      - name: Check formatting
+        run: dotnet format whitespace ClassPulse.slnx --verify-no-changes --no-restore
+
+      - name: Build
+        run: dotnet build ClassPulse.slnx -c Release --no-restore
+
+      - name: Test
+        run: dotnet test ClassPulse.slnx -c Release --no-build
+
+      # Reports advisories without failing. See docs/decisions/0002-build-enforced-rules.md.
+      - name: Report vulnerable packages
+        run: dotnet list ClassPulse.slnx package --vulnerable --include-transitive

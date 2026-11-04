@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.Data.Entities;
+using At.luki0606.ClassPulse.Data.Entities;
 
 namespace At.luki0606.ClassPulse.Tests.Data.Entities
 {
@@ -42,7 +42,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             void action()
             {
-                new Student(invalidFirstName, "Mustermann", _validSchoolClassId);
+                _ = new Student(invalidFirstName!, "Mustermann", _validSchoolClassId);
             }
 
             Assert.Throws<ArgumentNullException>((Action)action);
@@ -55,7 +55,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             void action()
             {
-                new Student("Max", invalidLastName, _validSchoolClassId);
+                _ = new Student("Max", invalidLastName!, _validSchoolClassId);
             }
 
             Assert.Throws<ArgumentNullException>((Action)action);
@@ -66,7 +66,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             static void action()
             {
-                new Student("Max", "Mustermann", Guid.Empty);
+                _ = new Student("Max", "Mustermann", Guid.Empty);
             }
 
             Assert.Throws<ArgumentNullException>((Action)action);
@@ -100,7 +100,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
 
             void action()
             {
-                student.UpdateDetails(invalidFirstName, "Mustermann", _validSchoolClassId);
+                student.UpdateDetails(invalidFirstName!, "Mustermann", _validSchoolClassId);
             }
 
             Assert.Throws<ArgumentNullException>((Action)action);
@@ -115,7 +115,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
 
             void action()
             {
-                student.UpdateDetails("Max", invalidLastName, _validSchoolClassId);
+                student.UpdateDetails("Max", invalidLastName!, _validSchoolClassId);
             }
 
             Assert.Throws<ArgumentNullException>((Action)action);

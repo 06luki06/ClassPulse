@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.Data;
+using At.luki0606.ClassPulse.Data;
 using At.luki0606.ClassPulse.Data.Entities;
 using At.luki0606.ClassPulse.Services;
 using Microsoft.EntityFrameworkCore;
@@ -118,7 +118,7 @@ namespace At.luki0606.ClassPulse.Tests.Services
         [TestCase("   ")]
         public async Task SearchStudentAsync_WithEmptySearchTerm_ReturnsEmptyList(string? invalidTerm)
         {
-            List<Student> result = await _classService.SearchStudentAsync(invalidTerm);
+            List<Student> result = await _classService.SearchStudentAsync(invalidTerm!);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Is.Empty);

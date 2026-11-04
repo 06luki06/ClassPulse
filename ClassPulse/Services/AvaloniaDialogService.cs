@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.ViewModels.Dialogs;
+using At.luki0606.ClassPulse.ViewModels.Dialogs;
 using At.luki0606.ClassPulse.Views.Dialogs;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace At.luki0606.ClassPulse.Services
 {
+    /// <summary>
+    /// <see cref="IDialogService"/> implementation that opens Avalonia windows.
+    /// </summary>
     public class AvaloniaDialogService : IDialogService
     {
+        /// <inheritdoc/>
         public async Task<InputDialogResult?> ShowInputDialogAsync(string title, string message, params InputField[] fields)
         {
             InputDialogViewModel dialogVm = new(title, message, fields);

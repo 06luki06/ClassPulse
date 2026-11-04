@@ -1,0 +1,51 @@
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{cs,axaml}]
+indent_size = 4
+
+[*.{csproj,props,targets,slnx,resx,yml,yaml,json,md}]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.cs]
+# Explicit types, never var.
+csharp_style_var_for_built_in_types = false:warning
+csharp_style_var_when_type_is_apparent = false:warning
+csharp_style_var_elsewhere = false:warning
+dotnet_diagnostic.IDE0007.severity = warning
+dotnet_diagnostic.IDE0008.severity = warning
+
+# Braces on every control-flow statement.
+csharp_prefer_braces = true:warning
+dotnet_diagnostic.IDE0011.severity = warning
+
+# Remove unused usings. Requires the XML documentation file, which is enabled for ClassPulse.
+dotnet_diagnostic.IDE0005.severity = warning
+
+# Private fields are named _camelCase.
+dotnet_naming_rule.private_fields_underscore.symbols = private_fields
+dotnet_naming_rule.private_fields_underscore.style = underscore_camel_case
+dotnet_naming_rule.private_fields_underscore.severity = warning
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+dotnet_naming_style.underscore_camel_case.capitalization = camel_case
+dotnet_naming_style.underscore_camel_case.required_prefix = _
+dotnet_diagnostic.IDE1006.severity = warning
+
+[**/Resources.Designer.cs]
+generated_code = true
+
+# The only allowed rule exceptions. See docs/decisions/0002-build-enforced-rules.md.
+[Tests/**.cs]
+# Test classes are not an API, so they need no XML documentation.
+dotnet_diagnostic.CS1591.severity = none
+# Test methods are named Method_Condition_ExpectedResult.
+dotnet_diagnostic.CA1707.severity = none

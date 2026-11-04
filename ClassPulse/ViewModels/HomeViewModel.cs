@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.Data.Entities;
+using At.luki0606.ClassPulse.Data.Entities;
 using At.luki0606.ClassPulse.Services;
 using At.luki0606.ClassPulse.ViewModels.Dialogs;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace At.luki0606.ClassPulse.ViewModels
 {
+    /// <summary>
+    /// View model of the start page, which lists, creates and deletes classes.
+    /// </summary>
     public partial class HomeViewModel : ViewModelBase
     {
         private readonly IClassService _classService;
@@ -20,13 +23,25 @@ namespace At.luki0606.ClassPulse.ViewModels
 
         private bool HasSelectedClass => SelectedClass != null;
 
+        /// <summary>
+        /// The class currently selected in the list.
+        /// </summary>
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(GoToClassCommand))]
         [NotifyCanExecuteChangedFor(nameof(DeleteClassCommand))]
         private SchoolClass? _selectedClass;
 
+        /// <summary>
+        /// Gets the classes shown in the list.
+        /// </summary>
         public ObservableCollection<SchoolClass> SchoolClasses { get; } = [];
 
+        /// <summary>
+        /// Initializes a new instance and starts loading the classes in the background.
+        /// </summary>
+        /// <param name="classService">The class service.</param>
+        /// <param name="dialogService">The dialog service.</param>
+        /// <param name="assessmentService">The assessment service passed to class pages.</param>
         public HomeViewModel(IClassService classService, IDialogService dialogService, IAssessmentService assessmentService)
         {
             _classService = classService;
@@ -36,12 +51,20 @@ namespace At.luki0606.ClassPulse.ViewModels
             _ = InitializeAsync();
         }
 
+        /// <summary>
+        /// Loads the initial page data.
+        /// </summary>
+        /// <returns>A task that completes when loading has finished.</returns>
         [RelayCommand]
         public async Task InitializeAsync()
         {
             await LoadClassesAsync();
         }
 
+        /// <summary>
+        /// Reloads the classes and selects the first one, if any.
+        /// </summary>
+        /// <returns>A task that completes when loading has finished.</returns>
         [RelayCommand]
         public async Task LoadClassesAsync()
         {
@@ -58,6 +81,10 @@ namespace At.luki0606.ClassPulse.ViewModels
             }
         }
 
+        /// <summary>
+        /// Asks for a name and school year and creates a class if the user confirms with non-blank values.
+        /// </summary>
+        /// <returns>A task that completes when the dialog is closed and the class is saved.</returns>
         [RelayCommand]
         public async Task CreateClassAsync()
         {

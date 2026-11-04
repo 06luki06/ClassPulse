@@ -8,15 +8,23 @@ using System.Threading.Tasks;
 
 namespace At.luki0606.ClassPulse.Services
 {
+    /// <summary>
+    /// Default <see cref="IAssessmentService"/> implementation backed by <see cref="AppDbContext"/>.
+    /// </summary>
     public class AssessmentService : IAssessmentService
     {
         private readonly AppDbContext _dbContext;
 
+        /// <summary>
+        /// Initializes a new instance.
+        /// </summary>
+        /// <param name="appDbContext">The database context.</param>
         public AssessmentService(AppDbContext appDbContext)
         {
             _dbContext = appDbContext;
         }
 
+        /// <inheritdoc/>
         public async Task<SubjectNote> AddSubjectNoteAsync(Guid studentId, Guid subjectId, string noteText)
         {
             SubjectNote subjectNote = new(noteText, studentId, subjectId);
@@ -25,6 +33,7 @@ namespace At.luki0606.ClassPulse.Services
             return subjectNote;
         }
 
+        /// <inheritdoc/>
         public double CalculateSubjectAverage(IEnumerable<Assessment> assessments)
         {
             List<Assessment> list = assessments
@@ -46,7 +55,8 @@ namespace At.luki0606.ClassPulse.Services
             return Math.Round(totalWeightedGrades / totalWeight, 2);
         }
 
-        public async Task<List<Assessment>> CreateClassAssessmentAsync(Guid schoolClassId, Guid subjectId, string title, DateTime date, double weight = 1, double defaultGrade = 1)
+        /// <inheritdoc/>
+        public async Task<List<Assessment>> CreateClassAssessmentAsync(Guid schoolClassId, Guid subjectId, string title, DateTime assessmentDate, double weight = 1, double defaultGrade = 1)
         {
             List<Guid> studentIds = await _dbContext.Students
                 .Where(s => s.SchoolClassId == schoolClassId)
@@ -61,7 +71,7 @@ namespace At.luki0606.ClassPulse.Services
             List<Assessment> newAssessments = [.. studentIds
                 .Select(studentId => new Assessment(
                     title: title,
-                    date: date,
+                    date: assessmentDate,
                     grade: defaultGrade,
                     studentId: studentId,
                     subjectId: subjectId,
@@ -74,6 +84,7 @@ namespace At.luki0606.ClassPulse.Services
             return newAssessments;
         }
 
+        /// <inheritdoc/>
         public bool HasPerformanceDrop(IEnumerable<Assessment> assessments)
         {
             List<Assessment> sorted = [.. assessments
@@ -91,6 +102,7 @@ namespace At.luki0606.ClassPulse.Services
             return (recentAvg - overallAvg) >= 0.75;
         }
 
+        /// <inheritdoc/>
         public async Task UpdateAssessmentGradeAsync(Guid assessmentId, double grade, string? positiveFeedback = null, string? improvementNotes = null, bool hasParticipated = true)
         {
             Assessment assessment = await _dbContext.Assessments.FindAsync(assessmentId)
@@ -108,6 +120,7 @@ namespace At.luki0606.ClassPulse.Services
             await _dbContext.SaveChangesAsync();
         }
 
+        /// <inheritdoc/>
         public async Task<List<Assessment>> GetAssessmentsByTitleAndSubjectAsync(Guid schoolClassId, Guid subjectId, string title)
         {
             return await _dbContext.Assessments

@@ -1,9 +1,9 @@
-﻿using At.luki0606.ClassPulse.Data.Entities;
+using At.luki0606.ClassPulse.Data.Entities;
 using At.luki0606.ClassPulse.Services;
 
 namespace At.luki0606.ClassPulse.Tests.Stubs
 {
-    internal class ClassServiceStub : IClassService
+    internal sealed class ClassServiceStub : IClassService
     {
         private readonly List<SchoolClass> _schoolClasses = [];
         private readonly List<Subject> _subjects = [];
@@ -65,8 +65,8 @@ namespace At.luki0606.ClassPulse.Tests.Stubs
 
             List<Student> results = [.. _schoolClasses
                 .SelectMany(c => c.Students ?? Enumerable.Empty<Student>())
-                .Where(s => s.FirstName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-                            s.LastName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))];
+                .Where(s => s.FirstName!.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                            s.LastName!.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))];
 
             return Task.FromResult(results);
         }
