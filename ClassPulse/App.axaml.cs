@@ -17,16 +17,26 @@ using System.Threading.Tasks;
 
 namespace At.luki0606.ClassPulse
 {
+    /// <summary>
+    /// Application root. Composes the dependency injection container, applies stored settings, prepares the database and opens the main window.
+    /// </summary>
     [ExcludeFromCodeCoverage]
     public partial class App : Application
     {
+        /// <summary>
+        /// Gets the root service provider, or <see langword="null"/> before framework initialization has completed.
+        /// </summary>
         public IServiceProvider? Services { get; private set; }
 
+        /// <inheritdoc/>
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
         }
 
+        /// <summary>
+        /// Registers global exception handlers, builds the service provider, applies settings, updates the database schema and shows the main window.
+        /// </summary>
         public override void OnFrameworkInitializationCompleted()
         {
             Dispatcher.UIThread.UnhandledException += OnUiThreadUnhandledException;

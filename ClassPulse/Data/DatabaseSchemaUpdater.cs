@@ -16,12 +16,20 @@ namespace At.luki0606.ClassPulse.Data
     /// </summary>
     public static class DatabaseSchemaUpdater
     {
+        /// <summary>
+        /// Creates the database if it does not exist and then adds any missing columns.
+        /// </summary>
+        /// <param name="dbContext">The context of the database to update.</param>
         public static void EnsureCreatedAndUpToDate(AppDbContext dbContext)
         {
             dbContext.Database.EnsureCreated();
             AddMissingColumns(dbContext);
         }
 
+        /// <summary>
+        /// Adds every column of the EF model that is missing from an existing table. Missing tables are skipped.
+        /// </summary>
+        /// <param name="dbContext">The context of the database to update.</param>
         public static void AddMissingColumns(AppDbContext dbContext)
         {
             DbConnection connection = dbContext.Database.GetDbConnection();

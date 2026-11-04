@@ -4,16 +4,42 @@ using System;
 
 namespace At.luki0606.ClassPulse.Data
 {
+    /// <summary>
+    /// Entity Framework Core session for the application's SQLite database.
+    /// </summary>
     public class AppDbContext : DbContext
     {
+        /// <summary>
+        /// Gets the school classes.
+        /// </summary>
         public DbSet<SchoolClass> SchoolClasses => Set<SchoolClass>();
+        /// <summary>
+        /// Gets the students.
+        /// </summary>
         public DbSet<Student> Students => Set<Student>();
+        /// <summary>
+        /// Gets the subjects.
+        /// </summary>
         public DbSet<Subject> Subjects => Set<Subject>();
+        /// <summary>
+        /// Gets the subject notes.
+        /// </summary>
         public DbSet<SubjectNote> SubjectNotes => Set<SubjectNote>();
+        /// <summary>
+        /// Gets the assessments.
+        /// </summary>
         public DbSet<Assessment> Assessments => Set<Assessment>();
 
+        /// <summary>
+        /// Initializes a new instance with the given options.
+        /// </summary>
+        /// <param name="options">The context options, including the database provider.</param>
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
+        /// <summary>
+        /// Configures seed subjects, relationships, delete behavior and automatically included navigations.
+        /// </summary>
+        /// <param name="modelBuilder">The builder for the entity model.</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
