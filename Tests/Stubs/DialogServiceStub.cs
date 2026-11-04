@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.Services;
+using At.luki0606.ClassPulse.Services;
 using At.luki0606.ClassPulse.ViewModels.Dialogs;
 
 namespace At.luki0606.ClassPulse.Tests.Stubs

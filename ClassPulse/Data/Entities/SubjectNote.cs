@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace At.luki0606.ClassPulse.Data.Entities
 {

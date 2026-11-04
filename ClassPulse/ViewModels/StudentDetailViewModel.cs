@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.Data.Entities;
+using At.luki0606.ClassPulse.Data.Entities;
 using At.luki0606.ClassPulse.Services;
 using At.luki0606.ClassPulse.ViewModels.Dialogs;
 using At.luki0606.ClassPulse.Views.Dialogs;

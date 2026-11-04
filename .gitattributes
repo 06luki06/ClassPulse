@@ -1,0 +1,8 @@
+# Git stores text with LF; the working tree uses the platform default.
+* text=auto
+
+*.ico binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary

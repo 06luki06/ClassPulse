@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.Data.Entities;
+using At.luki0606.ClassPulse.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

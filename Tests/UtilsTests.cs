@@ -1,4 +1,4 @@
-﻿namespace At.luki0606.ClassPulse.Tests
+namespace At.luki0606.ClassPulse.Tests
 {
     [TestFixture]
     internal sealed class UtilsTests

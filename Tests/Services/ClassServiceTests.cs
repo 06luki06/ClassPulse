@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.Data;
+using At.luki0606.ClassPulse.Data;
 using At.luki0606.ClassPulse.Data.Entities;
 using At.luki0606.ClassPulse.Services;
 using Microsoft.EntityFrameworkCore;

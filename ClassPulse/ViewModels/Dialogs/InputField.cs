@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 
 namespace At.luki0606.ClassPulse.ViewModels.Dialogs

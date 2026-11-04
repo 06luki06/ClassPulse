@@ -1,4 +1,4 @@
-﻿namespace At.luki0606.ClassPulse.Data
+namespace At.luki0606.ClassPulse.Data
 {
     /// <summary>
     /// User preferences stored in <c>settings.json</c>.

@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.ViewModels.Dialogs;
+using At.luki0606.ClassPulse.ViewModels.Dialogs;
 using At.luki0606.ClassPulse.Views.Dialogs;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;

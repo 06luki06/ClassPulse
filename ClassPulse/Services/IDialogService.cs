@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.ViewModels.Dialogs;
+using At.luki0606.ClassPulse.ViewModels.Dialogs;
 using System.Threading.Tasks;
 
 namespace At.luki0606.ClassPulse.Services

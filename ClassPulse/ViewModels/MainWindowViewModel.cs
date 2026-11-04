@@ -1,4 +1,4 @@
-﻿using At.luki0606.ClassPulse.Services;
+using At.luki0606.ClassPulse.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace At.luki0606.ClassPulse.ViewModels
