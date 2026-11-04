@@ -94,9 +94,7 @@ namespace At.luki0606.ClassPulse
         private void OnUiThreadUnhandledException(object? sender, DispatcherUnhandledExceptionEventArgs e)
         {
             e.Handled = true;
-# pragma warning disable CS4014
-            ShowErrorDialog("UI Thread Error", e.Exception);
-# pragma warning restore CS4014
+            _ = ShowErrorDialog("UI Thread Error", e.Exception);
         }
 
         private void OnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
@@ -104,9 +102,7 @@ namespace At.luki0606.ClassPulse
             e.SetObserved();
             Dispatcher.UIThread.Post(() =>
             {
-# pragma warning disable CS4014
-                ShowErrorDialog("Async Task Error", e.Exception.InnerException ?? e.Exception);
-# pragma warning restore CS4014
+                _ = ShowErrorDialog("Async Task Error", e.Exception.InnerException ?? e.Exception);
             });
         }
 
@@ -116,9 +112,7 @@ namespace At.luki0606.ClassPulse
             {
                 Dispatcher.UIThread.Post(() =>
                 {
-# pragma warning disable CS4014
-                    ShowErrorDialog("Fatal Application Error", ex);
-# pragma warning restore CS4014
+                    _ = ShowErrorDialog("Fatal Application Error", ex);
                 });
             }
         }

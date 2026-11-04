@@ -12,7 +12,7 @@ namespace At.luki0606.ClassPulse.Data.Entities
         public string? GeneralNotes { get; private set; }
 
         public Guid SchoolClassId { get; private set; }
-        public SchoolClass? SchoolClass { get; private set; } = null;
+        public SchoolClass? SchoolClass { get; private set; }
 
         private readonly List<SubjectNote> _subjectNotes = [];
         public IReadOnlyCollection<SubjectNote> SubjectNotes => _subjectNotes.AsReadOnly();

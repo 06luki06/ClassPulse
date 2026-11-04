@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace At.luki0606.ClassPulse.ViewModels
@@ -66,7 +67,7 @@ namespace At.luki0606.ClassPulse.ViewModels
                 SubjectGroups.Add(new SubjectDetailGroup(
                     subject.Name,
                     subject.Code,
-                    avg > 0 ? avg.ToString("0.0") : "-",
+                    avg > 0 ? avg.ToString("0.0", CultureInfo.CurrentCulture) : "-",
                     hasWarning,
                     assessments
                 ));

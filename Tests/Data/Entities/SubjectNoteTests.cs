@@ -35,7 +35,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             void action()
             {
-                new SubjectNote(invalidText, _validStudentId, _validSubjectId);
+                _ = new SubjectNote(invalidText!, _validStudentId, _validSubjectId);
             }
 
             Assert.Throws<ArgumentNullException>((Action)action);
@@ -46,7 +46,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             void action()
             {
-                new SubjectNote("Valid text", Guid.Empty, _validSubjectId);
+                _ = new SubjectNote("Valid text", Guid.Empty, _validSubjectId);
             }
 
             Assert.Throws<ArgumentException>((Action)action);
@@ -57,7 +57,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             void action()
             {
-                new SubjectNote("Valid text", _validStudentId, Guid.Empty);
+                _ = new SubjectNote("Valid text", _validStudentId, Guid.Empty);
             }
 
             Assert.Throws<ArgumentException>((Action)action);
@@ -83,7 +83,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
 
             void action()
             {
-                note.UpdateText(invalidText);
+                note.UpdateText(invalidText!);
             }
 
             Assert.Throws<ArgumentNullException>((Action)action);

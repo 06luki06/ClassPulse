@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -62,12 +63,12 @@ namespace At.luki0606.ClassPulse.ViewModels
                     IEnumerable<Assessment> studentAssessments = student.GetAssessmentsBySubjectId(subject.Id);
                     allStudentAssessments.AddRange(studentAssessments);
                     double avg = _assessmentService.CalculateSubjectAverage(studentAssessments);
-                    string gradeStr = avg > 0 ? avg.ToString("0.0") : "-";
+                    string gradeStr = avg > 0 ? avg.ToString("0.0", CultureInfo.CurrentCulture) : "-";
 
                     row.SubjectGradesList.Add(new SubjectGradeDto(subject.Code, gradeStr));
                 }
                 double overallAvg = _assessmentService.CalculateSubjectAverage(allStudentAssessments);
-                row.OverallAverage = overallAvg > 0 ? overallAvg.ToString("0.0") : "-";
+                row.OverallAverage = overallAvg > 0 ? overallAvg.ToString("0.0", CultureInfo.CurrentCulture) : "-";
                 StudentRows.Add(row);
             }
 
@@ -157,7 +158,7 @@ namespace At.luki0606.ClassPulse.ViewModels
                         subjectId: selectedSubject.Id,
                         title: title,
                         weight: weight,
-                        date: DateTime.Now,
+                        assessmentDate: DateTime.Now,
                         defaultGrade: 1.0
                     );
 

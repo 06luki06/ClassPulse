@@ -10,7 +10,7 @@ namespace At.luki0606.ClassPulse.Data
 {
     /// <summary>
     /// Brings an existing SQLite database in line with the current EF model.
-    /// <see cref="DatabaseFacade.EnsureCreated"/> only creates a database that does not exist yet,
+    /// <see cref="Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreated"/> only creates a database that does not exist yet,
     /// so columns added to entities later would be missing in existing databases.
     /// This adds every missing column (additive changes only - no renames or removals).
     /// </summary>

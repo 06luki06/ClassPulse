@@ -46,7 +46,7 @@ namespace At.luki0606.ClassPulse.Services
             return Math.Round(totalWeightedGrades / totalWeight, 2);
         }
 
-        public async Task<List<Assessment>> CreateClassAssessmentAsync(Guid schoolClassId, Guid subjectId, string title, DateTime date, double weight = 1, double defaultGrade = 1)
+        public async Task<List<Assessment>> CreateClassAssessmentAsync(Guid schoolClassId, Guid subjectId, string title, DateTime assessmentDate, double weight = 1, double defaultGrade = 1)
         {
             List<Guid> studentIds = await _dbContext.Students
                 .Where(s => s.SchoolClassId == schoolClassId)
@@ -61,7 +61,7 @@ namespace At.luki0606.ClassPulse.Services
             List<Assessment> newAssessments = [.. studentIds
                 .Select(studentId => new Assessment(
                     title: title,
-                    date: date,
+                    date: assessmentDate,
                     grade: defaultGrade,
                     studentId: studentId,
                     subjectId: subjectId,

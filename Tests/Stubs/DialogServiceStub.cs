@@ -3,7 +3,7 @@ using At.luki0606.ClassPulse.ViewModels.Dialogs;
 
 namespace At.luki0606.ClassPulse.Tests.Stubs
 {
-    internal class DialogServiceStub : IDialogService
+    internal sealed class DialogServiceStub : IDialogService
     {
         public InputDialogResult? NextInputResult { get; set; }
 

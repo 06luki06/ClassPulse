@@ -11,7 +11,7 @@ namespace At.luki0606.ClassPulse.Services
             Guid schoolClassId,
             Guid subjectId,
             string title,
-            DateTime date,
+            DateTime assessmentDate,
             double weight = 1.0,
             double defaultGrade = 1.0);
 

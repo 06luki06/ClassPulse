@@ -1,7 +1,7 @@
 ﻿namespace At.luki0606.ClassPulse.Tests
 {
     [TestFixture]
-    internal class UtilsTests
+    internal sealed class UtilsTests
     {
         [Test]
         public void GetAppdataFolderPath_ReturnsExpectedPath()

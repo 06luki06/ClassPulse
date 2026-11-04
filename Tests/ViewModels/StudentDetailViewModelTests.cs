@@ -6,7 +6,7 @@ using System.Reflection;
 namespace At.luki0606.ClassPulse.Tests.ViewModels
 {
     [TestFixture]
-    internal class StudentDetailViewModelTests
+    internal sealed class StudentDetailViewModelTests
     {
         private ClassServiceStub _classService;
         private AssessmentServiceStub _assessmentService;

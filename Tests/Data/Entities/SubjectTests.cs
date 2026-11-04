@@ -27,7 +27,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             void action()
             {
-                new Subject(invalidName, "M");
+                _ = new Subject(invalidName!, "M");
             }
 
             Assert.Throws<ArgumentNullException>((Action)action);
@@ -40,7 +40,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         {
             void action()
             {
-                new Subject("Mathematik", invalidCode);
+                _ = new Subject("Mathematik", invalidCode!);
             }
 
             Assert.Throws<ArgumentNullException>((Action)action);
@@ -69,7 +69,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
 
             void action()
             {
-                subject.Update(invalidName, "INF");
+                subject.Update(invalidName!, "INF");
             }
 
             Assert.Throws<ArgumentNullException>((Action)action);
@@ -84,7 +84,7 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
 
             void action()
             {
-                subject.Update("Informatik", invalidCode);
+                subject.Update("Informatik", invalidCode!);
             }
 
             Assert.Throws<ArgumentNullException>((Action)action);

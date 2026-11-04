@@ -4,7 +4,7 @@ using At.luki0606.ClassPulse.Services;
 namespace At.luki0606.ClassPulse.Tests.Services
 {
     [TestFixture]
-    internal class SettingsServiceTests
+    internal sealed class SettingsServiceTests
     {
         private string _tempFilePath;
         private SettingsService _service;
