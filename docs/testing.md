@@ -17,6 +17,7 @@ dotnet test ClassPulse.slnx -c Release
 | `Tests/Services/` | Services | EF Core InMemory, temporary files for settings |
 | `Tests/ViewModels/` | View model logic | Stubs from `Tests/Stubs/` |
 | `Tests/ResourcesTests.cs` | Matching keys and non-blank values in both languages | Compiled resources |
+| `Tests/ReleaseScriptsTests.cs` | `build.ps1` and `ClassPulseSetup.iss` take the version only from `ClassPulse.csproj`. Reads the script text and runs neither script | Files in the repository root |
 | `Tests/UtilsTests.cs` | Helper methods | File system. Creates `%LOCALAPPDATA%\ClassPulse\` if it is missing, and reads no files in it |
 
 The project has no UI tests. Do not rely on tests to check AXAML layout or bindings.
