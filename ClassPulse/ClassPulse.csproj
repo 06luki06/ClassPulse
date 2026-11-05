@@ -17,21 +17,21 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="12.1.5" />
-    <PackageReference Include="Avalonia.Desktop" Version="12.1.1" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.1" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.1" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.1.5" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.5" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.5" />
     <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageReference Include="FluentIcons.Avalonia" Version="2.1.345" />
 	  <PackageReference Include="HotAvalonia" Version="3.1.5" />
-<PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="12.1.1" PrivateAssets="All" Publish="True" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.30" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.30">
+<PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="12.1.5" PrivateAssets="All" Publish="True" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.22" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.22">
 		<PrivateAssets>all</PrivateAssets>
 		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
-	<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.11" />
+	<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.14" />
   </ItemGroup>
 
   <ItemGroup>
