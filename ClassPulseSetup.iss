@@ -6,7 +6,7 @@
 #define MyAppPublisher "06luki06"
 #define MyAppExeName "ClassPulse.exe"
 
-#define SourcePath ".\ClassPulse\bin\Release\net8.0\win-x64\publish"
+#define SourcePath ".\ClassPulse\bin\Release\net10.0\win-x64\publish"
 
 ; The version is defined only in ClassPulse\ClassPulse.csproj. build.ps1 passes it in.
 #ifndef MyAppVersion

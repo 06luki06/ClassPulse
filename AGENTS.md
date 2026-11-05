@@ -2,7 +2,7 @@
 
 Binding rules for AI agents working in this repository. "Must" and "never" are not negotiable. If a task conflicts with a rule, stop and ask the user.
 
-ClassPulse is a Windows desktop app that teachers use to manage classes, students, grades and notes. It uses .NET 8, Avalonia 12, CommunityToolkit.Mvvm, and EF Core 8 with SQLite.
+ClassPulse is a Windows desktop app that teachers use to manage classes, students, grades and notes. It uses .NET 10, Avalonia 12, CommunityToolkit.Mvvm, and EF Core 10 with SQLite.
 
 ## Read before you change
 

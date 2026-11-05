@@ -34,6 +34,17 @@ namespace At.luki0606.ClassPulse.Tests
         }
 
         [Test]
+        public void SetupScript_Always_PackagesOutputOfProjectTargetFramework()
+        {
+            string project = ReadRepositoryFile(@"ClassPulse\ClassPulse.csproj");
+            string script = ReadRepositoryFile("ClassPulseSetup.iss");
+
+            string targetFramework = Regex.Match(project, "<TargetFramework>(.+)</TargetFramework>").Groups[1].Value;
+
+            Assert.That(script, Does.Contain($@"\ClassPulse\bin\Release\{targetFramework}\win-x64\publish"));
+        }
+
+        [Test]
         public void BuildScript_Always_PassesVersionFromProjectToInstaller()
         {
             string script = ReadRepositoryFile("build.ps1");
