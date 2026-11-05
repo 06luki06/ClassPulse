@@ -8,6 +8,7 @@ An ADR records a significant decision and its consequences. Agents must follow a
 | [0002](0002-build-enforced-rules.md) | Enforce project rules in the build | Accepted |
 | [0003](0003-additive-schema-updates.md) | Additive schema updates instead of migrations | Accepted |
 | [0004](0004-grade-scale-and-participation.md) | Grade scale and non-participation | Accepted |
+| [0005](0005-git-hooks.md) | Check changes locally with Git hooks | Accepted |
 
 ADRs 0001, 0003 and 0004 were written afterward from the code. Their original reasoning was not recorded, so any inferred reasons are marked as such.
 

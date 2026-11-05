@@ -18,6 +18,7 @@ dotnet test ClassPulse.slnx -c Release
 | `Tests/ViewModels/` | View model logic | Stubs from `Tests/Stubs/` |
 | `Tests/ResourcesTests.cs` | Matching keys and non-blank values in both languages | Compiled resources |
 | `Tests/ReleaseScriptsTests.cs` | `build.ps1` and `ClassPulseSetup.iss` take the version only from `ClassPulse.csproj`. Reads the script text and runs neither script | Files in the repository root |
+| `Tests/HookScriptsTests.cs` | The scripts in `scripts/hooks/` block data files and invalid commit messages, and the hook and CI configuration use them correctly | Runs the scripts with `powershell`, temporary files |
 | `Tests/UtilsTests.cs` | Helper methods | File system. Creates `%LOCALAPPDATA%\ClassPulse\` if it is missing, and reads no files in it |
 
 The project has no UI tests. Do not rely on tests to check AXAML layout or bindings.
@@ -73,7 +74,7 @@ Use `!` when a test passes `null` on purpose, and `_ =` when it creates an objec
 
 ## Coverage
 
-`coverlet.collector` is installed. There is no required coverage threshold.
+`coverlet.collector` is installed. There is no required coverage threshold. CI shows the line coverage in the job summary.
 
 ```powershell
 dotnet test ClassPulse.slnx --collect:"XPlat Code Coverage"

@@ -1,0 +1,55 @@
+# Setup steps are in README.md. The reasons for these hooks are in docs/decisions/0005-git-hooks.md.
+minimum_pre_commit_version: "3.2.0"
+default_install_hook_types: [pre-commit, commit-msg, pre-push]
+default_stages: [pre-commit]
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-merge-conflict
+        args: [--assume-in-merge]
+      - id: check-added-large-files
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+
+  - repo: local
+    hooks:
+      - id: data-files
+        name: Block databases, backups and exports
+        entry: powershell -NoProfile -ExecutionPolicy Bypass -File scripts/hooks/Test-DataFiles.ps1
+        language: system
+
+      # Plain dotnet format is forbidden. See AGENTS.md.
+      - id: format-whitespace
+        name: Check formatting
+        entry: dotnet format whitespace ClassPulse.slnx --verify-no-changes --include
+        language: system
+        files: \.cs$
+        require_serial: true
+
+      - id: commit-message
+        name: Check commit message format
+        entry: powershell -NoProfile -ExecutionPolicy Bypass -File scripts/hooks/Test-CommitMessage.ps1
+        language: system
+        stages: [commit-msg]
+
+      - id: build
+        name: Build with analyzers
+        entry: dotnet build ClassPulse.slnx -c Release
+        language: system
+        stages: [pre-push]
+        pass_filenames: false
+        always_run: true
+        fail_fast: true
+
+      - id: test
+        name: Run unit tests
+        entry: dotnet test ClassPulse.slnx -c Release --no-build
+        language: system
+        stages: [pre-push]
+        pass_filenames: false
+        always_run: true

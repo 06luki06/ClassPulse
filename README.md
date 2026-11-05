@@ -14,6 +14,22 @@ dotnet run --project ClassPulse
 
 Running the app uses your real data in `%LOCALAPPDATA%\ClassPulse\`.
 
+### Git hooks
+
+The hooks need Python. Install them once per clone, in a virtual environment:
+
+```powershell
+python -m venv .venv
+.venv\Scripts\python -m pip install pre-commit==4.7.0
+.venv\Scripts\pre-commit install
+```
+
+They check every commit and push from then on, without activating the environment. If you delete or move `.venv`, repeat these steps. To run the commit checks on all files:
+
+```powershell
+.venv\Scripts\pre-commit run --all-files
+```
+
 ## Documentation
 
 - [AGENTS.md](AGENTS.md): binding rules for AI agents and the definition of done
