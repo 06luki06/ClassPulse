@@ -27,5 +27,18 @@ namespace At.luki0606.ClassPulse.Services
 
             return null;
         }
+
+        /// <inheritdoc/>
+        public async Task ShowMessageAsync(string title, string message)
+        {
+            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop && desktop.MainWindow != null)
+            {
+                MessageDialogViewModel dialogVm = new(title, message);
+                MessageDialogWindow dialog = new() { DataContext = dialogVm };
+                dialogVm.OnCloseRequested += () => dialog.Close();
+
+                await dialog.ShowDialog(desktop.MainWindow);
+            }
+        }
     }
 }

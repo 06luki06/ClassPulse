@@ -82,6 +82,8 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
         [TestCase(0.0)]
         [TestCase(-0.5)]
         [TestCase(-5.0)]
+        [TestCase(double.NaN)]
+        [TestCase(double.PositiveInfinity)]
         public void Constructor_WithInvalidWeight_ThrowsArgumentOutOfRangeException(double invalidWeight)
         {
             void action()
@@ -217,8 +219,22 @@ namespace At.luki0606.ClassPulse.Tests.Data.Entities
             Assert.Throws<ArgumentOutOfRangeException>((Action)action);
         }
 
+        [TestCase(0.5, true)]
+        [TestCase(1.0, true)]
+        [TestCase(0.0, false)]
+        [TestCase(-1.0, false)]
+        [TestCase(double.NaN, false)]
+        [TestCase(double.PositiveInfinity, false)]
+        [TestCase(double.NegativeInfinity, false)]
+        public void IsValidWeight_ReturnsExpectedResult(double weight, bool expected)
+        {
+            Assert.That(Assessment.IsValidWeight(weight), Is.EqualTo(expected));
+        }
+
         [TestCase(0.0)]
         [TestCase(-1.0)]
+        [TestCase(double.NaN)]
+        [TestCase(double.PositiveInfinity)]
         public void Update_WithInvalidWeight_ThrowsArgumentOutOfRangeException(double invalidWeight)
         {
             Assessment assessment = new("Valid Title", DateTime.Now, 2.0, _validStudentId, _validSubjectId);

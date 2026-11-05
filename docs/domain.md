@@ -37,9 +37,9 @@ The value 0.0 means the student did not participate. See [ADR 0004](decisions/00
 
 - grade 1.0 for every student
 - the current date and time
-- a weight that must parse as a whole number
+- a weight entered as a decimal number in the current culture, such as `0,5` in German or `0.5` in English. Thousands separators are not allowed, so `0.5` in German is rejected and not read as 5. The user sees a message if the weight is invalid, and nothing is created.
 
-Until a teacher edits them, these grades **count in all averages as a 1**. See TD-05 and TD-06 in [tech-debt.md](tech-debt.md).
+Until a teacher edits them, these grades **count in all averages as a 1**. See TD-05 in [tech-debt.md](tech-debt.md).
 
 ### Grade editor
 
@@ -88,7 +88,7 @@ The calculation ignores weights. `StudentDetailViewModel` runs it per subject.
 | `SubjectNote` | Student and subject IDs not empty | `ArgumentException` |
 | `Assessment` | Title not blank | `ArgumentNullException` |
 | `Assessment` | Grade valid (see above) | `ArgumentOutOfRangeException` |
-| `Assessment` | Weight greater than 0 | `ArgumentOutOfRangeException` |
+| `Assessment` | Weight finite and greater than 0 (`IsValidWeight`) | `ArgumentOutOfRangeException` |
 | `Assessment` | Student and subject IDs not empty | `ArgumentException` |
 
 Tests rely on these exception types, so changing one is a behavior change.

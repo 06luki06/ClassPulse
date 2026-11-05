@@ -97,6 +97,7 @@ View models navigate through `App.Current.Services`. See TD-02 in [tech-debt.md]
 | Dialog | View model | Opened by |
 |---|---|---|
 | `InputDialogWindow` | `InputDialogViewModel` | `IDialogService.ShowInputDialogAsync` |
+| `MessageDialogWindow` | `MessageDialogViewModel` | `IDialogService.ShowMessageAsync`, for example to report invalid input |
 | `AssessmentGradeEditWindow` | `AssessmentGradeEditViewModel` | `StudentDetailViewModel` directly (TD-02) |
 
 A dialog's view model raises `OnCloseRequested`, and whoever opens the window subscribes to close it. Without that subscription, the dialog's buttons do not close it.

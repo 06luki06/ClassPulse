@@ -16,6 +16,14 @@ namespace At.luki0606.ClassPulse.Services
         /// <param name="fields">The input fields to show.</param>
         /// <returns>The result, or <see langword="null"/> if no main window is available.</returns>
         Task<InputDialogResult?> ShowInputDialogAsync(string title, string message, params InputField[] fields);
+
+        /// <summary>
+        /// Shows a modal message, for example about invalid input, and waits until it closes. Does nothing if no main window is available.
+        /// </summary>
+        /// <param name="title">The window title.</param>
+        /// <param name="message">The message to show.</param>
+        /// <returns>A task that completes when the message has closed.</returns>
+        Task ShowMessageAsync(string title, string message);
     }
 
     /// <summary>

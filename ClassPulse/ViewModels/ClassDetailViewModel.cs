@@ -177,7 +177,17 @@ namespace At.luki0606.ClassPulse.ViewModels
                 string shortName = selectedOption.Split(" - ")[0];
                 SubjectDto? selectedSubject = Subjects.FirstOrDefault(s => s.ShortName == shortName) ?? Subjects[0];
 
-                if (!string.IsNullOrWhiteSpace(title) && int.TryParse(weightStr, out int weight))
+                // NumberStyles.Float excludes AllowThousands. Otherwise "0.5" under German culture would parse as 5.
+                if (!double.TryParse(weightStr, NumberStyles.Float, CultureInfo.CurrentCulture, out double weight)
+                    || !Assessment.IsValidWeight(weight))
+                {
+                    await _dialogService.ShowMessageAsync(
+                        Resources.Resources.Dialog_InvalidInput_Title,
+                        Resources.Resources.Dialog_InvalidWeight_Message);
+                    return;
+                }
+
+                if (!string.IsNullOrWhiteSpace(title))
                 {
                     await _assessmentService.CreateClassAssessmentAsync(
                         schoolClassId: SelectedClass.Id,
