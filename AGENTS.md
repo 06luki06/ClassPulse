@@ -36,7 +36,13 @@ A change is done only when all of the following are true:
 4. All affected documents are updated (see [Keeping documentation current](#keeping-documentation-current)).
 5. You report the commands you ran and their results. If you could not run one, say so.
 
-CI runs the same checks on every pull request.
+CI runs the same checks on every pull request, plus a check for data files and a coverage report. CodeQL runs in its own workflow.
+
+## Git hooks
+
+`.pre-commit-config.yaml` defines the hooks, and [README.md](README.md#git-hooks) has the setup steps. They check commits and pushes on machines where they are installed. They do not replace the definition of done, because they can be missing.
+
+Hook scripts are in `scripts/hooks/`. CI runs `Test-DataFiles.ps1` on all tracked files.
 
 ## Commands to avoid
 

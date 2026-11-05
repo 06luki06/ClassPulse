@@ -14,6 +14,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check for data files
+        run: scripts/hooks/Test-DataFiles.ps1 @(git -c core.quotepath=off ls-files)
+
       # Tests run on .NET 8, while global.json selects the SDK that builds them.
       - uses: actions/setup-dotnet@v4
         with:
@@ -30,7 +33,15 @@ jobs:
         run: dotnet build ClassPulse.slnx -c Release --no-restore
 
       - name: Test
-        run: dotnet test ClassPulse.slnx -c Release --no-build
+        run: dotnet test ClassPulse.slnx -c Release --no-build --collect:"XPlat Code Coverage" --results-directory TestResults
+
+      # Reports coverage without enforcing a minimum. See docs/testing.md.
+      - name: Report coverage
+        run: |
+          $report = Get-ChildItem TestResults -Recurse -Filter coverage.cobertura.xml | Select-Object -First 1
+          [xml] $coverage = Get-Content -LiteralPath $report.FullName -Raw
+          $rate = [double]::Parse($coverage.coverage.'line-rate', [cultureinfo]::InvariantCulture)
+          "Line coverage: $([math]::Round($rate * 100, 1)) %" >> $env:GITHUB_STEP_SUMMARY
 
       # Reports advisories without failing. See docs/decisions/0002-build-enforced-rules.md.
       - name: Report vulnerable packages

@@ -32,6 +32,8 @@ ClassPulse is a single-process MVVM desktop app. It has no server, and all data 
 | `ClassPulse/Styles/AppTheme.axaml` | Colors and brushes for light and dark themes |
 | `Tests/` | Automated tests, mirroring the `ClassPulse/` folders |
 | `build.ps1`, `ClassPulseSetup.iss` | Publishing and installer |
+| `.pre-commit-config.yaml`, `scripts/hooks/` | Git hooks. See [ADR 0005](decisions/0005-git-hooks.md) |
+| `.github/` | CI, CodeQL and Dependabot |
 
 ## Layers
 

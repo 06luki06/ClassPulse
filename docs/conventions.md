@@ -13,6 +13,9 @@
 | Formatting, encoding, final newline | `dotnet format whitespace` in CI |
 | SDK version | `global.json` |
 | Matching resource keys | `Tests/ResourcesTests.cs` |
+| No databases, backups or exports in the repository | `scripts/hooks/Test-DataFiles.ps1` in the Git hooks and CI |
+| Commit message format | `scripts/hooks/Test-CommitMessage.ps1` in the Git hooks |
+| No secrets in commits | gitleaks in the Git hooks |
 
 All other rules in `AGENTS.md` depend on careful work and review.
 
