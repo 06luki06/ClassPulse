@@ -13,10 +13,17 @@
   #error MyAppVersion is missing. Run build.ps1, or pass /DMyAppVersion=<version> to iscc.exe.
 #endif
 
+; build.ps1 passes the short hash of the commit that is being built.
+#ifndef MyAppCommit
+  #error MyAppCommit is missing. Run build.ps1, or pass /DMyAppCommit=<short hash> to iscc.exe.
+#endif
+
+#define MyAppFullVersion MyAppVersion + "+" + MyAppCommit
+
 [Setup]
 AppId={{D821F242-9921-4EBA-8A11-F99201A8325C}
 AppName={#MyAppName}
-AppVersion={#MyAppVersion}
+AppVersion={#MyAppFullVersion}
 AppPublisher={#MyAppPublisher}
 
 UsePreviousAppDir=yes
@@ -28,7 +35,7 @@ DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 
 OutputDir=.\InstallerOutput
-OutputBaseFilename=ClassPulse_Setup_{#MyAppVersion}
+OutputBaseFilename=ClassPulse_Setup_{#MyAppFullVersion}
 Compression=lzma2/ultra64
 SolidCompression=yes
 WizardStyle=modern

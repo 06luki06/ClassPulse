@@ -34,6 +34,27 @@ namespace At.luki0606.ClassPulse.Tests
         }
 
         [Test]
+        public void SetupScript_WithoutCommit_StopsCompilation()
+        {
+            string script = ReadRepositoryFile("ClassPulseSetup.iss");
+
+            Assert.That(Regex.IsMatch(script, @"^\s*#ifndef\s+MyAppCommit\s*\r?\n\s*#error\b", RegexOptions.Multiline), Is.True);
+        }
+
+        [Test]
+        public void SetupScript_Always_AddsCommitToVersionAndFileName()
+        {
+            string script = ReadRepositoryFile("ClassPulseSetup.iss");
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(script, Does.Contain("#define MyAppFullVersion MyAppVersion + \"+\" + MyAppCommit"));
+                Assert.That(script, Does.Contain("AppVersion={#MyAppFullVersion}"));
+                Assert.That(script, Does.Contain("OutputBaseFilename=ClassPulse_Setup_{#MyAppFullVersion}"));
+            });
+        }
+
+        [Test]
         public void SetupScript_Always_PackagesOutputOfProjectTargetFramework()
         {
             string project = ReadRepositoryFile(@"ClassPulse\ClassPulse.csproj");
@@ -52,7 +73,8 @@ namespace At.luki0606.ClassPulse.Tests
             Assert.Multiple(() =>
             {
                 Assert.That(script, Does.Contain(@"$version = dotnet msbuild ClassPulse\ClassPulse.csproj -getProperty:Version"));
-                Assert.That(script, Does.Contain("iscc.exe \"/DMyAppVersion=$version\" ClassPulseSetup.iss"));
+                Assert.That(script, Does.Contain("$commit = git rev-parse --short HEAD"));
+                Assert.That(script, Does.Contain("iscc.exe \"/DMyAppVersion=$version\" \"/DMyAppCommit=$commit\" ClassPulseSetup.iss"));
             });
         }
     }

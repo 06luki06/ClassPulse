@@ -18,7 +18,7 @@ dotnet test ClassPulse.slnx -c Release
 | `Tests/Services/` | Services | EF Core InMemory, temporary files for settings |
 | `Tests/ViewModels/` | View model logic | Stubs from `Tests/Stubs/` |
 | `Tests/ResourcesTests.cs` | Matching keys and non-blank values in both languages | Compiled resources |
-| `Tests/ReleaseScriptsTests.cs` | `build.ps1` and `ClassPulseSetup.iss` take the version only from `ClassPulse.csproj`, and the installer packages the output folder of its target framework. Reads the script text and runs neither script | Files in the repository root |
+| `Tests/ReleaseScriptsTests.cs` | `build.ps1` and `ClassPulseSetup.iss` take the version only from `ClassPulse.csproj`, add the short commit hash to it, and the installer packages the output folder of its target framework. Reads the script text and runs neither script | Files in the repository root |
 | `Tests/HookScriptsTests.cs` | The scripts in `scripts/hooks/` block data files and invalid commit messages, and the hook and CI configuration use them correctly | Runs the scripts with `powershell`, temporary files |
 | `Tests/UtilsTests.cs` | Helper methods | File system. Creates `%LOCALAPPDATA%\ClassPulse\` if it is missing, and reads no files in it |
 
