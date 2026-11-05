@@ -3,11 +3,15 @@
 ; =====================================================================
 
 #define MyAppName "ClassPulse"
-#define MyAppVersion "1.0.0"
 #define MyAppPublisher "06luki06"
 #define MyAppExeName "ClassPulse.exe"
 
 #define SourcePath ".\ClassPulse\bin\Release\net8.0\win-x64\publish"
+
+; The version is defined only in ClassPulse\ClassPulse.csproj. build.ps1 passes it in.
+#ifndef MyAppVersion
+  #error MyAppVersion is missing. Run build.ps1, or pass /DMyAppVersion=<version> to iscc.exe.
+#endif
 
 [Setup]
 AppId={{D821F242-9921-4EBA-8A11-F99201A8325C}

@@ -52,4 +52,3 @@ Nothing in the app calls these members. Check with the user before removing them
 |---|---|---|---|
 | TD-17 | [#28](https://github.com/06luki06/ClassPulse/issues/28) | Target framework | Support for .NET 8 and EF Core 8 ends on 2026-11-10. Upgrading requires changes to both project files, `ClassPulseSetup.iss` and the CI runtime. |
 | TD-18 | [#29](https://github.com/06luki06/ClassPulse/issues/29) | `ClassPulse.csproj` | `AvaloniaUI.DiagnosticsSupport` and `Avalonia.Markup.Xaml.Loader` are copied to Release output. A comment describes a condition that does not exist. HotAvalonia's hot reload is enabled only in Debug by default. |
-| TD-19 | [#30](https://github.com/06luki06/ClassPulse/issues/30) | `ClassPulse.csproj`, `ClassPulseSetup.iss` | The version is stored in both files and must be changed manually. |
