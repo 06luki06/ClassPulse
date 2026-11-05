@@ -4,7 +4,7 @@ ClassPulse is a Windows desktop app that helps teachers manage classes, students
 
 ## Development
 
-You need Windows and the .NET SDK version from `global.json`, plus the .NET 8 runtime.
+You need Windows and the .NET SDK version from `global.json`, which includes the .NET 10 runtime.
 
 ```powershell
 dotnet build ClassPulse.slnx

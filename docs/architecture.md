@@ -6,10 +6,10 @@ ClassPulse is a single-process MVVM desktop app. It has no server, and all data 
 
 | Purpose | Technology |
 |---|---|
-| Runtime | .NET 8, C# 14, built with the SDK from `global.json` |
+| Runtime | .NET 10, C# 14, built with the SDK from `global.json` |
 | UI | Avalonia 12 with the Fluent theme, FluentIcons, compiled bindings |
 | MVVM | CommunityToolkit.Mvvm source generators |
-| Data | EF Core 8 with SQLite |
+| Data | EF Core 10 with SQLite |
 | Dependency injection | Microsoft.Extensions.DependencyInjection |
 | Tests | NUnit 4, EF Core InMemory, in-memory SQLite |
 | Installer | Inno Setup |

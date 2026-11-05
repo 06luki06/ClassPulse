@@ -6,17 +6,24 @@
 #define MyAppPublisher "06luki06"
 #define MyAppExeName "ClassPulse.exe"
 
-#define SourcePath ".\ClassPulse\bin\Release\net8.0\win-x64\publish"
+#define SourcePath ".\ClassPulse\bin\Release\net10.0\win-x64\publish"
 
 ; The version is defined only in ClassPulse\ClassPulse.csproj. build.ps1 passes it in.
 #ifndef MyAppVersion
   #error MyAppVersion is missing. Run build.ps1, or pass /DMyAppVersion=<version> to iscc.exe.
 #endif
 
+; build.ps1 passes the short hash of the commit that is being built.
+#ifndef MyAppCommit
+  #error MyAppCommit is missing. Run build.ps1, or pass /DMyAppCommit=<short hash> to iscc.exe.
+#endif
+
+#define MyAppFullVersion MyAppVersion + "+" + MyAppCommit
+
 [Setup]
 AppId={{D821F242-9921-4EBA-8A11-F99201A8325C}
 AppName={#MyAppName}
-AppVersion={#MyAppVersion}
+AppVersion={#MyAppFullVersion}
 AppPublisher={#MyAppPublisher}
 
 UsePreviousAppDir=yes
@@ -28,7 +35,7 @@ DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 
 OutputDir=.\InstallerOutput
-OutputBaseFilename=ClassPulse_Setup_{#MyAppVersion}
+OutputBaseFilename=ClassPulse_Setup_{#MyAppFullVersion}
 Compression=lzma2/ultra64
 SolidCompression=yes
 WizardStyle=modern
