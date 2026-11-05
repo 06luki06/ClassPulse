@@ -79,6 +79,24 @@ namespace At.luki0606.ClassPulse.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid input.
+        /// </summary>
+        public static string Dialog_InvalidInput_Title {
+            get {
+                return ResourceManager.GetString("Dialog_InvalidInput_Title", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The exam was not saved. The weight must be a number greater than 0, for example 1 or 0.5..
+        /// </summary>
+        public static string Dialog_InvalidWeight_Message {
+            get {
+                return ResourceManager.GetString("Dialog_InvalidWeight_Message", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Add exam for the selected subject:.
         /// </summary>
         public static string Dialog_NewAssessment_Message {
@@ -348,6 +366,15 @@ namespace At.luki0606.ClassPulse.Resources {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string Label_Ok {
+            get {
+                return ResourceManager.GetString("Label_Ok", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Performance Drop.
         /// </summary>

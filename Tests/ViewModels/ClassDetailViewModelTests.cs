@@ -127,6 +127,106 @@ namespace At.luki0606.ClassPulse.Tests.ViewModels
             Assert.That(assessments[0].Weight, Is.EqualTo(2));
         }
 
+        [TestCase("1", 1.0)]
+        [TestCase("0,5", 0.5)]
+        [TestCase(" 1,5 ", 1.5)]
+        [SetCulture("de")]
+        public async Task AddAssessmentAsync_WithValidWeightUnderGerman_CreatesAssessmentWithoutMessage(string weightInput, double expectedWeight)
+        {
+            List<Assessment> assessments = await AddAssessmentWithWeightAsync(weightInput);
+
+            Assert.That(assessments, Has.Count.EqualTo(1));
+            Assert.That(assessments[0].Weight, Is.EqualTo(expectedWeight));
+            Assert.That(_dialogService.ShownMessages, Is.Empty);
+        }
+
+        [TestCase("1", 1.0)]
+        [TestCase("0.5", 0.5)]
+        [SetCulture("en")]
+        public async Task AddAssessmentAsync_WithValidWeightUnderEnglish_CreatesAssessmentWithoutMessage(string weightInput, double expectedWeight)
+        {
+            List<Assessment> assessments = await AddAssessmentWithWeightAsync(weightInput);
+
+            Assert.That(assessments, Has.Count.EqualTo(1));
+            Assert.That(assessments[0].Weight, Is.EqualTo(expectedWeight));
+            Assert.That(_dialogService.ShownMessages, Is.Empty);
+        }
+
+        [TestCase("0.5")]
+        [TestCase("1.000")]
+        [TestCase("0")]
+        [TestCase("0,0")]
+        [TestCase("-1")]
+        [TestCase("-0,5")]
+        [TestCase("abc")]
+        [TestCase("")]
+        [TestCase("   ")]
+        [TestCase("NaN")]
+        [TestCase("1e999")]
+        [TestCase("∞")]
+        [SetCulture("de")]
+        public async Task AddAssessmentAsync_WithInvalidWeightUnderGerman_CreatesNothingAndReportsProblem(string weightInput)
+        {
+            List<Assessment> assessments = await AddAssessmentWithWeightAsync(weightInput);
+
+            Assert.That(assessments, Is.Empty);
+            AssertInvalidWeightWasReported();
+        }
+
+        [TestCase("0,5")]
+        [TestCase("1,000")]
+        [TestCase("0")]
+        [TestCase("-1")]
+        [TestCase("abc")]
+        [TestCase("Infinity")]
+        [SetCulture("en")]
+        public async Task AddAssessmentAsync_WithInvalidWeightUnderEnglish_CreatesNothingAndReportsProblem(string weightInput)
+        {
+            List<Assessment> assessments = await AddAssessmentWithWeightAsync(weightInput);
+
+            Assert.That(assessments, Is.Empty);
+            AssertInvalidWeightWasReported();
+        }
+
+        [Test]
+        public async Task AddAssessmentAsync_WhenCancelledWithInvalidWeight_ShowsNoMessage()
+        {
+            List<Assessment> assessments = await AddAssessmentWithWeightAsync("abc", isConfirmed: false);
+
+            Assert.That(assessments, Is.Empty);
+            Assert.That(_dialogService.ShownMessages, Is.Empty);
+        }
+
+        private async Task<List<Assessment>> AddAssessmentWithWeightAsync(string weightInput, bool isConfirmed = true)
+        {
+            Subject subject = await _classService.CreateSubjectAsync("Mathematics", "M");
+            Student student = await _classService.AddStudentToSchoolClassAsync(_testClass.Id, "Max", "Mustermann");
+            _assessmentService.RegisterStudentToClass(student.Id, _testClass.Id);
+
+            ClassDetailViewModel vm = new(_testClass, _classService, _dialogService, _assessmentService);
+            await vm.LoadDataAsync();
+
+            List<InputField> fields =
+            [
+                new InputField(Resources.Resources.Label_Subject, "Placeholder", "M - Mathematics"),
+                new InputField(Resources.Resources.Label_Titel, "Placeholder", "Test 1"),
+                new InputField(Resources.Resources.Label_Weight, "1", weightInput)
+            ];
+            InputDialogViewModel dialogResultVm = new("TestTitle", "TestMessage", fields);
+            _dialogService.NextInputResult = new InputDialogResult(isConfirmed, dialogResultVm);
+
+            await vm.AddAssessmentCommand.ExecuteAsync(null);
+
+            return await _assessmentService.GetAssessmentsByTitleAndSubjectAsync(_testClass.Id, subject.Id, "Test 1");
+        }
+
+        private void AssertInvalidWeightWasReported()
+        {
+            Assert.That(_dialogService.ShownMessages, Has.Count.EqualTo(1));
+            Assert.That(_dialogService.ShownMessages[0].Title, Is.EqualTo(Resources.Resources.Dialog_InvalidInput_Title));
+            Assert.That(_dialogService.ShownMessages[0].Message, Is.EqualTo(Resources.Resources.Dialog_InvalidWeight_Message));
+        }
+
         [Test]
         public async Task RemoveStudentCommand_RemovesStudent()
         {

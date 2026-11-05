@@ -152,6 +152,16 @@ namespace At.luki0606.ClassPulse.Data.Entities
             HasParticipated = hasParticipated;
         }
 
+        /// <summary>
+        /// Checks whether a weight is allowed, so that callers can reject input without duplicating the rule.
+        /// </summary>
+        /// <param name="weight">The weight to check.</param>
+        /// <returns><see langword="true"/> if the weight is a finite number greater than zero; otherwise <see langword="false"/>.</returns>
+        public static bool IsValidWeight(double weight)
+        {
+            return double.IsFinite(weight) && weight > 0.0;
+        }
+
         private static void ValidateTitle(string title)
         {
             if (string.IsNullOrWhiteSpace(title))
@@ -175,7 +185,10 @@ namespace At.luki0606.ClassPulse.Data.Entities
 
         private static void ValidateWeight(double weight)
         {
-            ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(weight, 0.0);
+            if (!IsValidWeight(weight))
+            {
+                throw new ArgumentOutOfRangeException(nameof(weight));
+            }
         }
 
         private static void ValidateId(Guid id)
